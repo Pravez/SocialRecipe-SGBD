@@ -12,6 +12,8 @@ public class SSTunnel {
     private JSch secureChannel;
     private Session session;
 
+    private int portForwarding;
+
     public SSTunnel(String user, String host, String password, int port){
         this.user = user;
         this.host = host;
@@ -33,10 +35,15 @@ public class SSTunnel {
     void forwardPort(int localPort, String distantHost, int distantPort){
 
         try {
-            this.session.setPortForwardingL(localPort, distantHost, distantPort);
+            this.portForwarding = this.session.setPortForwardingL(localPort, distantHost, distantPort);
         } catch (JSchException e) {
             e.printStackTrace();
         }
+    }
+
+    void close() throws JSchException {
+        this.session.delPortForwardingL(this.portForwarding);
+        this.session.disconnect();
     }
 
 }

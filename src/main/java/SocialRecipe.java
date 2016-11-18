@@ -16,7 +16,7 @@ public class SocialRecipe {
         access.setCredentials("enseirb", "vatefairefoutre");
 
         try {
-            access.connect();
+            access.connect(6543);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -32,6 +32,8 @@ public class SocialRecipe {
         }catch (Exception e){
             e.printStackTrace();
         }
+
+        access.close();
 
     }
 }

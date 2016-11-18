@@ -16,6 +16,7 @@ public class DBAccess {
     private Statement statement;
 
     private SSTunnel tunnel;
+    private int forwardPort;
 
     public DBAccess(String host, int port, String database){
         this.host = host;
@@ -41,9 +42,10 @@ public class DBAccess {
         this.password = password;
     }
 
-    public void connect() throws SQLException {
-        this.tunnel.forwardPort(6543, this.host, this.port);
-        this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:6543/" + this.database, this.username, this.password);
+    public void connect(int forwardPort) throws SQLException {
+        this.forwardPort = forwardPort;
+        this.tunnel.forwardPort(this.forwardPort, this.host, this.port);
+        this.connection = DriverManager.getConnection("jdbc:postgresql://" + this.host + ":" + this.forwardPort + "/" + this.database, this.username, this.password);
         this.statement = this.connection.createStatement();
     }
 
@@ -57,33 +59,14 @@ public class DBAccess {
         return null;
     }
 
-    /*public static void main(String[] args)
-            throws SQLException, ClassNotFoundException, java.io.IOException {
-        // Preparation de la connexion.
-        Connection conn = null;
-        conn = DriverManager.getConnection(
-                "jdbc:postgresql://localhost:5432/enseirb","root", "");
-
-        Statement stmt = null;
-
-        try {
-            stmt = conn.createStatement();
-            // Execution de la requete.
-            ResultSet rset = stmt.executeQuery("select A.NOM_ACTEUR, count(*) "
-                            + "from ACTEUR A, ROLE RO "
-                            + "where A.NUMERO_ACTEUR = RO.NUMERO_ACTEUR "
-                            + "group by A.NOM_ACTEUR");
-
-
+    public void close(){
+        try{
+            this.tunnel.close();
+            this.statement.close();
+            this.connection.close();
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        finally {
-            if (stmt != null) {
-                stmt.close();
-            }
-            if (conn != null) {
-                conn.close();
-            }
-        }
-    }*/
 
+    }
 }
