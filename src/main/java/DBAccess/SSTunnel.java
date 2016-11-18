@@ -24,15 +24,16 @@ public class SSTunnel {
         this.secureChannel = new JSch();
         this.session = this.secureChannel.getSession(this.user, this.host, this.port);
 
-        session.setPassword(password);
+        session.setPassword(this.password);
         //If server's host key is unknown or changed, always insert new key
         session.setConfig("StrictHostKeyChecking", "no");
+        this.session.connect();
     }
 
     void forwardPort(int localPort, String distantHost, int distantPort){
 
         try {
-            int assigned_port = this.session.setPortForwardingL(localPort, distantHost, distantPort);
+            this.session.setPortForwardingL(localPort, distantHost, distantPort);
         } catch (JSchException e) {
             e.printStackTrace();
         }

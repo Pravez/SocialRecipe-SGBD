@@ -3,6 +3,8 @@ package main.java;
 import main.java.DBAccess.DBAccess;
 import main.java.DBAccess.SSTunnel;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public class SocialRecipe {
@@ -18,5 +20,18 @@ public class SocialRecipe {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        ResultSet rset = access.sendQuery("SELECT * FROM test");
+
+        try {
+            while (rset.next()) {
+                // Affichage du resultat.
+                System.out.println(rset.getInt(1));
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
     }
 }

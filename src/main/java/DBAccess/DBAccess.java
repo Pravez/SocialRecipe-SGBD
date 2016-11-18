@@ -42,8 +42,19 @@ public class DBAccess {
     }
 
     public void connect() throws SQLException {
-        this.tunnel.forwardPort(4321, this.host, this.port);
-        this.connection = DriverManager.getConnection("jdbc:postgresql://" + this.host + ":4321/" + this.database);
+        this.tunnel.forwardPort(6543, this.host, this.port);
+        this.connection = DriverManager.getConnection("jdbc:postgresql://localhost:6543/" + this.database, this.username, this.password);
+        this.statement = this.connection.createStatement();
+    }
+
+    public ResultSet sendQuery(String query) {
+        try {
+            return this.statement.executeQuery(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /*public static void main(String[] args)
@@ -63,16 +74,7 @@ public class DBAccess {
                             + "where A.NUMERO_ACTEUR = RO.NUMERO_ACTEUR "
                             + "group by A.NOM_ACTEUR");
 
-            ResultSetMetaData data = rset.getMetaData();
-            for (int j=1;j<=data.getColumnCount();j++){
-                System.out.println("Colonne : " + j + " " +data.getColumnName(j) + " "
-                        + data.getColumnTypeName(j));
-            }
-            while (rset.next()) {
-                // Affichage du resultat.
-                System.out.println(rset.getString(1) + " a "
-                        + rset.getInt(2) + " roles");
-            }
+
         }
         finally {
             if (stmt != null) {
