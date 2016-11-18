@@ -1,0 +1,10 @@
+DELETE FROM ingredient;
+ALTER SEQUENCE ingredient_id_ingredient_seq RESTART WITH 1;
+INSERT INTO ingredient(ingredient_name) VALUES ('Dark Chocolate');
+INSERT INTO ingredient(ingredient_name) VALUES ('Sardine');
+INSERT INTO ingredient(ingredient_name) VALUES ('Strawberry');
+INSERT INTO ingredient(ingredient_name) VALUES ('Turkey escalope');
+INSERT INTO ingredient(ingredient_name) VALUES ('Flour');
+INSERT INTO ingredient(ingredient_name) VALUES ('Sugar');
+INSERT INTO ingredient(ingredient_name) VALUES ('Egg');
+INSERT INTO ingredient(ingredient_name) VALUES ('Ham');

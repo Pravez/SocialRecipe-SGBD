@@ -1,0 +1,16 @@
+DELETE FROM nutritional_characteristic;
+ALTER SEQUENCE nutritional_characteristic_id_nc_seq RESTART WITH 1;
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Calories');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin K');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin B1');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin C');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin E');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin A');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Phosphorus');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Fiber');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Potassium');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Protein');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Zinc');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Iron');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Calcium');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Magnesium');

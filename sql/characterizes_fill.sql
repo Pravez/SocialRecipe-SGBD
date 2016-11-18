@@ -1,0 +1,22 @@
+DELETE FROM ingredient_characteristic;
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+INSERT INTO ingredient_characteristic(1,,);
+
+INSERT INTO ingredient_characteristic(,,);
+INSERT INTO ingredient_characteristic(,,);
+INSERT INTO ingredient_characteristic(,,);
+INSERT INTO ingredient_characteristic(,,);
+INSERT INTO ingredient_characteristic(,,);
+INSERT INTO ingredient_characteristic(,,);

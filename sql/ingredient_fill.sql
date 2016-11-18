@@ -1,0 +1,87 @@
+DELETE FROM ingredient;
+ALTER SEQUENCE ingredient_id_ingredient_seq RESTART WITH 1;
+INSERT INTO ingredient(ingredient_name) VALUES ('Tomato');
+INSERT INTO ingredient(ingredient_name) VALUES ('Salmon');
+INSERT INTO ingredient(ingredient_name) VALUES ('Beef steak');
+INSERT INTO ingredient(ingredient_name) VALUES ('Corn');
+INSERT INTO ingredient(ingredient_name) VALUES ('Salad');
+INSERT INTO ingredient(ingredient_name) VALUES ('Dark Chocolate');
+INSERT INTO ingredient(ingredient_name) VALUES ('Flour');
+INSERT INTO ingredient(ingredient_name) VALUES ('Sugar');
+INSERT INTO ingredient(ingredient_name) VALUES ('Egg');
+INSERT INTO ingredient(ingredient_name) VALUES ('Yeast');
+INSERT INTO ingredient(ingredient_name) VALUES ('Vanilla sugar');
+INSERT INTO ingredient(ingredient_name) VALUES ('Mustard');
+INSERT INTO ingredient(ingredient_name) VALUES ('Tuna');
+INSERT INTO ingredient(ingredient_name) VALUES ('Garlic');
+INSERT INTO ingredient(ingredient_name) VALUES ('Turkey escalope');
+INSERT INTO ingredient(ingredient_name) VALUES ('Nutella');
+INSERT INTO ingredient(ingredient_name) VALUES ('Sour cream');
+INSERT INTO ingredient(ingredient_name) VALUES ('Mozarella');
+INSERT INTO ingredient(ingredient_name) VALUES ('Camembert');
+INSERT INTO ingredient(ingredient_name) VALUES ('Milk');
+INSERT INTO ingredient(ingredient_name) VALUES ('Oignon');
+INSERT INTO ingredient(ingredient_name) VALUES ('Potato');
+INSERT INTO ingredient(ingredient_name) VALUES ('Carrot');
+INSERT INTO ingredient(ingredient_name) VALUES ('Pumpkin');
+INSERT INTO ingredient(ingredient_name) VALUES ('Zucchini');
+INSERT INTO ingredient(ingredient_name) VALUES ('Avocado');
+INSERT INTO ingredient(ingredient_name) VALUES ('Strawberry');
+INSERT INTO ingredient(ingredient_name) VALUES ('Banana');
+INSERT INTO ingredient(ingredient_name) VALUES ('Apple');
+INSERT INTO ingredient(ingredient_name) VALUES ('Asparagu');
+INSERT INTO ingredient(ingredient_name) VALUES ('Beet');
+INSERT INTO ingredient(ingredient_name) VALUES ('Bell pepper');
+INSERT INTO ingredient(ingredient_name) VALUES ('Broccoli');
+INSERT INTO ingredient(ingredient_name) VALUES ('Brussel sprout');
+INSERT INTO ingredient(ingredient_name) VALUES ('Cabage');
+INSERT INTO ingredient(ingredient_name) VALUES ('Cauliflower');
+INSERT INTO ingredient(ingredient_name) VALUES ('Celery');
+INSERT INTO ingredient(ingredient_name) VALUES ('Cucumber');
+INSERT INTO ingredient(ingredient_name) VALUES ('Eggplant');
+INSERT INTO ingredient(ingredient_name) VALUES ('Fennel');
+INSERT INTO ingredient(ingredient_name) VALUES ('Grean Bean');
+INSERT INTO ingredient(ingredient_name) VALUES ('Grean Pea');
+INSERT INTO ingredient(ingredient_name) VALUES ('Leek');
+INSERT INTO ingredient(ingredient_name) VALUES ('Mushroom');
+INSERT INTO ingredient(ingredient_name) VALUES ('Olive oil');
+INSERT INTO ingredient(ingredient_name) VALUES ('Olive');
+INSERT INTO ingredient(ingredient_name) VALUES ('Lettuce');
+INSERT INTO ingredient(ingredient_name) VALUES ('Algae');
+INSERT INTO ingredient(ingredient_name) VALUES ('Spinach');
+INSERT INTO ingredient(ingredient_name) VALUES ('Sweet Potato');
+INSERT INTO ingredient(ingredient_name) VALUES ('Apricot');
+INSERT INTO ingredient(ingredient_name) VALUES ('Blueberry');
+INSERT INTO ingredient(ingredient_name) VALUES ('Cranberry');
+INSERT INTO ingredient(ingredient_name) VALUES ('Fig');
+INSERT INTO ingredient(ingredient_name) VALUES ('Grapefruit');
+INSERT INTO ingredient(ingredient_name) VALUES ('Kiwifruit');
+INSERT INTO ingredient(ingredient_name) VALUES ('Lemon');
+INSERT INTO ingredient(ingredient_name) VALUES ('Orange');
+INSERT INTO ingredient(ingredient_name) VALUES ('Papaya');
+INSERT INTO ingredient(ingredient_name) VALUES ('Pineapple');
+INSERT INTO ingredient(ingredient_name) VALUES ('Pear');
+INSERT INTO ingredient(ingredient_name) VALUES ('Raspberry');
+INSERT INTO ingredient(ingredient_name) VALUES ('Watermelon');
+INSERT INTO ingredient(ingredient_name) VALUES ('Cod');
+INSERT INTO ingredient(ingredient_name) VALUES ('Sardine');
+INSERT INTO ingredient(ingredient_name) VALUES ('Scallop');
+INSERT INTO ingredient(ingredient_name) VALUES ('Shrimp');
+INSERT INTO ingredient(ingredient_name) VALUES ('Tuna');
+INSERT INTO ingredient(ingredient_name) VALUES ('Almond');
+INSERT INTO ingredient(ingredient_name) VALUES ('Cashew');
+INSERT INTO ingredient(ingredient_name) VALUES ('Peanut');
+INSERT INTO ingredient(ingredient_name) VALUES ('Chickpea');
+INSERT INTO ingredient(ingredient_name) VALUES ('Kidney bean');
+INSERT INTO ingredient(ingredient_name) VALUES ('Lentil');
+INSERT INTO ingredient(ingredient_name) VALUES ('Navy beans');
+INSERT INTO ingredient(ingredient_name) VALUES ('Soybeans');
+INSERT INTO ingredient(ingredient_name) VALUES ('Soy sauce');
+INSERT INTO ingredient(ingredient_name) VALUES ('Lamb');
+
+
+
+
+
+
+
