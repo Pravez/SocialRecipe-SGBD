@@ -23,6 +23,44 @@ INSERT INTO category(category_name) values('main course');
 INSERT INTO category(category_name) values('fish');
 INSERT INTO category(category_name) values('breakfast');
 
+/* INSERT INTO USER */
+DELETE FROM "user";
+
+ALTER SEQUENCE user_id_user_seq RESTART WITH 1;
+INSERT INTO "user"(pseudo) values ('Etchebest');
+INSERT INTO "user"(pseudo) values ('Ramsey');
+INSERT INTO "user"(pseudo) values ('Ratatouille');
+INSERT INTO "user"(pseudo) values ('MarionProChefOfTheDoom');
+INSERT INTO "user"(pseudo) values ('Norbert');
+INSERT INTO "user"(pseudo) values ('Jean_topchef');
+INSERT INTO "user"(pseudo) values ('SebastienF');
+INSERT INTO "user"(pseudo) values ('SylvainL');
+INSERT INTO "user"(pseudo) values ('LeChefFrancais');
+INSERT INTO "user"(pseudo) values ('InLoveWithMayonnaise');
+INSERT INTO "user"(pseudo) values ('Nutellman');
+INSERT INTO "user"(pseudo) values ('SylvainL');
+INSERT INTO "user"(pseudo) values ('RecipeMaster');
+INSERT INTO "user"(pseudo) values ('FiveStarsChief');
+INSERT INTO "user"(pseudo) values ('Patoche');
+INSERT INTO "user"(pseudo) values ('Miam');
+INSERT INTO "user"(pseudo) values ('MmmmmmmBrownies');
+INSERT INTO "user"(pseudo) values ('DarkChief33');
+INSERT INTO "user"(pseudo) values ('gleu');
+
+/* INSERT INTO RECIPE */
+DELETE FROM recipe;
+ALTER SEQUENCE recipe_id_recipe_seq RESTART WITH 1;
+
+INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Holiday strawberry sauce', '5 minutes', '15 minutes', '8 hours', 16);
+INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Perfect turkey', '30 minutes', '4 hours', '12 hours 30 minutes', 24);
+INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('MMMMMM... Brownies', '25 minutes', '25 minutes', '10 minutes', 16);
+INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Grilled fennel', '10 minutes', '15 minutes', '0', 4);
+INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Valentine ''s salmon', '20 minutes', '45 minutes', '0', 4);
+INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Pasta Salad', '20 minutes', '15 minutes', '13 hours 30 minutes', 6);
+INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES ('Egg in a hole', '1 minute', '4 minute', '0', 1);
+INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES ('Chocolated Sardine', '20 minutes', '15 minutes' ,'10 minutes', 4);
+
+
 /*INSERT COMMENT*/
 DELETE FROM comment;
 
@@ -35,28 +73,6 @@ INSERT INTO comment(id_recipe, id_user, comment_text) values (3, 17,'Hmmmmmmm, s
 INSERT INTO comment(id_recipe, id_user, comment_text) values (5, 1, 'Not really good');
 INSERT INTO comment(id_recipe, id_user, comment_text) values (3, 6, 'Mmmm... no.');
 INSERT INTO comment(id_recipe, id_user, comment_text) values (7, 7, 'Simple and efficient.');
-
-
-/* INSERT INTO CONSTITUTE */
-DELETE FROM constitute;
-
-INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES(7, 7, 8, 1);
-INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES(8, 7, 10, 1.5);
-
-
-/* INSERT INTO DESCRIPTION*/
-
-
-
-/* INSERT INTO IS_PART_OF*/
-DELETE from is_part_of;
-
-INSERT INTO is_part_of VALUES (5,2);
-INSERT INTO is_part_of VALUES (1,2);
-INSERT INTO is_part_of VALUES (2,1);
-INSERT INTO is_part_of VALUES (3,1);
-INSERT INTO is_part_of VALUES (6,3);
-INSERT INTO is_part_of VALUES (3,3);
 
 /* INSERT INTO INGREDIENT*/
 
@@ -72,6 +88,70 @@ INSERT INTO ingredient(ingredient_name) VALUES ('Sugar');
 INSERT INTO ingredient(ingredient_name) VALUES ('Egg');
 INSERT INTO ingredient(ingredient_name) VALUES ('Ham');
 
+/* INSERT INTO UNIT */
+
+DELETE FROM unit;
+
+ALTER SEQUENCE unit_id_unit_seq RESTART WITH 1;
+INSERT INTO unit(unit_name) VALUES('kilogram');
+INSERT INTO unit(unit_name) VALUES('gram');
+INSERT INTO unit(unit_name) VALUES('liter');
+INSERT INTO unit(unit_name) VALUES('centiliter');
+INSERT INTO unit(unit_name) VALUES('spoon');
+INSERT INTO unit(unit_name) VALUES('pound');
+INSERT INTO unit(unit_name) VALUES('cup');
+INSERT INTO unit(unit_name) VALUES('unit');
+INSERT INTO unit(unit_name) VALUES('tablespoon');
+INSERT INTO unit(unit_name) VALUES('teaspoon');
+INSERT INTO unit(unit_name) VALUES('ounce');
+INSERT INTO unit(unit_name) VALUES('stick');
+INSERT INTO unit(unit_name) VALUES('clove');
+
+/* INSERT INTO CONSTITUTE */
+DELETE FROM constitute;
+
+INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES(7, 7, 8, 1);
+INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES(8, 7, 10, 1.5);
+
+/* INSERT INTO DESCRIPTION*/
+
+
+/* INSERT INTO MENU*/
+DELETE from menu;
+ALTER SEQUENCE menu_id_menu_seq RESTART with 1;
+
+INSERT INTO menu(menu_name,id_user) VALUES ('Christmas Meal',9);
+INSERT INTO menu(menu_name,id_user) VALUES ('Valentines Meal',4);
+INSERT INTO menu(menu_name,id_user) VALUES ('Pasta',2);
+
+/* INSERT INTO IS_PART_OF*/
+DELETE from is_part_of;
+
+INSERT INTO is_part_of VALUES (5,2);
+INSERT INTO is_part_of VALUES (1,2);
+INSERT INTO is_part_of VALUES (2,1);
+INSERT INTO is_part_of VALUES (3,1);
+INSERT INTO is_part_of VALUES (6,3);
+INSERT INTO is_part_of VALUES (3,3);
+
+/* INSERT INTO NUTRITIONAL_CHARCACTERISTIC*/
+DELETE FROM nutritional_characteristic;
+
+ALTER SEQUENCE nutritional_characteristic_id_nc_seq RESTART WITH 1;
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Calories');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin K');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin B1');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin C');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin E');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin A');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Phosphorus');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Fiber');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Potassium');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Protein');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Zinc');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Iron');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Calcium');
+INSERT INTO nutritional_characteristic(nc_name) VALUES ('Magnesium');
 
 /* INSERT INTO INGREDIENT_CHARACTERISTIC*/
 
@@ -140,40 +220,6 @@ INSERT INTO is_category(id_category, id_recipe)  values (18, 5); /*Valentine's s
 INSERT INTO is_category(id_category, id_recipe)  values (12, 6); /*Pasta Salad*/
 INSERT INTO is_category(id_category, id_recipe)  values (19, 7); /*Egg in a hole*/
 
-
-/* INSERT INTO USER */
-DELETE FROM user;
-
-ALTER SEQUENCE user_id_user_seq RESTART WITH 1;
-INSERT INTO "user"(pseudo) values ('Etchebest');
-INSERT INTO "user"(pseudo) values ('Ramsey');
-INSERT INTO "user"(pseudo) values ('Ratatouille');
-INSERT INTO "user"(pseudo) values ('MarionProChefOfTheDoom');
-INSERT INTO "user"(pseudo) values ('Norbert');
-INSERT INTO "user"(pseudo) values ('Jean_topchef');
-INSERT INTO "user"(pseudo) values ('SebastienF');
-INSERT INTO "user"(pseudo) values ('SylvainL');
-INSERT INTO "user"(pseudo) values ('LeChefFrancais');
-INSERT INTO "user"(pseudo) values ('InLoveWithMayonnaise');
-INSERT INTO "user"(pseudo) values ('Nutellman');
-INSERT INTO "user"(pseudo) values ('SylvainL');
-INSERT INTO "user"(pseudo) values ('RecipeMaster');
-INSERT INTO "user"(pseudo) values ('FiveStarsChief');
-INSERT INTO "user"(pseudo) values ('Patoche');
-INSERT INTO "user"(pseudo) values ('Miam');
-INSERT INTO "user"(pseudo) values ('MmmmmmmBrownies');
-INSERT INTO "user"(pseudo) values ('DarkChief33');
-INSERT INTO "user"(pseudo) values ('gleu');
-
-/* INSERT INTO MENU*/
-DELETE from menu;
-ALTER SEQUENCE menu_id_menu_seq RESTART with 1;
-
-INSERT INTO menu(menu_name,id_user) VALUES ('Christmas Meal',9);
-INSERT INTO menu(menu_name,id_user) VALUES ('Valentines Meal',4);
-INSERT INTO menu(menu_name,id_user) VALUES ('Pasta',2);
-
-
 /* INSERT INTO NOTE*/
 DELETE FROM note;
 
@@ -187,56 +233,3 @@ INSERT INTO note(id_recipe, id_user, note) values(3, 6, 1);
 INSERT INTO note(id_recipe, id_user, note) values(4, 1, 2);
 INSERT INTO note(id_recipe, id_user, note) values(5, 1, 1);
 INSERT INTO note(id_recipe, id_user, note) values(7, 7, 2);
-
-
-/* INSERT INTO NUTRITIONAL_CHARCACTERISTIC*/ 
-DELETE FROM nutritional_characteristic;
-
-ALTER SEQUENCE nutritional_characteristic_id_nc_seq RESTART WITH 1;
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Calories');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin K');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin B1');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin C');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin E');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Vitamin A');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Phosphorus');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Fiber');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Potassium');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Protein');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Zinc');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Iron');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Calcium');
-INSERT INTO nutritional_characteristic(nc_name) VALUES ('Magnesium');
-
-
-/* INSERT INTO RECIPE */
-DELETE FROM recipe;
-ALTER SEQUENCE recipe_id_recipe_seq RESTART WITH 1;
-
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Holiday strawberry sauce', '5 minutes', '15 minutes', '8 hours', 16);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Perfect turkey', '30 minutes', '4 hours', '12 hours 30 minutes', 24);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('MMMMMM... Brownies', '25 minutes', '25 minutes', '10 minutes', 16);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Grilled fennel', '10 minutes', '15 minutes', '0', 4);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Valentine ''s salmon', '20 minutes', '45 minutes', '0', 4);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Pasta Salad', '20 minutes', '15 minutes', '13 hours 30 minutes', 6);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES ('Egg in a hole', '1 minute', '4 minute', '0', 1);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES ('Chocolated Sardine', '20 minutes', '15 minutes' ,'10 minutes', 4);
-
-/* INSERT INTO UNIT */
-
-DELETE FROM unit;
-
-ALTER SEQUENCE unit_id_unit_seq RESTART WITH 1;
-INSERT INTO unit(unit_name) VALUES('kilogram');
-INSERT INTO unit(unit_name) VALUES('gram');
-INSERT INTO unit(unit_name) VALUES('liter');
-INSERT INTO unit(unit_name) VALUES('centiliter');
-INSERT INTO unit(unit_name) VALUES('spoon');
-INSERT INTO unit(unit_name) VALUES('pound');
-INSERT INTO unit(unit_name) VALUES('cup');
-INSERT INTO unit(unit_name) VALUES('unit');
-INSERT INTO unit(unit_name) VALUES('tablespoon');
-INSERT INTO unit(unit_name) VALUES('teaspoon');
-INSERT INTO unit(unit_name) VALUES('ounce');
-INSERT INTO unit(unit_name) VALUES('stick');
-INSERT INTO unit(unit_name) VALUES('clove');

@@ -26,6 +26,7 @@ CREATE TABLE Recipe (
   date_added DATE ,
   preparation_time  INTERVAL ,
   cooking_time  INTERVAL,
+  waiting_time INTERVAL,
   servings  INT
 );
 
