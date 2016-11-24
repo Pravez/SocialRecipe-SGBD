@@ -23,6 +23,7 @@ CREATE TABLE Unit (
 CREATE TABLE Recipe (
 	id_recipe	SERIAL	PRIMARY KEY,
 	recipe_name VARCHAR(50) NOT NULL ,
+  date_added DATE ,
   preparation_time  INTERVAL ,
   cooking_time  INTERVAL,
   servings  INT
