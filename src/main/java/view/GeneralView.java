@@ -67,9 +67,9 @@ public class GeneralView extends JFrame{
 
                 this.connectionStatus.setText(status);
                 try {
-                    loadData(this.menuData, "SELECT * FROM menu");
-                    loadData(this.recipesData, "SELECT * FROM recipe");
-                    loadData(this.ingredientsData, "SELECT * FROM ingredient");
+                    updateTableWithData(this.menuData, new DataSet(this.access.sendQuery("SELECT * FROM menu")));
+                    updateTableWithData(this.recipesData, new DataSet(this.access.sendQuery("SELECT * FROM recipe")));
+                    updateTableWithData(this.ingredientsData, new DataSet(this.access.sendQuery("SELECT * FROM ingredient")));
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -78,9 +78,7 @@ public class GeneralView extends JFrame{
         }
     }
 
-
-    private void loadData(JTable table, String query) throws SQLException {
-        DataSet set = new DataSet(this.access.sendQuery(query));
+    private void updateTableWithData(JTable table, DataSet set){
         Map.Entry<Object[][], String[]> tableData = set.exportToTable();
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 

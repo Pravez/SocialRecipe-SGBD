@@ -3,17 +3,28 @@ package main.java.DBAccess;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * Class supposed to take the representation of the result set.
+ * It has a head made of a tuple (Column Name, Type of data), and a data made of {@link Row}s.
+ */
 public class DataSet {
     public ArrayList<Map.Entry<String, Class>> head;
     public ArrayList<Row> data;
 
+    /**
+     * Initializes and builds the head and data
+     * @param set is the {@link ResultSet} from the SQL query
+     * @throws SQLException if a database access error occurs or this method is called on a closed result set
+     */
     public DataSet(ResultSet set) throws SQLException {
         head = new ArrayList<>();
         data = new ArrayList<>();
 
+        //We take metadatas and number of columns
         ResultSetMetaData rsmd = set.getMetaData();
         int numOfCol = rsmd.getColumnCount();
 
+        //We add a "map entry" meaning a tuple made of two values
         for(int i=1;i <= rsmd.getColumnCount();i++){
             head.add(new AbstractMap.SimpleImmutableEntry<>(rsmd.getColumnName(i), Row.TYPE.get(rsmd.getColumnTypeName(i).toUpperCase())));
         }
