@@ -25,7 +25,6 @@ public class Connection extends JDialog {
     private JTextField userName;
     private JPasswordField userPassword;
     private JSpinner serverPort;
-    private JButton dataConnect;
 
     //Pane concerning ssh
     private JPanel sshPane;
@@ -49,33 +48,9 @@ public class Connection extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
         pack();
 
-        buttonOK.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onOK();
-            }
-        });
-        buttonCancel.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onCancel();
-            }
-        });
-        connectUsingSSHTunnelCheckBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                changeSshConnectionState(connectUsingSSHTunnelCheckBox.isSelected());
-            }
-        });
-        sshConnect.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkSsh();
-            }
-        });
-        dataConnect.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                checkDatabase();
-            }
-        });
+        buttonOK.addActionListener(e -> onOK());
+        buttonCancel.addActionListener(e -> onCancel());
+        connectUsingSSHTunnelCheckBox.addActionListener(e -> changeSshConnectionState(connectUsingSSHTunnelCheckBox.isSelected()));
 
         this.changeSshConnectionState(this.connectUsingSSHTunnelCheckBox.isSelected());
 
@@ -102,35 +77,35 @@ public class Connection extends JDialog {
     }
 
     private void onOK() {
-        boolean result = false;
-        if(this.connectUsingSSHTunnelCheckBox.isSelected())
-            result = checkSsh();
-
-        result = checkDatabase();
-
-        if(result)
+        if(checkDatabase())
             dispose();
     }
 
     private boolean checkDatabase(){
-        if(this.connectUsingSSHTunnelCheckBox.isSelected()) checkSsh();
-        this.access = new DBAccess(this.serverName.getText(),
-                (int)this.serverPort.getValue(), this.databaseName.getText(), this.tunnel);
-        this.access.setCredentials(this.userName.getText(), new String(this.userPassword.getPassword()));
+        boolean result = true;
+        if(this.connectUsingSSHTunnelCheckBox.isSelected()) result = checkSsh();
+        if(result) {
+            this.access = new DBAccess(this.serverName.getText(),
+                    (int) this.serverPort.getValue(), this.databaseName.getText(), this.tunnel);
+            this.access.setCredentials(this.userName.getText(), new String(this.userPassword.getPassword()));
 
-        try {
-            this.access.connect((int)this.sshForwardPort.getValue());
-            this.testResult.setText("SQL : Connection succeeded");
-            this.testResult.setForeground(new Color(0, 255, 0));
-            return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            if((this.sshCheckedAndWorking && this.connectUsingSSHTunnelCheckBox.isSelected()) || !this.connectUsingSSHTunnelCheckBox.isSelected()) {
-                this.testResult.setText(e.getMessage());
-                this.testResult.setForeground(new Color(255, 0, 0));
+            try {
+                this.access.connect((int) this.sshForwardPort.getValue());
+                this.testResult.setText("SQL : Connection succeeded");
+                this.testResult.setForeground(new Color(0, 255, 0));
+                return true;
+            } catch (SQLException e) {
+                e.printStackTrace();
+                if ((this.sshCheckedAndWorking && this.connectUsingSSHTunnelCheckBox.isSelected()) || !this.connectUsingSSHTunnelCheckBox.isSelected()) {
+                    this.testResult.setText(e.getMessage());
+                    this.testResult.setForeground(new Color(255, 0, 0));
+                    this.access.close();
+                }
+                return false;
             }
-            return false;
         }
+
+        return false;
     }
 
     private boolean checkSsh(){
@@ -147,6 +122,11 @@ public class Connection extends JDialog {
             e.printStackTrace();
             this.testResult.setText(e.getMessage());
             this.testResult.setForeground(new Color(255, 0, 0));
+            try {
+                this.tunnel.close();
+            } catch (JSchException e1) {
+                e1.printStackTrace();
+            }
             return false;
         }
     }
@@ -161,6 +141,5 @@ public class Connection extends JDialog {
         this.sshPassword.setEnabled(enabled);
         this.sshUsername.setEnabled(enabled);
         this.sshForwardPort.setEnabled(enabled);
-        this.sshConnect.setEnabled(enabled);
     }
 }

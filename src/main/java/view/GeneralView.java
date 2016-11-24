@@ -17,12 +17,20 @@ public class GeneralView extends JFrame{
     private JButton connectButton;
     private JLabel connectionStatus;
     private JButton button1;
-
-    private DBAccess access;
+    private JTabbedPane dataPane;
+    private JPanel menusPane;
+    private JPanel recipesPane;
+    private JPanel ingredientsPane;
+    private JToolBar statusBar;
+    private JTable menuData;
+    private JTable recipesData;
+    private JTable ingredientsData;
 
     public GeneralView(){
         initButtons();
         initWindow();
+
+        loadData();
     }
 
     private void initWindow(){
@@ -35,29 +43,33 @@ public class GeneralView extends JFrame{
     }
 
     private void initButtons() {
-        connectButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                connectButton();
-            }
-        });
+        connectButton.addActionListener(e -> connectButton());
     }
 
     private void connectButton(){
         Connection connection = new Connection();
         if(!connection.canceled) {
-            this.access = connection.access;
+            DBAccess access = connection.access;
 
-            if (this.access != null) {
-                String status = "Connected to " + this.access.getDatabase() + " at " + this.access.getHost();
-                if (this.access.getTunnel() != null) {
-                    if (this.access.getTunnel().isOpen()) {
-                        status += "@" + this.access.getTunnel().getHost();
+            if (access != null) {
+                String status = "Connected to " + access.getDatabase() + " at " + access.getHost();
+                if (access.getTunnel() != null) {
+                    if (access.getTunnel().isOpen()) {
+                        status += "@" + access.getTunnel().getHost();
                     }
                 }
 
                 this.connectionStatus.setText(status);
+
+
             }
         }
+    }
+
+
+    private void loadData(JTable table, ){
+        this.menuData.removeAll();
+
+
     }
 }
