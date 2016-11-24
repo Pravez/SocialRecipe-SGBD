@@ -113,16 +113,28 @@ DELETE FROM constitute;
 INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES(7, 7, 8, 1);
 INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES(8, 7, 10, 1.5);
 
-/* INSERT INTO DESCRIPTION*/
-
 
 /* INSERT INTO MENU*/
 DELETE from menu;
-ALTER SEQUENCE menu_id_menu_seq RESTART with 1;
+ALTER SEQUENCE menu_id_menu_seq RESTART WITH 1;
 
 INSERT INTO menu(menu_name,id_user) VALUES ('Christmas Meal',9);
 INSERT INTO menu(menu_name,id_user) VALUES ('Valentines Meal',4);
 INSERT INTO menu(menu_name,id_user) VALUES ('Pasta',2);
+
+
+/* INSERT INTO DESCRIPTION*/
+DELETE FROM description;
+ALTER SEQUENCE description_id_description_seq RESTART WITH 1;
+
+INSERT INTO description(description_text,date_added,id_recipe,id_user) VALUES (
+  'Combine strawberries, sugar, 2 tablespoons water, and balsamic vinegar in a saucepan and bring to simmer over medium heat.
+Reduce heat to medium-low, cover, and simmer for 15 minutes.
+Whisk 2 tablespoons water and cornstarch in a small bowl.
+Whisk cornstarch mixture into strawberry mixture. Cook, stirring constantly, until mixture thickens, 1 to 2 minutes. Remove from heat.
+Transfer mixture to a blender and puree until smooth.'
+  ,'24/11/2016',1,1);
+
 
 /* INSERT INTO IS_PART_OF*/
 DELETE from is_part_of;
@@ -233,3 +245,4 @@ INSERT INTO note(id_recipe, id_user, note) values(3, 6, 1);
 INSERT INTO note(id_recipe, id_user, note) values(4, 1, 2);
 INSERT INTO note(id_recipe, id_user, note) values(5, 1, 1);
 INSERT INTO note(id_recipe, id_user, note) values(7, 7, 2);
+
