@@ -18,22 +18,21 @@ public class DBAccess {
     private SSTunnel tunnel;
     private int forwardPort;
 
-    public DBAccess(String host, int port, String database){
-        this.host = host;
-        this.port = port;
-        this.database = database;
-    }
-
     public DBAccess(String host, int port, String database, SSTunnel tunnel){
         this.host = host;
         this.port = port;
         this.database = database;
-        this.tunnel = tunnel;
 
-        try {
-            this.tunnel.initSession();
-        } catch (JSchException e) {
-            e.printStackTrace();
+        if(tunnel != null) {
+            this.tunnel = tunnel;
+
+            if(!this.tunnel.isOpen()) {
+                try {
+                    this.tunnel.initSession();
+                } catch (JSchException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -44,7 +43,9 @@ public class DBAccess {
 
     public void connect(int forwardPort) throws SQLException {
         this.forwardPort = forwardPort;
-        this.tunnel.forwardPort(this.forwardPort, this.host, this.port);
+        if(this.forwardPort == 0) this.forwardPort = this.port;
+        else this.tunnel.forwardPort(this.forwardPort, this.host, this.port);
+
         this.connection = DriverManager.getConnection("jdbc:postgresql://" + this.host + ":" + this.forwardPort + "/" + this.database, this.username, this.password);
         this.statement = this.connection.createStatement();
     }
@@ -68,5 +69,17 @@ public class DBAccess {
             e.printStackTrace();
         }
 
+    }
+
+    public String getHost(){
+        return this.host;
+    }
+
+    public SSTunnel getTunnel(){
+        return this.tunnel;
+    }
+
+    public String getDatabase(){
+        return this.database;
     }
 }

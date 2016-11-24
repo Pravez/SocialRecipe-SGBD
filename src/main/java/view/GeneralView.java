@@ -15,6 +15,10 @@ public class GeneralView extends JFrame{
     private JToolBar menuBar;
     private JPanel contentPane;
     private JButton connectButton;
+    private JLabel connectionStatus;
+    private JButton button1;
+
+    private DBAccess access;
 
     public GeneralView(){
         initButtons();
@@ -40,6 +44,20 @@ public class GeneralView extends JFrame{
     }
 
     private void connectButton(){
-        DatabaseConnection connection = new DatabaseConnection();
+        Connection connection = new Connection();
+        if(!connection.canceled) {
+            this.access = connection.access;
+
+            if (this.access != null) {
+                String status = "Connected to " + this.access.getDatabase() + " at " + this.access.getHost();
+                if (this.access.getTunnel() != null) {
+                    if (this.access.getTunnel().isOpen()) {
+                        status += "@" + this.access.getTunnel().getHost();
+                    }
+                }
+
+                this.connectionStatus.setText(status);
+            }
+        }
     }
 }
