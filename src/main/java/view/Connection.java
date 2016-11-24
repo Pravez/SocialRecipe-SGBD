@@ -31,7 +31,6 @@ public class Connection extends JDialog {
     private JTextField sshServer;
     private JTextField sshUsername;
     private JPasswordField sshPassword;
-    private JButton sshConnect;
     private JSpinner sshForwardPort;
     private JCheckBox connectUsingSSHTunnelCheckBox;
     private JLabel testResult;
@@ -52,7 +51,7 @@ public class Connection extends JDialog {
         buttonCancel.addActionListener(e -> onCancel());
         connectUsingSSHTunnelCheckBox.addActionListener(e -> changeSshConnectionState(connectUsingSSHTunnelCheckBox.isSelected()));
 
-        this.changeSshConnectionState(this.connectUsingSSHTunnelCheckBox.isSelected());
+        //this.changeSshConnectionState(this.connectUsingSSHTunnelCheckBox.isSelected());
 
 
 
@@ -71,6 +70,9 @@ public class Connection extends JDialog {
                 onCancel();
             }
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+
+        this.sshForwardPort.setValue(3000);
+        this.serverPort.setValue(5432);
 
         setVisible(true);
 

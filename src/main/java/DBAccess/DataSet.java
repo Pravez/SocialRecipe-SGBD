@@ -1,14 +1,7 @@
 package main.java.DBAccess;
 
-
-
-import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.*;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DataSet {
     public ArrayList<Map.Entry<String, Class>> head;
@@ -21,8 +14,8 @@ public class DataSet {
         ResultSetMetaData rsmd = set.getMetaData();
         int numOfCol = rsmd.getColumnCount();
 
-        for(int i=1;i<rsmd.getColumnCount();i++){
-            head.add(new Map.Entry<>(rsmd.getColumnName(i), Row.TYPE.get(rsmd.getColumnTypeName(i).toUpperCase())));
+        for(int i=1;i <= rsmd.getColumnCount();i++){
+            head.add(new AbstractMap.SimpleImmutableEntry<>(rsmd.getColumnName(i), Row.TYPE.get(rsmd.getColumnTypeName(i).toUpperCase())));
         }
 
         while(set.next()){
@@ -31,66 +24,33 @@ public class DataSet {
             for (int i = 1; i <= numOfCol; i++) {
                 current_row.add(set.getObject(i), rsmd.getColumnTypeName(i));
             }
+
+            data.add(current_row);
         }
     }
-}
 
-    /*ResultSet rset = access.sendQuery("SELECT * FROM test");
+    public Map.Entry<Object[][], String[]> exportToTable(){
+        int size = this.head.size();
+        String[] head = new String[size];
+        Object[][] data = new Object[this.data.size()][size];
+        int i = 0;
+        int j = 0;
 
-        try {
-                while (rset.next()) {
-                // Affichage du resultat.
-                System.out.println(rset.getInt(1));
-                }
-
-                }catch (Exception e){
-                e.printStackTrace();
-                }*/
-
-class Row {
-    public List<Map.Entry<Object, Class>> row;
-    public static Map<String, Class> TYPE;
-
-    static {
-        TYPE = new HashMap<>();
-
-        TYPE.put("INTEGER", Integer.class);
-        TYPE.put("TINYINT", Byte.class);
-        TYPE.put("SMALLINT", Short.class);
-        TYPE.put("BIGINT", Long.class);
-        TYPE.put("REAL", Float.class);
-        TYPE.put("FLOAT", Double.class);
-        TYPE.put("DOUBLE", Double.class);
-        TYPE.put("DECIMAL", BigDecimal.class);
-        TYPE.put("NUMERIC", BigDecimal.class);
-        TYPE.put("BOOLEAN", Boolean.class);
-        TYPE.put("CHAR", String.class);
-        TYPE.put("VARCHAR", String.class);
-        TYPE.put("INTERVAL", Timestamp.class);
-        TYPE.put("DATE", Date.class);
-        TYPE.put("TIME", Time.class);
-        TYPE.put("TIMESTAMP", Timestamp.class);
-        TYPE.put("SERIAL", Integer.class);
-        // ...
-    }
-
-    public Row() {
-        row = new ArrayList<>();
-    }
-
-    public <T> void add(T data) {
-        row.add(new AbstractMap.SimpleImmutableEntry<>(data, data.getClass()));
-    }
-
-    public void add(Object data, String sqlType) {
-        Class castType = Row.TYPE.get(sqlType.toUpperCase());
-        try {
-            this.add(castType.cast(data));
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-            Logger lgr = Logger.getLogger(Row.class.getName());
-            lgr.log(Level.SEVERE, e.getMessage() + " Add the type " + sqlType + " to the TYPE hash map in the Row class.", e);
-            throw e;
+        for(Map.Entry<String, Class> entry : this.head){
+            head[i++] = entry.getKey();
         }
+
+        for(Row row : this.data){
+            i = 0;
+            Object[] rowData = new Object[size];
+
+            for(Map.Entry<Object, Class> obj : row.row){
+                rowData[i++] = obj.getValue().cast(obj.getKey());
+            }
+
+            data[j++] = rowData;
+        }
+
+        return new AbstractMap.SimpleImmutableEntry<>(data, head);
     }
 }

@@ -1,12 +1,18 @@
 package main.java.view;
 
 
+import main.java.DBAccess.Row;
 import main.java.DBAccess.DBAccess;
+import main.java.DBAccess.DataSet;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.Map;
 
 public class GeneralView extends JFrame{
 
@@ -16,7 +22,7 @@ public class GeneralView extends JFrame{
     private JPanel contentPane;
     private JButton connectButton;
     private JLabel connectionStatus;
-    private JButton button1;
+    private JButton reloadQueries;
     private JTabbedPane dataPane;
     private JPanel menusPane;
     private JPanel recipesPane;
@@ -26,11 +32,11 @@ public class GeneralView extends JFrame{
     private JTable recipesData;
     private JTable ingredientsData;
 
+    private DBAccess access;
+
     public GeneralView(){
         initButtons();
         initWindow();
-
-        loadData();
     }
 
     private void initWindow(){
@@ -38,7 +44,7 @@ public class GeneralView extends JFrame{
         this.setSize(537, 468);
 
         this.setTitle("SocialRecipe");
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
 
@@ -49,7 +55,7 @@ public class GeneralView extends JFrame{
     private void connectButton(){
         Connection connection = new Connection();
         if(!connection.canceled) {
-            DBAccess access = connection.access;
+            this.access = connection.access;
 
             if (access != null) {
                 String status = "Connected to " + access.getDatabase() + " at " + access.getHost();
@@ -60,16 +66,26 @@ public class GeneralView extends JFrame{
                 }
 
                 this.connectionStatus.setText(status);
-
+                try {
+                    loadData(this.menuData, "SELECT * FROM menu");
+                    loadData(this.recipesData, "SELECT * FROM recipe");
+                    loadData(this.ingredientsData, "SELECT * FROM ingredient");
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
 
             }
         }
     }
 
 
-    private void loadData(JTable table, ){
-        this.menuData.removeAll();
+    private void loadData(JTable table, String query) throws SQLException {
+        DataSet set = new DataSet(this.access.sendQuery(query));
+        Map.Entry<Object[][], String[]> tableData = set.exportToTable();
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 
-
+        tableModel.setColumnIdentifiers(tableData.getValue());
+        tableModel.setDataVector(tableData.getKey(), tableData.getValue());
+        tableModel.fireTableDataChanged();
     }
 }
