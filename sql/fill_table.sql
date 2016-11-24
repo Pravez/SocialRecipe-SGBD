@@ -23,12 +23,30 @@ INSERT INTO category(category_name) values('main course');
 INSERT INTO category(category_name) values('fish');
 INSERT INTO category(category_name) values('breakfast');
 
+/*INSERT COMMENT*/
+DELETE FROM comment;
+
+ALTER SEQUENCE comment_id_comment_seq RESTART WITH 1;
+INSERT INTO comment(id_recipe, id_user, comment_text) values (1, 1, 'Perfect for relax during holidays');
+INSERT INTO comment(id_recipe, id_user, comment_text) values (2, 5, 'Really good recipe. A must to taste.');
+INSERT INTO comment(id_recipe, id_user, comment_text) values (2, 1, 'Awesome ! I really, really, really appreciated it !');
+INSERT INTO comment(id_recipe, id_user, comment_text) values (2, 1, 'Moreover, all of my family liked it. Proof of excellence.');
+INSERT INTO comment(id_recipe, id_user, comment_text) values (3, 17,'Hmmmmmmm, so much brownieees');
+INSERT INTO comment(id_recipe, id_user, comment_text) values (5, 1, 'Not really good');
+INSERT INTO comment(id_recipe, id_user, comment_text) values (3, 6, 'Mmmm... no.');
+INSERT INTO comment(id_recipe, id_user, comment_text) values (7, 7, 'Simple and efficient.');
+
 
 /* INSERT INTO CONSTITUTE */
 DELETE FROM constitute;
 
 INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES(7, 7, 8, 1);
 INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES(8, 7, 10, 1.5);
+
+
+/* INSERT INTO DESCRIPTION*/
+
+
 
 /* INSERT INTO IS_PART_OF*/
 DELETE from is_part_of;
@@ -111,8 +129,21 @@ INSERT INTO ingredient_characteristic VALUES (7,8,55);
 INSERT INTO ingredient_characteristic VALUES (10,8,8);
 INSERT INTO ingredient_characteristic VALUES (12,8,5);
 
-/*INSERT INTO USER */
+/* INSERT INTO IS_CATEGORY*/
+DELETE FROM is_category;
+
+INSERT INTO is_category(id_category, id_recipe)  values (4, 1); /*Holiday strawberry sauce*/
+INSERT INTO is_category(id_category, id_recipe)  values (17, 2); /*Perfect turkey*/
+INSERT INTO is_category(id_category, id_recipe)  values (8, 3); /*MMMM.. Brownies*/
+INSERT INTO is_category(id_category, id_recipe)  values (14, 4); /*Grilled fennel*/
+INSERT INTO is_category(id_category, id_recipe)  values (18, 5); /*Valentine's salmon*/
+INSERT INTO is_category(id_category, id_recipe)  values (12, 6); /*Pasta Salad*/
+INSERT INTO is_category(id_category, id_recipe)  values (19, 7); /*Egg in a hole*/
+
+
+/* INSERT INTO USER */
 DELETE FROM user;
+
 ALTER SEQUENCE user_id_user_seq RESTART WITH 1;
 INSERT INTO "user"(pseudo) values ('Etchebest');
 INSERT INTO "user"(pseudo) values ('Ramsey');
@@ -141,6 +172,21 @@ ALTER SEQUENCE menu_id_menu_seq RESTART with 1;
 INSERT INTO menu(menu_name,id_user) VALUES ('Christmas Meal',9);
 INSERT INTO menu(menu_name,id_user) VALUES ('Valentines Meal',4);
 INSERT INTO menu(menu_name,id_user) VALUES ('Pasta',2);
+
+
+/* INSERT INTO NOTE*/
+DELETE FROM note;
+
+INSERT INTO note(id_recipe, id_user, note) values(1, 1, 3);
+INSERT INTO note(id_recipe, id_user, note) values(1, 2, 2);
+INSERT INTO note(id_recipe, id_user, note) values(2, 1, 3);
+INSERT INTO note(id_recipe, id_user, note) values(2, 4, 1);
+INSERT INTO note(id_recipe, id_user, note) values(2, 5, 3);
+INSERT INTO note(id_recipe, id_user, note) values(2, 8, 3);
+INSERT INTO note(id_recipe, id_user, note) values(3, 6, 1);
+INSERT INTO note(id_recipe, id_user, note) values(4, 1, 2);
+INSERT INTO note(id_recipe, id_user, note) values(5, 1, 1);
+INSERT INTO note(id_recipe, id_user, note) values(7, 7, 2);
 
 
 /* INSERT INTO NUTRITIONAL_CHARCACTERISTIC*/ 
@@ -175,42 +221,6 @@ INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, se
 INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Pasta Salad', '20 minutes', '15 minutes', '13 hours 30 minutes', 6);
 INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES ('Egg in a hole', '1 minute', '4 minute', '0', 1);
 INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES ('Chocolated Sardine', '20 minutes', '15 minutes' ,'10 minutes', 4);
-
-
-/*INSERT INTO IS_CATEGORY*/
-
-INSERT INTO is_category(id_category, id_recipe)  values (4, 1); /*Holiday strawberry sauce*/
-INSERT INTO is_category(id_category, id_recipe)  values (17, 2); /*Perfect turkey*/
-INSERT INTO is_category(id_category, id_recipe)  values (8, 3); /*MMMM.. Brownies*/
-INSERT INTO is_category(id_category, id_recipe)  values (14, 4); /*Grilled fennel*/
-INSERT INTO is_category(id_category, id_recipe)  values (18, 5); /*Valentine's salmon*/
-INSERT INTO is_category(id_category, id_recipe)  values (12, 6); /*Pasta Salad*/
-INSERT INTO is_category(id_category, id_recipe)  values (19, 7); /*Egg in a hole*/
-
-/*INSERT INTO NOTE*/
-INSERT INTO note(id_recipe, id_user, note) values(1, 1, 3);
-INSERT INTO note(id_recipe, id_user, note) values(1, 2, 2);
-INSERT INTO note(id_recipe, id_user, note) values(2, 1, 3);
-INSERT INTO note(id_recipe, id_user, note) values(2, 4, 1);
-INSERT INTO note(id_recipe, id_user, note) values(2, 5, 3);
-INSERT INTO note(id_recipe, id_user, note) values(2, 8, 3);
-INSERT INTO note(id_recipe, id_user, note) values(3, 6, 1);
-INSERT INTO note(id_recipe, id_user, note) values(4, 1, 2);
-INSERT INTO note(id_recipe, id_user, note) values(5, 1, 1);
-INSERT INTO note(id_recipe, id_user, note) values(7, 7, 2);
-
-
-/*INSERT COMMENT*/
-DELETE FROM comment;
-ALTER SEQUENCE comment_id_comment_seq RESTART WITH 1;
-INSERT INTO comment(id_recipe, id_user, comment_text) values (1, 1, 'Perfect for relax during holidays');
-INSERT INTO comment(id_recipe, id_user, comment_text) values (2, 5, 'Really good recipe. A must to taste.');
-INSERT INTO comment(id_recipe, id_user, comment_text) values (2, 1, 'Awesome ! I really, really, really appreciated it !');
-INSERT INTO comment(id_recipe, id_user, comment_text) values (2, 1, 'Moreover, all of my family liked it. Proof of excellence.');
-INSERT INTO comment(id_recipe, id_user, comment_text) values (3, 17,'Hmmmmmmm, so much brownieees');
-INSERT INTO comment(id_recipe, id_user, comment_text) values (5, 1, 'Not really good');
-INSERT INTO comment(id_recipe, id_user, comment_text) values (3, 6, 'Mmmm... no.');
-INSERT INTO comment(id_recipe, id_user, comment_text) values (7, 7, 'Simple and efficient.');
 
 /* INSERT INTO UNIT */
 
