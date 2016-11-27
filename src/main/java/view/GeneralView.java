@@ -4,6 +4,7 @@ package main.java.view;
 import main.java.DBAccess.Row;
 import main.java.DBAccess.DBAccess;
 import main.java.DBAccess.DataSet;
+import main.java.util.Utility;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -67,9 +68,9 @@ public class GeneralView extends JFrame{
 
                 this.connectionStatus.setText(status);
                 try {
-                    updateTableWithData(this.menuData, new DataSet(this.access.sendQuery("SELECT * FROM menu")));
-                    updateTableWithData(this.recipesData, new DataSet(this.access.sendQuery("SELECT * FROM recipe")));
-                    updateTableWithData(this.ingredientsData, new DataSet(this.access.sendQuery("SELECT * FROM ingredient")));
+                    updateTableWithData(this.menuData, new DataSet(this.access.sendQuery("SELECT * FROM menu")), Utility.IntegerArray(1), null);
+                    /*updateTableWithData(this.recipesData, new DataSet(this.access.sendQuery("SELECT * FROM recipe")));
+                    updateTableWithData(this.ingredientsData, new DataSet(this.access.sendQuery("SELECT * FROM ingredient")));*/
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -78,12 +79,16 @@ public class GeneralView extends JFrame{
         }
     }
 
-    private void updateTableWithData(JTable table, DataSet set){
-        Map.Entry<Object[][], String[]> tableData = set.exportToTable();
+    private void updateTableWithData(JTable table, DataSet set, int[] showedColumns, String[] head){
+        Map.Entry<Object[][], String[]> tableData = set.exportToTable(showedColumns);
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 
-        tableModel.setColumnIdentifiers(tableData.getValue());
+        if(head != null) {
+            tableModel.setColumnIdentifiers(tableData.getValue());
+        }
         tableModel.setDataVector(tableData.getKey(), tableData.getValue());
+        table.setTableHeader(null);
+
         tableModel.fireTableDataChanged();
     }
 }

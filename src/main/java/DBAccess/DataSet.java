@@ -2,6 +2,7 @@ package main.java.DBAccess;
 
 import java.sql.*;
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * Class supposed to take the representation of the result set.
@@ -40,28 +41,39 @@ public class DataSet {
         }
     }
 
-    public Map.Entry<Object[][], String[]> exportToTable(){
-        int size = this.head.size();
-        String[] head = new String[size];
-        Object[][] data = new Object[this.data.size()][size];
-        int i = 0;
-        int j = 0;
+    public Map.Entry<Object[][], String[]> exportToTable(int[] showedColumns){
+        boolean selectColumns = showedColumns != null;
 
-        for(Map.Entry<String, Class> entry : this.head){
-            head[i++] = entry.getKey();
+        //If we have to select columns then we take the array of selected ones,
+        //else we fill an array with int values from 1 to the size of total columns
+        int[] toTake = selectColumns ? showedColumns.clone() : new int[this.head.size()];
+        if(!selectColumns) IntStream.range(0, this.head.size()).forEach(value -> toTake[value] = value);
+
+        String[] head = new String[toTake.length];
+        Object[][] data = new Object[this.data.size()][toTake.length];
+        Map.Entry<Object, Class> temp;
+        int add = 0;
+
+        //Then for each selected column we take the head
+        for (int aToTake : toTake) {
+            head[add++] = this.head.get(aToTake).getKey();
         }
 
-        for(Row row : this.data){
-            i = 0;
-            Object[] rowData = new Object[size];
+        //And for each row
+        for(int i=0;i<this.data.size();i++){
+            Object[] rowData = new Object[toTake.length];
+            add = 0;
 
-            for(Map.Entry<Object, Class> obj : row.row){
-                rowData[i++] = obj.getValue().cast(obj.getKey());
+            //we take the selected columns (we get the value and cast it with the key)
+            for (int aToTake : toTake) {
+                temp = this.data.get(i).row.get(aToTake);
+                rowData[add++] = temp.getValue().cast(temp.getKey());
             }
 
-            data[j++] = rowData;
+            data[i] = rowData;
         }
 
+        //We return a tuple
         return new AbstractMap.SimpleImmutableEntry<>(data, head);
     }
 }
