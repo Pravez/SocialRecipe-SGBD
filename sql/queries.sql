@@ -13,10 +13,10 @@ SELECT * FROM ingredient;
 SELECT * FROM menu;
 
 --Recette d'une catégorie @category pour un nombre de personne @nb_people donné
-"SELECT * FROM recipe
+SELECT * FROM recipe
 JOIN is_category ON recipe.id_recipe=is_category.id_recipe
 JOIN category ON is_category.id_category=category.id_category
-WHERE category_name = " + @category + " AND nb_people = " @nb_people + ";"
+WHERE category_name = " + @category + " AND nb_people = " @nb_people + ";
 
 --Menu avec seulement des recettes ajoutées après une date @date donnée
 --Selection de tous les couple menu-recette, group by pour compter combien de recette par menu

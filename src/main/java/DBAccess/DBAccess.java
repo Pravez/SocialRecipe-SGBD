@@ -41,13 +41,18 @@ public class DBAccess {
         this.password = password;
     }
 
-    public void connect(int forwardPort) throws SQLException {
+    public void connect(int forwardPort) {
         this.forwardPort = forwardPort;
         if(this.forwardPort == 0) this.forwardPort = this.port;
         else this.tunnel.forwardPort(this.forwardPort, this.host, this.port);
 
-        this.connection = DriverManager.getConnection("jdbc:postgresql://" + this.host + ":" + this.forwardPort + "/" + this.database, this.username, this.password);
-        this.statement = this.connection.createStatement();
+        try {
+            this.connection = DriverManager.getConnection("jdbc:postgresql://" + this.host + ":" + this.forwardPort + "/" + this.database, this.username, this.password);
+            this.statement = this.connection.createStatement();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public ResultSet sendQuery(String query) {

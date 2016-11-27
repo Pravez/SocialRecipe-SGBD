@@ -1,19 +1,11 @@
 package main.java.view;
 
 
-import main.java.DBAccess.Row;
 import main.java.DBAccess.DBAccess;
-import main.java.DBAccess.DataSet;
-import main.java.util.Utility;
+import main.java.control.Controller;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.Map;
 
 public class GeneralView extends JFrame{
 
@@ -29,15 +21,21 @@ public class GeneralView extends JFrame{
     private JPanel recipesPane;
     private JPanel ingredientsPane;
     private JToolBar statusBar;
-    private JTable menuData;
-    private JTable recipesData;
-    private JTable ingredientsData;
+    private JButton reloadMenu;
+    private JButton button2;
 
-    private DBAccess access;
+    public JTable menuTable;
+    public JTable recipesTable;
+    public JTable ingredientsTable;
 
-    public GeneralView(){
+    private Controller controller;
+
+    public GeneralView(Controller controller){
+        this.controller = controller;
+
         initButtons();
         initWindow();
+
     }
 
     private void initWindow(){
@@ -46,17 +44,20 @@ public class GeneralView extends JFrame{
 
         this.setTitle("SocialRecipe");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        this.setVisible(true);
+
+        //Controller sets it visible
+        //this.setVisible(true);
     }
 
     private void initButtons() {
         connectButton.addActionListener(e -> connectButton());
+        reloadMenu.addActionListener(e -> controller.updateTable(menuTable));
     }
 
     private void connectButton(){
         Connection connection = new Connection();
         if(!connection.canceled) {
-            this.access = connection.access;
+            DBAccess access = connection.access;
 
             if (access != null) {
                 String status = "Connected to " + access.getDatabase() + " at " + access.getHost();
@@ -67,26 +68,19 @@ public class GeneralView extends JFrame{
                 }
 
                 this.connectionStatus.setText(status);
-                try {
-                    updateTableWithData(this.menuData, new DataSet(this.access.sendQuery("SELECT * FROM menu")), Utility.IntegerArray(1), null);
-                    /*updateTableWithData(this.recipesData, new DataSet(this.access.sendQuery("SELECT * FROM recipe")));
-                    updateTableWithData(this.ingredientsData, new DataSet(this.access.sendQuery("SELECT * FROM ingredient")));*/
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                this.controller.setSQLConnection(access);
 
             }
         }
     }
 
-    private void updateTableWithData(JTable table, DataSet set, int[] showedColumns, String[] head){
-        Map.Entry<Object[][], String[]> tableData = set.exportToTable(showedColumns);
+    public void updateTableWithData(JTable table, Object[][] data, String[] head){
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 
         if(head != null) {
-            tableModel.setColumnIdentifiers(tableData.getValue());
+            tableModel.setColumnIdentifiers(head);
         }
-        tableModel.setDataVector(tableData.getKey(), tableData.getValue());
+        tableModel.setDataVector(data, head);
         table.setTableHeader(null);
 
         tableModel.fireTableDataChanged();

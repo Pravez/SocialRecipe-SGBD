@@ -91,20 +91,10 @@ public class Connection extends JDialog {
                     (int) this.serverPort.getValue(), this.databaseName.getText(), this.tunnel);
             this.access.setCredentials(this.userName.getText(), new String(this.userPassword.getPassword()));
 
-            try {
-                this.access.connect((int) this.sshForwardPort.getValue());
-                this.testResult.setText("SQL : Connection succeeded");
-                this.testResult.setForeground(new Color(0, 255, 0));
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-                if ((this.sshCheckedAndWorking && this.connectUsingSSHTunnelCheckBox.isSelected()) || !this.connectUsingSSHTunnelCheckBox.isSelected()) {
-                    this.testResult.setText(e.getMessage());
-                    this.testResult.setForeground(new Color(255, 0, 0));
-                    this.access.close();
-                }
-                return false;
-            }
+            this.access.connect((int) this.sshForwardPort.getValue());
+            this.testResult.setText("SQL : Connection succeeded");
+            this.testResult.setForeground(new Color(0, 255, 0));
+            return true;
         }
 
         return false;
