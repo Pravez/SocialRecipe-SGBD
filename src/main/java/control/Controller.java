@@ -7,6 +7,7 @@ import main.java.util.Utility;
 import main.java.view.GeneralView;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +50,19 @@ public class Controller {
         set.analyze(this.access.sendQuery(set.request.toString()));
 
         Map.Entry<Object[][], String[]> data = set.exportToTable();
-        this.view.updateTableWithData(table, data.getKey(), data.getValue());
+        updateTableWithData(table, data.getKey(), data.getValue());
+    }
+
+    public void updateTableWithData(JTable table, Object[][] data, String[] head){
+        DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+
+        if(head != null) {
+            tableModel.setColumnIdentifiers(head);
+        }
+        tableModel.setDataVector(data, head);
+        table.setTableHeader(null);
+
+        tableModel.fireTableDataChanged();
     }
 
 }
