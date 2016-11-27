@@ -2,8 +2,12 @@ package main.java.view;
 
 
 import main.java.DBAccess.DBAccess;
+import main.java.DBAccess.SQLRequest;
 import main.java.control.Controller;
+import main.java.util.Utility;
+import sun.applet.Main;
 
+import javax.rmi.CORBA.Util;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +31,7 @@ public class GeneralView extends JFrame{
     public JTable menuTable;
     public JTable recipesTable;
     public JTable ingredientsTable;
+    private JPanel menuDataSetPane;
 
     private Controller controller;
 
@@ -44,6 +49,11 @@ public class GeneralView extends JFrame{
 
         this.setTitle("SocialRecipe");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        MainRequestPane pane = new MainRequestPane();
+        this.controller.createAndBind(new SQLRequest().select("*").from("menu"), pane.table, Utility.IntegerArray(1));
+        pane.reloadButton.addActionListener(e -> controller.updateTable(pane.table));
+        this.dataPane.addTab("other", pane);
 
         //Controller sets it visible
         //this.setVisible(true);

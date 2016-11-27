@@ -16,7 +16,7 @@ public class DataSet {
     public JTable table;
     public int[] visibleColumns;
 
-    public String request;
+    public SQLRequest request;
 
     /**
      * Initializes the head and data
@@ -106,13 +106,13 @@ public class DataSet {
      * @param request the SQL request qualifying the dataset
      * @param visibleColumns to specify every column that must be shown. null means every column
      */
-    public void bindTo(JTable table, String request, int[] visibleColumns){
+    public void bindTo(JTable table, SQLRequest request, int[] visibleColumns){
         this.table = table;
         this.request = request;
         this.visibleColumns = visibleColumns;
     }
 
-    public void updateRequest(String request){
+    public void updateRequest(SQLRequest request){
         this.request = request;
     }
 }

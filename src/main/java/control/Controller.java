@@ -2,6 +2,7 @@ package main.java.control;
 
 import main.java.DBAccess.DBAccess;
 import main.java.DBAccess.DataSet;
+import main.java.DBAccess.SQLRequest;
 import main.java.util.Utility;
 import main.java.view.GeneralView;
 
@@ -23,9 +24,9 @@ public class Controller {
         this.sets = new HashMap<>();
         this.view = new GeneralView(this);
 
-        this.createAndBind("SELECT * FROM menu", view.menuTable, Utility.IntegerArray(1));
-        this.createAndBind("SELECT * FROM recipe", view.recipesTable, Utility.IntegerArray(1));
-        this.createAndBind("SELECT * FROM ingredient", view.ingredientsTable, Utility.IntegerArray(1));
+        this.createAndBind(new SQLRequest().select("*").from("menu"), view.menuTable, Utility.IntegerArray(1));
+        this.createAndBind(new SQLRequest().select("*").from("recipe"), view.recipesTable, Utility.IntegerArray(1));
+        this.createAndBind(new SQLRequest().select("*").from("ingredient"), view.ingredientsTable, Utility.IntegerArray(1));
     }
 
     public void launch(){
@@ -37,7 +38,7 @@ public class Controller {
         this.access = access;
     }
 
-    private void createAndBind(String request, JTable table, int[] columns){
+    public void createAndBind(SQLRequest request, JTable table, int[] columns){
         DataSet set = new DataSet();
         set.bindTo(table, request, columns);
         this.sets.put(table, set);
@@ -45,7 +46,7 @@ public class Controller {
 
     public void updateTable(JTable table){
         DataSet set = this.sets.get(table);
-        set.analyze(this.access.sendQuery(set.request));
+        set.analyze(this.access.sendQuery(set.request.toString()));
 
         Map.Entry<Object[][], String[]> data = set.exportToTable();
         this.view.updateTableWithData(table, data.getKey(), data.getValue());
