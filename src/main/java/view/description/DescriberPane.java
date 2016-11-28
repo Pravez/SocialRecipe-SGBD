@@ -29,6 +29,7 @@ public abstract class DescriberPane extends JPanel{
 
     protected int gridxcurrent;
     protected int gridycurrent;
+    public String mainQualifier;
 
 
     DescriberPane(){
@@ -36,6 +37,9 @@ public abstract class DescriberPane extends JPanel{
 
         this.begin = new JLabel("To see details, select an entry ...");
         this.add(begin, constraints(0, 0, 1, 1,1., 1.,  GridBagConstraints.BASELINE));
+
+        gridxcurrent = 0;
+        gridycurrent = 0;
     }
 
     void setVisibilityAll(boolean visible){

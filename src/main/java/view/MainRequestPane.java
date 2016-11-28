@@ -7,9 +7,12 @@ import main.java.view.description.MenuDescriber;
 import main.java.view.description.RecipeDescriber;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 import static main.java.util.Utility.constraints;
 
@@ -20,6 +23,7 @@ class MainRequestPane extends JPanel {
     private JTable table;
     private JButton reloadButton;
     private JButton addButton;
+    private JTextField searchField;
 
     private DescriberPane describer;
 
@@ -46,10 +50,17 @@ class MainRequestPane extends JPanel {
         this.scrollPane = new JScrollPane(table);
         this.reloadButton = new JButton("Reload");
         this.addButton = new JButton("Add an entry");
+        this.searchField = new JTextField();
 
-        this.dataPane.add(scrollPane, constraints(0, 1, 2, 4, 1., 1., GridBagConstraints.BOTH));
         this.dataPane.add(reloadButton, constraints(0, 0, 1, 1, 1., 0.01, GridBagConstraints.BOTH));
         this.dataPane.add(addButton, constraints(1, 0, 1, 1, 1., 0.01, GridBagConstraints.BOTH));
+
+        this.dataPane.add(new JLabel("Search : "), constraints(0, 1, 1, 1, 0.3, 0.01, GridBagConstraints.CENTER));
+        this.dataPane.add(searchField, constraints(1, 1, 1, 1, 1., 0.01, GridBagConstraints.HORIZONTAL));
+
+        this.dataPane.add(scrollPane, constraints(0, 2, 2, 4, 1., 1., GridBagConstraints.BOTH));
+
+
 
         switch (desc_type){
             case MENU: this.describer = new MenuDescriber(); break;
@@ -63,6 +74,31 @@ class MainRequestPane extends JPanel {
 
     private void initEvents(){
         mainFrame.addButtonListener(this.reloadButton, () -> mainFrame.controller.updateTable(table));
+        searchField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                change();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                change();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                change();
+            }
+
+            public void change(){
+                request.where("");
+                if(!Objects.equals(searchField.getText(), "")){
+                    request.where(describer.mainQualifier + " LIKE '%" + searchField.getText() + "%'");
+                }
+                mainFrame.controller.updateTable(table);
+
+            }
+        });
 
         table.addMouseListener(new MouseAdapter() {
             @Override

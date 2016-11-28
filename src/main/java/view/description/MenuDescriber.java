@@ -12,8 +12,7 @@ public class MenuDescriber extends DescriberPane{
     public MenuDescriber(){
         super();
 
-        gridxcurrent = 0;
-        gridycurrent = 0;
+        mainQualifier = "menu.menu_name";
 
         describers = new ArrayList<>();
         addDescriber("menu_name", "Menu name :");

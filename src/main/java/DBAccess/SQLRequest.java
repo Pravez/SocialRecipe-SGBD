@@ -42,7 +42,8 @@ public class SQLRequest {
     }
 
     public SQLRequest where(String where){
-        this.where += "WHERE " + where + " ";
+        if(where.equals("")) this.where = "";
+        else this.where += "WHERE " + where + " ";
         return this;
     }
 

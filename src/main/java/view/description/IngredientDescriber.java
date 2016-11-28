@@ -12,8 +12,7 @@ public class IngredientDescriber extends DescriberPane {
     public IngredientDescriber(){
         super();
 
-        gridxcurrent = 0;
-        gridycurrent = 0;
+        mainQualifier = "ingredient.ingredient_name";
 
         describers = new ArrayList<>();
         addDescriber("ingredient_name", "Ingredient name :");

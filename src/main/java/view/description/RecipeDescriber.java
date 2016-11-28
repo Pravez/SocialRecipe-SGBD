@@ -10,8 +10,7 @@ public class RecipeDescriber extends DescriberPane{
     public RecipeDescriber(){
         super();
 
-        gridxcurrent = 0;
-        gridycurrent = 0;
+        mainQualifier = "recipe.recipe_name";
 
         describers = new ArrayList<>();
         addDescriber("recipe_name", "Recipe Name :");
