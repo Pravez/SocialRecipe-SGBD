@@ -7,20 +7,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MenuDescriber extends DescriberPane{
+public class IngredientDescriber extends DescriberPane {
 
-    public MenuDescriber(){
+    public IngredientDescriber(){
         super();
 
         gridxcurrent = 0;
         gridycurrent = 0;
 
         describers = new ArrayList<>();
-        addDescriber("menu_name", "Menu name :");
+        addDescriber("ingredient_name", "Ingredient name :");
 
         this.setVisibilityAll(true);
     }
-
 
     @Override
     public void updateDescriber(HashMap<String, Object> values) {

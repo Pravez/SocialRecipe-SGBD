@@ -3,7 +3,6 @@ package main.java.control;
 import main.java.DBAccess.DBAccess;
 import main.java.DBAccess.DataSet;
 import main.java.DBAccess.SQLRequest;
-import main.java.util.Utility;
 import main.java.view.GeneralView;
 
 import javax.swing.*;
@@ -24,10 +23,6 @@ public class Controller {
     public Controller(){
         this.sets = new HashMap<>();
         this.view = new GeneralView(this);
-
-        this.createAndBind(new SQLRequest().select("*").from("menu"), view.menuTable, Utility.IntegerArray(1));
-        this.createAndBind(new SQLRequest().select("*").from("recipe"), view.recipesTable, Utility.IntegerArray(1));
-        this.createAndBind(new SQLRequest().select("*").from("ingredient"), view.ingredientsTable, Utility.IntegerArray(1));
     }
 
     public void launch(){
@@ -40,8 +35,7 @@ public class Controller {
     }
 
     public void createAndBind(SQLRequest request, JTable table, int[] columns){
-        DataSet set = new DataSet();
-        set.bindTo(table, request, columns);
+        DataSet set = new DataSet(request, columns);
         this.sets.put(table, set);
     }
 
@@ -53,7 +47,7 @@ public class Controller {
         updateTableWithData(table, data.getKey(), data.getValue());
     }
 
-    public void updateTableWithData(JTable table, Object[][] data, String[] head){
+    private void updateTableWithData(JTable table, Object[][] data, String[] head){
         DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
 
         if(head != null) {
@@ -65,4 +59,8 @@ public class Controller {
         tableModel.fireTableDataChanged();
     }
 
+    public HashMap<String, Object> getRowFromValue(JTable table, Object value){
+        DataSet set = sets.get(table);
+        return set.getRowFromItem(value);
+    }
 }

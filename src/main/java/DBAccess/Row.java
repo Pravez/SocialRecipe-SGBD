@@ -4,12 +4,13 @@ import java.math.BigDecimal;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class Row {
-    public List<Map.Entry<Object, Class>> row;
-    public static Map<String, Class> TYPE;
+/**
+ *
+ */
+class Row {
+    List<Map.Entry<Object, Class>> row;
+    static Map<String, Class> TYPE;
 
     static {
         TYPE = new HashMap<>();
@@ -36,23 +37,26 @@ public class Row {
         // ...
     }
 
-    public Row() {
+    Row() {
         row = new ArrayList<>();
     }
 
-    public <T> void add(T data) {
+    private <T> void add(T data) {
         row.add(new AbstractMap.SimpleImmutableEntry<>(data, data.getClass()));
     }
 
-    public void add(Object data, String sqlType) {
+    void add(Object data, String sqlType) {
         Class castType = Row.TYPE.get(sqlType.toUpperCase());
         try {
             this.add(castType.cast(data));
         } catch (NullPointerException e) {
             e.printStackTrace();
+
+            //Finally not necessary
             /*Logger lgr = Logger.getLogger(Row.class.getName());
             lgr.log(Level.SEVERE, e.getMessage() + " Add the type " + sqlType + " to the TYPE hash map in the Row class.", e);
             throw e;*/
+            //Temporary
             this.add("null");
         }
     }

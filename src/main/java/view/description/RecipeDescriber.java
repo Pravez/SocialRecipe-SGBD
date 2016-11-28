@@ -1,26 +1,23 @@
 package main.java.view.description;
 
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+public class RecipeDescriber extends DescriberPane{
 
-public class MenuDescriber extends DescriberPane{
-
-    public MenuDescriber(){
+    public RecipeDescriber(){
         super();
 
         gridxcurrent = 0;
         gridycurrent = 0;
 
         describers = new ArrayList<>();
-        addDescriber("menu_name", "Menu name :");
+        addDescriber("recipe_name", "Recipe Name :");
 
         this.setVisibilityAll(true);
     }
-
 
     @Override
     public void updateDescriber(HashMap<String, Object> values) {

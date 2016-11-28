@@ -13,17 +13,19 @@ public class DataSet {
     private ArrayList<Map.Entry<String, Class>> head;
     private ArrayList<Row> data;
 
-    public JTable table;
-    public int[] visibleColumns;
+    private int[] visibleColumns;
 
     public SQLRequest request;
 
     /**
      * Initializes the head and data
      */
-    public DataSet(){
+    public DataSet(SQLRequest request, int[] visibleColumns){
         head = new ArrayList<>();
         data = new ArrayList<>();
+
+        this.request = request;
+        this.visibleColumns = visibleColumns;
     }
 
     /**
@@ -100,16 +102,21 @@ public class DataSet {
         return new AbstractMap.SimpleImmutableEntry<>(data, head);
     }
 
-    /**
-     * To bind a DataSet to a {@link JTable}, and to give the visible columns
-     * @param table the JTable
-     * @param request the SQL request qualifying the dataset
-     * @param visibleColumns to specify every column that must be shown. null means every column
-     */
-    public void bindTo(JTable table, SQLRequest request, int[] visibleColumns){
-        this.table = table;
-        this.request = request;
-        this.visibleColumns = visibleColumns;
+    public HashMap<String, Object> getRowFromItem(Object itemValue){
+        for(Row row : this.data){
+            for(int column : this.visibleColumns){
+                if (row.row.get(column).getKey().equals(itemValue)) {
+                    HashMap<String, Object> selectedRow = new HashMap<>();
+                    for(int i=0;i<this.head.size();i++){
+                        selectedRow.put(this.head.get(i).getKey(), row.row.get(i).getKey());
+                    }
+
+                    return selectedRow;
+                }
+            }
+        }
+
+        return null;
     }
 
     public void updateRequest(SQLRequest request){

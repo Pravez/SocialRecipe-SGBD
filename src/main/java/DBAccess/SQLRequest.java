@@ -10,15 +10,19 @@ public class SQLRequest {
     private String orderby;
 
     public SQLRequest(){
-        select = "";
         from = "";
         where = "";
         groupby = "";
         orderby = "";
     }
 
-    public SQLRequest select(String select){
-        this.select += "SELECT " + select;
+    public SQLRequest select(String... select){
+        this.select = "";
+        for(String s : select){
+            this.select += s + ", ";
+        }
+
+        this.select = this.select.substring(0, this.select.length()-2);
         return this;
     }
 
@@ -55,6 +59,6 @@ public class SQLRequest {
     @Override
     public String toString() {
         System.out.println(select+" "+from+" "+where+" "+groupby+" "+orderby);
-        return select+" "+from+" "+where+" "+groupby+" "+orderby;
+        return "SELECT " + select+" "+from+" "+where+" "+groupby+" "+orderby;
     }
 }

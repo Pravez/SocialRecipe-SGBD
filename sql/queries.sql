@@ -26,21 +26,21 @@ WHERE category_name = " + @category + " AND nb_people = " @nb_people + ";
 SELECT id_menu, COUNT(recipe.id_recipe) as nb_total_recipe from menu
 JOIN is_part_of ON menu.id_menu = is_part_of.id_menu
 JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe
-GROUP BY id_menu
+GROUP BY id_menu;
 
 
 SELECT id_menu, COUNT(recipe.id_recipe) as nb_recipe_valid from menu
 JOIN is_part_of ON menu.id_menu = is_part_of.id_menu
 JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe
 GROUP BY id_menu
-HAVING recipe.add_date >= @date
+HAVING recipe.add_date >= @date;
 
 SELECT id_menu from truc_au_dessus
 WHERE  nb_total_recipe=nb_recipe_valid;
 
 --Historique des préparations d'une recette --> historique des descriptions ?
-SELECT
-FROM
+/*SELECT
+FROM;*/
 
 --Ensemble des menus contenant des recettes avec des ingrédient peu caloriques
 
@@ -52,7 +52,7 @@ WHERE menu.id_menu = @menu;
 
 --==> Sélection pour une recette @recipe des ingrédients et de leurs calories :
 
-SELECT id_ingredient,  from recipe
+SELECT id_ingredient from recipe
 JOIN constitute ON recipe.id_recipe = consitute.id_recipe
 JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
 JOIN characterizes
@@ -65,10 +65,10 @@ WHERE recipe.id_recipe = @recipe;
 SELECT id_recipe
 FROM (SELECT id_recipe FROM constitute
        JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
-        WHERE ingredient_name = 'honey';) AS re1
-JOIN (SELECT id_recipe FROM constitute
+        WHERE ingredient_name = 'honey') AS re1
+NATURAL JOIN (SELECT id_recipe FROM constitute
        JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
-        WHERE ingredient_name = 'salt';) AS re2
+        WHERE ingredient_name = 'salt') AS re2
 WHERE re1.id_recipe = re2.recipe;
 
 --liste des top recettes : notés au moins 5 fois à 3

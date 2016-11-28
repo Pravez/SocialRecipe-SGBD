@@ -5,6 +5,8 @@ import main.java.DBAccess.DBAccess;
 import main.java.DBAccess.SQLRequest;
 import main.java.control.Controller;
 import main.java.util.Utility;
+import main.java.view.description.DescriberPane;
+import sun.applet.Main;
 
 import javax.swing.*;
 
@@ -36,8 +38,13 @@ public class GeneralView extends JFrame{
         this.setTitle("SocialRecipe");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        MainRequestPane pane = new MainRequestPane(this, new SQLRequest().select("*").from("menu"), Utility.IntegerArray(1));
-        this.dataPane.addTab("Menus", pane);
+        MainRequestPane menus = new MainRequestPane(this, new SQLRequest().select("*").from("menu"), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.MENU);
+        MainRequestPane ingredients = new MainRequestPane(this, new SQLRequest().select("*").from("ingredient"), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.INGREDIENT);
+        MainRequestPane recipes = new MainRequestPane(this, new SQLRequest().select("*").from("recipe"), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.RECIPE);
+
+        this.dataPane.addTab("Menus", menus);
+        this.dataPane.addTab("Ingredients", ingredients);
+        this.dataPane.addTab("Recipes", recipes);
 
         //Controller sets it visible
         //this.setVisible(true);
