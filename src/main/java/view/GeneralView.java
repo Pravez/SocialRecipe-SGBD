@@ -2,6 +2,7 @@ package main.java.view;
 
 
 import main.java.DBAccess.DBAccess;
+import main.java.DBAccess.Requests;
 import main.java.DBAccess.SQLRequest;
 import main.java.control.Controller;
 import main.java.util.Utility;
@@ -38,9 +39,9 @@ public class GeneralView extends JFrame{
         this.setTitle("SocialRecipe");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-        MainRequestPane menus = new MainRequestPane(this, new SQLRequest().select("*").from("menu"), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.MENU);
-        MainRequestPane ingredients = new MainRequestPane(this, new SQLRequest().select("*").from("ingredient"), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.INGREDIENT);
-        MainRequestPane recipes = new MainRequestPane(this, new SQLRequest().select("*").from("recipe"), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.RECIPE);
+        MainRequestPane menus = new MainRequestPane(this, Requests.menus_all.callWithArgs(""), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.MENU);
+        MainRequestPane ingredients = new MainRequestPane(this, Requests.ingredients_all.callWithArgs(""), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.INGREDIENT);
+        MainRequestPane recipes = new MainRequestPane(this, Requests.recipes_all.callWithArgs(""), Utility.IntegerArray(1), DescriberPane.DESCRIBER_TYPE.RECIPE);
 
         this.dataPane.addTab("Menus", menus);
         this.dataPane.addTab("Ingredients", ingredients);

@@ -91,10 +91,7 @@ class MainRequestPane extends JPanel {
             }
 
             public void change(){
-                request.where("");
-                if(!Objects.equals(searchField.getText(), "")){
-                    request.where(describer.mainQualifier + " LIKE '%" + searchField.getText() + "%'");
-                }
+                request.callWithArgs(searchField.getText());
                 mainFrame.controller.updateTable(table);
 
             }

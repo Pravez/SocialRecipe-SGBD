@@ -3,6 +3,30 @@ package main.java.DBAccess;
 
 public class SQLRequest {
 
+    private String identifier = "@param";
+    private String request;
+
+    private String finalRequest;
+
+    SQLRequest(String request){
+        this.request = request;
+    }
+
+    public SQLRequest callWithArgs(String... args){
+        for(String str : args){
+            this.finalRequest = this.request.replaceFirst(identifier, str);
+        }
+
+        return this;
+    }
+
+    @Override
+    public String toString() {
+        System.out.println(this.finalRequest);
+        return this.finalRequest;
+    }
+
+    /*Old one
     private String select;
     private String from;
     private String where;
@@ -61,5 +85,5 @@ public class SQLRequest {
     public String toString() {
         System.out.println(select+" "+from+" "+where+" "+groupby+" "+orderby);
         return "SELECT " + select+" "+from+" "+where+" "+groupby+" "+orderby;
-    }
+    }*/
 }
