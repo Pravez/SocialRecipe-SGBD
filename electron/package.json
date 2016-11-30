@@ -1,0 +1,27 @@
+{
+  "name": "sgbd-socialrecipe",
+  "version": "0.0.0",
+  "description": "Project for ENSEIRB",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/electron/electron-quick-start",
+  "keywords": [
+    "SGBD",
+    "Social",
+    "Recipe"
+  ],
+  "author": "GitHub",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "^1.4.1",
+    "electron-packager": "^8.3.0"
+  },
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "pg": "^6.1.0",
+    "riot": "^3.0.1",
+    "tunnel-ssh": "^4.1.1"
+  }
+}
