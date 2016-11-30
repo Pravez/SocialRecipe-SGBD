@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Social Recipe</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <script src="components/webcomponentsjs/webcomponents-lite.min.js"></script>
+      <!-- 2. Use an HTML Import to bring in some elements. -->
+      <link rel="import" href="components/paper-button/paper-button.html">
+      <link rel="import" href="components/paper-input/paper-input.html">
+      <link rel="import" href="components/paper-card/paper-card.html">
+      <link rel="import" href="components/paper-scroll-header-panel/paper-scroll-header-panel.html">
+
+  </head>
+  <body class="fullbleed layout vertical">
+  <% include menu.ejs %>
+    <% for(let i=0;i<rows.length;i++){ %>
+      <p><%= rows[i] %></p>
+    <% } %>
+
+    <!-- 3. Declare the element. Configure using its attributes. -->
+    <paper-input label="Your name here"></paper-input>
+    <paper-button>Say Hello</paper-button>
+    <div id="greeting"></div>
+
+    <paper-card heading="Emmental" image="http://placehold.it/350x150/FFC107/000000" alt="Emmental">
+        <div class="card-content">
+            Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
+        </div>
+        <div class="card-actions">
+            <paper-button>Share</paper-button>
+            <paper-button>Explore!</paper-button>
+        </div>
+    </paper-card>
+
+    <script>
+        // To ensure that elements are ready on polyfilled browsers,
+        // wait for WebComponentsReady.
+        document.addEventListener('WebComponentsReady', function() {
+            var input = document.querySelector('paper-input');
+            var button = document.querySelector('paper-button');
+            var greeting = document.getElementById("greeting");
+            button.addEventListener('click', function() {
+                greeting.textContent = 'Hello, ' + input.value;
+            });
+        });
+    </script>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-var pg = require('pg');
+const pg = require('pg');
 
 class PostGres{
 
@@ -8,10 +8,13 @@ class PostGres{
     }
 
     doQuery(query, args, callback) {
+        let array = [];
         let result = this.client.query(query, args);
-        result.on('row', function (row) {
-            callback(row);
+        result.on('row', (row) => {
+            array.push(row);
         });
+
+        result.on('end', () => callback(array));
     }
 }
 
