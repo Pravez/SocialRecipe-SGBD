@@ -22,6 +22,7 @@ const pgconfig = {
 };
 
 postgreaccess = new postgres(pgconfig);
+queries = require('./lib/queries.json');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
