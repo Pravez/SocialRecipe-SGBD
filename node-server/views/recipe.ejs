@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Recipe</title>
+    <% include parts/headers.ejs %>
+
+</head>
+<body>
+
+    <% include parts/toolbar.ejs %>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1><%= rows[0].recipe_name %></h1><br/>
+            <% if(rows[0].preparation_time.minutes || rows[0].preparation_time.hours) { %>
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="glyphicon glyphicon-time"></span> Temps de préparation  <span class="badge">
+                    <% if(rows[0].preparation_time.minutes) { %>
+                        <%= rows[0].preparation_time.minutes %> minutes
+                    <% }else if(rows[0].preparation_time.hours) { %>
+                        <%= rows[0].preparation_time.hours %> heures
+                    <% } %>
+                </span>
+            </button>
+            <% } %>
+            <% if(rows[0].cooking_time.minutes || rows[0].cooking_time.hours) { %>
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="glyphicon glyphicon-time"></span> Temps de cuisine  <span class="badge">
+                    <% if(rows[0].cooking_time.minutes) { %>
+                    <%= rows[0].cooking_time.minutes %> minutes
+                    <% }else if(rows[0].cooking_time.hours) { %>
+                    <%= rows[0].cooking_time.hours %> heures
+                    <% } %>
+                </span>
+            </button>
+            <% } %>
+            <% if(rows[0].waiting_time.minutes || rows[0].waiting_time.hours) { %>
+            <button class="btn btn-primary" type="button" disabled>
+                <span class="glyphicon glyphicon-time"></span> Temps d'attente  <span class="badge">
+                    <% if(rows[0].waiting_time.minutes) { %>
+                    <%= rows[0].waiting_time.minutes %> minutes
+                    <% }else if(rows[0].waiting_time.hours) { %>
+                    <%= rows[0].waiting_time.hours %> heures
+                    <% } %>
+                </span>
+            </button>
+            <% } %>
+            <button class="btn btn-danger" type="button" disabled>
+                <span class="glyphicon glyphicon-cutlery"></span> Pour <span class="badge"><%= rows[0].servings %></span> personnes
+            </button>
+        </div>
+    </div>
+
+</body>
+</html>
