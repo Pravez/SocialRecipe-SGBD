@@ -43,23 +43,26 @@ FROM;*/
 --Ensemble des menus contenant des recettes avec des ingrédient peu caloriques
 
 --Sélection des recettes d'un menu @menu:
+--VALIDEE
 SELECT recipe.id_recipe FROM menu
 JOIN is_part_of ON menu.id_menu = is_part_of.id_menu
 JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe
 WHERE menu.id_menu = @menu;
 
 --==> Sélection pour une recette @recipe des ingrédients et de leurs calories :
-
-SELECT id_ingredient from recipe
-JOIN constitute ON recipe.id_recipe = consitute.id_recipe
+--VALIDEE
+SELECT ingredient.id_ingredient, nutritional_characteristic.id_nc, ingredient_characteristic.quantity from recipe
+JOIN constitute ON recipe.id_recipe = constitute.id_recipe
 JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
-JOIN characterizes
-JOIN nutritional_characteristic
-WHERE recipe.id_recipe = @recipe;
+JOIN ingredient_characteristic ON ingredient.id_ingredient = ingredient_characteristic.id_ingredient
+JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
+WHERE recipe.id_recipe = 7 and nutritional_characteristic.id_nc=1; --1 parce que c'est les calories
+
 
 --==> Plus qu'à vérifier la valeur de chaque ingrédient de chaque recette du menu et estimer s'il est peu calorique ou non.
 
 --liste des recettes sucré-salé pour une catégorie (à la fois miel et sel)
+--VALIDEE
 SELECT id_recipe
 FROM (SELECT id_recipe FROM constitute
        JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
@@ -70,11 +73,12 @@ NATURAL JOIN (SELECT id_recipe FROM constitute
 WHERE re1.id_recipe = re2.recipe;
 
 --liste des top recettes : notés au moins 5 fois à 3
+--VALIDEE
 
-SELECT id_recipe as nb_vote FROM recipe
+SELECT recipe.id_recipe, COUNT(recipe.id_recipe) as nb_vote FROM recipe
 JOIN note ON recipe.id_recipe = note.id_recipe
 WHERE  note.note >= 3
-GROUP BY id_recipe
+GROUP BY recipe.id_recipe;
 HAVING COUNT(id_user) >=5;
 
 --recettes présentes dans au moins trois menus, ayant au moins 10 notes et au moins 3 com
@@ -102,6 +106,22 @@ GROUP BY recipe.id_recipe
 HAVING COUNT(id_user) >=3;
 
 --==> @REQUETE1 INTERSECT @REQUETE2 INTERSECT @REQUETE3
+--VALIDEE
+(SELECT recipe.id_recipe FROM recipe
+JOIN is_part_of ON recipe.id_recipe = is_part_of.id_recipe
+GROUP BY recipe.id_recipe
+HAVING COUNT(id_menu) >=3
+INTERSECT
+SELECT recipe.id_recipe FROM recipe
+JOIN note ON recipe.id_recipe = note.id_recipe
+GROUP BY recipe.id_recipe
+HAVING COUNT(id_user) >=10)
+INTERSECT
+SELECT recipe.id_recipe FROM recipe
+JOIN comment ON recipe.id_recipe = comment.id_recipe
+GROUP BY recipe.id_recipe
+HAVING COUNT(id_user) >=3;
+
 
 -----------------------------------------------------------------------------
 --Statistiques
@@ -110,10 +130,10 @@ HAVING COUNT(id_user) >=3;
 --nombre de recettes d'une catégorie @category crée depuis le début de l'année @year
 -- on crée la date 01/01/year dans @date
 
-SELECT id_recipe FROM recipe
+SELECT recipe.id_recipe FROM recipe
 JOIN is_category ON recipe.id_recipe=is_category.id_recipe
 JOIN category ON is_category.id_category=category.id_category
-WHERE category_name = " + @category + " AND recipe.add_date > @date;
+WHERE category_name = 'dessert' AND recipe.date_added > @year;
 
 --Classement des recettes selon les notes données :
 
