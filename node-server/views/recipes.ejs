@@ -21,7 +21,7 @@
             <div class="col-md-5">
                 <div class="input-group">
                     <span class="input-group-addon glyphicon glyphicon-search search" id="search-addon"></span>
-                    <input id="search_name" type="text" class="form-control" placeholder="Search" aria-describedby="search-addon" oninput="search_value('recipe_name', this.value, 'id-recipe', 'id_recipe');">
+                    <input id="search_name" type="text" class="form-control" placeholder="Search" aria-describedby="search-addon" oninput="search_value();">
                 </div>
             </div>
             <div class="col-md-5">
@@ -33,11 +33,11 @@
                         </button>
                         <ul class="dropdown-menu" id="servings-list">
                             <li id-selection="1"><a href="#">Only this exact quantity</a></li>
-                            <li id-selection="2"><a href="#">Less or equal to</a></li>
+                            <li id-selection="2" class="active"><a href="#">Less or equal to</a></li>
                             <li id-selection="3"><a href="#">More or equal to</a></li>
                         </ul>
                     </div><!-- /btn-group -->
-                    <input id="search_servings" type="number" class="form-control" placeholder="servings ..." aria-describedby="number-addon">
+                    <input id="search_servings" type="number" class="form-control" placeholder="servings ..." aria-describedby="number-addon" oninput="search_value();">
                 </div>
             </div>
         </div>
