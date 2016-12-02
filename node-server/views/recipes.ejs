@@ -4,15 +4,42 @@
     <title>Social Recipe</title>
     <% include parts/headers.ejs %>
 
+    <script>
+        const name = "recipe_name";
+        const id = "id_recipe";
+        const id_field = "id-recipe";
+        const quantity = "servings"
+    </script>
+
 </head>
 <body>
 
     <% include parts/toolbar.ejs %>
 
     <div class="container">
-        <div id="search" class="input-group">
-            <span class="input-group-addon glyphicon glyphicon-search" id="search-addon"></span>
-            <input type="text" class="form-control" placeholder="Search" aria-describedby="search-addon" oninput="search_value('recipe_name', this.value, 'id-recipe', 'id_recipe');">
+        <div class="row col-md-8 col-md-offset-2">
+            <div class="col-md-5">
+                <div class="input-group">
+                    <span class="input-group-addon glyphicon glyphicon-search search" id="search-addon"></span>
+                    <input id="search_name" type="text" class="form-control" placeholder="Search" aria-describedby="search-addon" oninput="search_value('recipe_name', this.value, 'id-recipe', 'id_recipe');">
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button id="number-addon" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-cutlery"></span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" id="servings-list">
+                            <li id-selection="1"><a href="#">Only this exact quantity</a></li>
+                            <li id-selection="2"><a href="#">Less or equal to</a></li>
+                            <li id-selection="3"><a href="#">More or equal to</a></li>
+                        </ul>
+                    </div><!-- /btn-group -->
+                    <input id="search_servings" type="number" class="form-control" placeholder="servings ..." aria-describedby="number-addon">
+                </div>
+            </div>
         </div>
 
         <div class="row center">
@@ -34,6 +61,7 @@
     </div>
 
 </body>
+<script src="javascripts/search.js"></script>
 
 
 </html>
