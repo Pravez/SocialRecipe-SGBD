@@ -51,14 +51,14 @@ INSERT INTO "user"(pseudo) values ('gleu');
 DELETE FROM recipe;
 ALTER SEQUENCE recipe_id_recipe_seq RESTART WITH 1;
 
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Holiday strawberry sauce', '5 minutes', '15 minutes', '8 hours', 16);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Perfect turkey', '30 minutes', '4 hours', '12 hours 30 minutes', 24);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('MMMMMM... Brownies', '25 minutes', '25 minutes', '10 minutes', 16);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Grilled fennel', '10 minutes', '15 minutes', '0', 4);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Valentine ''s salmon', '20 minutes', '45 minutes', '0', 4);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES('Pasta Salad', '20 minutes', '15 minutes', '13 hours 30 minutes', 6);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES ('Egg in a hole', '1 minute', '4 minute', '0', 1);
-INSERT INTO recipe(recipe_name, preparation_time, cooking_time, waiting_time, servings) VALUES ('Chocolated Sardine', '20 minutes', '15 minutes' ,'10 minutes', 4);
+INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES('Holiday strawberry sauce', '02/02/2010', '5 minutes', '15 minutes', '8 hours', 16);
+INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES('Perfect turkey', '03/06/2012', '30 minutes', '4 hours', '12 hours 30 minutes', 24);
+INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES('MMMMMM... Brownies', '06/05/2013', '25 minutes', '25 minutes', '10 minutes', 16);
+INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES('Grilled fennel', '08/04/2012', '10 minutes', '15 minutes', '0', 4);
+INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES('Valentine ''s salmon', '19/03/2013', '20 minutes', '45 minutes', '0', 4);
+INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES('Pasta Salad', '16/08/2014', '20 minutes', '15 minutes', '13 hours 30 minutes', 6);
+INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES ('Egg in a hole', '02/11/2015', '1 minute', '4 minute', '0', 1);
+INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES ('Chocolated Sardine', '10/02/2015', '20 minutes', '15 minutes' ,'10 minutes', 4);
 
 
 /*INSERT COMMENT*/
