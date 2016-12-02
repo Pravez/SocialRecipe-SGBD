@@ -11,8 +11,11 @@ router.get('/', function(req, res, next) {
         });
     }else {
         postgreaccess.doQuery(queries.recipes.everything, [], (results) => {
-            console.log(results);
-            res.render('recipes', {rows: results, recipes: true});
+            postgreaccess.doQuery(queries.categories.all, [], (categories) =>{
+                console.log(categories);
+                //console.log(results);
+                res.render('recipes', {rows: results, categories: categories, recipes: true})
+            });
         });
     }
 });

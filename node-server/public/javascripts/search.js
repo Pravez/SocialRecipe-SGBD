@@ -1,10 +1,18 @@
 let selected_servings = 2;
+let selected_category = 0;
 
 $("#servings-list").find("li a").on("click", function(e){
     $("#servings-list").find("li").removeClass("active");
     $(this).parent().addClass("active");
     selected_servings = parseInt($(this).parent().attr("id-selection"));
     search_value();
+});
+
+$("#categories-list").find("li a").on('click', function(e){
+    $("#categories-list").find("li").removeClass("active");
+    $(this).parent().addClass("active");
+    selected_category = parseInt($(this).parent().attr("id-category"));
+    $("#search_categories").val($(this).html());
 });
 
 function test_servings(type, value, totest){
@@ -36,6 +44,10 @@ function search_value(){
             document.querySelector('['+id_field+'="'+e[id]+'"]').style.display = "none";
         }
     });
+}
+
+function validate_category(){
+
 }
 
 function search_value_temp(value, expression, attribute, id){

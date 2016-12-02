@@ -7,5 +7,8 @@
     "all":"SELECT * FROM recipe",
     "query_id": "SELECT * FROM recipe WHERE id_recipe=$1::integer",
     "everything":"SELECT * FROM recipe INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe INNER JOIN category ON is_category.id_category=category.id_category"
+  },
+  "categories":{
+    "all":"SELECT * FROM category"
   }
 }
