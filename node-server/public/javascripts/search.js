@@ -13,6 +13,7 @@ $("#categories-list").find("li a").on('click', function(e){
     $(this).parent().addClass("active");
     selected_category = parseInt($(this).parent().attr("id-category"));
     $("#search_categories").val($(this).html());
+    search_value();
 });
 
 function test_servings(type, value, totest){
@@ -34,11 +35,16 @@ function test_servings(type, value, totest){
 function search_value(){
     let search_name = $("#search_name").val();
     let search_servings = $("#search_servings").val();
+    let search_category = $("#search_categories").val();
     if(search_servings === "")
         search_servings = -1;
 
+    if(search_category === "" || search_category === "All")
+        search_category = "";
+
     rows.forEach(function(e){
-        if(e[name].match(new RegExp(search_name, 'i')) && test_servings(selected_servings, parseInt(search_servings), e[quantity])){
+        if(e[name].match(new RegExp(search_name, 'i')) && test_servings(selected_servings, parseInt(search_servings), e[quantity])
+        && e[category].match(new RegExp(search_category, "i"))){
             document.querySelector('['+id_field+'="'+e[id]+'"]').style.display = "";
         }else{
             document.querySelector('['+id_field+'="'+e[id]+'"]').style.display = "none";
@@ -47,7 +53,7 @@ function search_value(){
 }
 
 function validate_category(){
-
+    search_value();
 }
 
 function search_value_temp(value, expression, attribute, id){
