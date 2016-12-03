@@ -10,6 +10,8 @@
         const id_field = "id-recipe";
         const quantity = "servings";
         const category = "category_name";
+
+        var rows = <%- JSON.stringify(rows) %>;
     </script>
 
 </head>
@@ -60,7 +62,8 @@
             </div>
         </div>
 
-        <div class="row center">
+        <div class="row col-md-8 col-md-offset-2 spaced">
+            <div id="nothing-found" class="alert alert-info" role="alert" style="display:none;"><strong>Woops !</strong> Seems that your request gave nothing ...</div>
             <% for(let i=0;i<rows.length;i++){ %>
             <div id-recipe="<%= rows[i]['id_recipe'] %>" class="col-sm-5 col-md-3 format-size">
                 <div class="thumbnail">
@@ -79,7 +82,7 @@
     </div>
 
 </body>
-<script src="javascripts/search.js"></script>
+<script src="javascripts/search_recipes.js"></script>
 
 
 </html>

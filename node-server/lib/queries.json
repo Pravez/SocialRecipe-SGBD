@@ -1,12 +1,13 @@
 {
   "menus":{
-    "all":"SELECT * FROM menu",
-    "query_id": "SELECT * FROM menu WHERE id_menu=$1::integer"
+    "all":"SELECT id_menu, menu_name FROM menu",
+    "query_id": "SELECT * FROM menu WHERE id_menu=$1::integer",
+    "query_date": "SELECT id_menu, re2.menu_name FROM (  SELECT menu.id_menu as id1, COUNT(is_part_of.id_recipe) as nb_total_recipe FROM menu INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu GROUP BY menu.id_menu) AS re1 INNER JOIN (  SELECT menu.id_menu, menu.menu_name, COUNT(recipe.id_recipe) as nb_recipe_valid FROM menu INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu INNER JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe WHERE recipe.date_added >= $1::date GROUP BY menu.id_menu )AS re2 ON id1 = re2.id_menu WHERE  nb_total_recipe=nb_recipe_valid"
   },
   "recipes":{
     "all":"SELECT * FROM recipe",
     "query_id": "SELECT * FROM recipe WHERE id_recipe=$1::integer",
-    "everything":"SELECT * FROM recipe INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe INNER JOIN category ON is_category.id_category=category.id_category"
+    "everything":"SELECT recipe.id_recipe, recipe.recipe_name, recipe.servings, category_name FROM recipe INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe INNER JOIN category ON is_category.id_category=category.id_category"
   },
   "categories":{
     "all":"SELECT * FROM category"

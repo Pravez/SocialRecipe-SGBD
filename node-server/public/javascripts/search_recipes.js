@@ -42,26 +42,24 @@ function search_value(){
     if(search_category === "" || search_category === "All")
         search_category = "";
 
+    let found = 0;
+
     rows.forEach(function(e){
         if(e[name].match(new RegExp(search_name, 'i')) && test_servings(selected_servings, parseInt(search_servings), e[quantity])
         && e[category].match(new RegExp(search_category, "i"))){
             document.querySelector('['+id_field+'="'+e[id]+'"]').style.display = "";
+            found ++;
         }else{
             document.querySelector('['+id_field+'="'+e[id]+'"]').style.display = "none";
         }
     });
+
+    if(found > 0)
+        document.querySelector("#nothing-found").style.display = "none";
+    else
+        document.querySelector("#nothing-found").style.display = "";
 }
 
 function validate_category(){
     search_value();
-}
-
-function search_value_temp(value, expression, attribute, id){
-    rows.forEach((e) =>{
-        if(!e[value].match(new RegExp(expression, 'i'))){
-            document.querySelector('['+attribute+'="'+e[id]+'"]').style.display = "none";
-        }else{
-            document.querySelector('['+attribute+'="'+e[id]+'"]').style.display = "";
-        }
-    });
 }

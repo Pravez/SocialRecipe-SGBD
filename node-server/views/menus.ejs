@@ -4,18 +4,51 @@
     <title>Social Recipe</title>
     <% include parts/headers.ejs %>
 
+    <link rel='stylesheet' href='/components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css' />
+
+    <script>
+        const id = "id_menu";
+        const name = "menu_name";
+        const id_field = "id-menu";
+
+        const rows = <%- JSON.stringify(rows) %>;
+    </script>
+
 </head>
 <body>
 
     <% include parts/toolbar.ejs %>
 
     <div class="container">
-        <div id="search" class="input-group">
-            <span class="input-group-addon glyphicon glyphicon-search" id="search-addon"></span>
-            <input type="text" class="form-control" placeholder="Search" aria-describedby="search-addon" oninput="search_value_temp('menu_name', this.value, 'id-menu', 'id_menu');">
-        </div>
+        <form action="/menu" method="post">
+            <div class="row col-md-10 col-md-offset-1">
+                <div class="col-md-5">
+                    <div class="input-group" data-toggle="tooltip" title="search for a menu name">
+                        <span class="input-group-addon glyphicon glyphicon-search search" id="search-addon"></span>
+                        <input <% if(locals.name){ %> value="<%= name %>" <% } %> name="name" id="search_name" type="text" class="form-control" placeholder="Search" aria-describedby="search-addon" oninput="search_value();">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div id="search_date_group" class="input-group" data-toggle="tooltip" title="search menus where recipes were added before ...">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        <input <% if(locals.date){ %> value="<%= date %>" <% } %> name="date" id="search_date" type="text" class="form-control date" placeholder="enter a date ...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick='$("#search_date").val("");'><span class="glyphicon glyphicon-trash"></span></button>
+                        </span>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-groupe">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Search <span class="glyphicon glyphicon-filter"></span></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
 
-        <div class="row">
+        <div class="row col-md-8 col-md-offset-2 spaced">
+            <div id="nothing-found" class="alert alert-info" role="alert"><strong>Woops !</strong> Seems that your request gave nothing ...</div>
             <% for(let i=0;i<rows.length;i++){ %>
             <div id-menu="<%= rows[i]['id_menu'] %>" class="col-sm-5 col-md-3 format-size">
                 <div class="thumbnail">
@@ -33,4 +66,8 @@
         </div>
     </div>
 </body>
+
+<script src="/components/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="javascripts/search_menus.js"></script>
+
 </html>

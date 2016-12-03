@@ -23,11 +23,11 @@ WHERE category_name = " + @category + " AND nb_people = " @nb_people";
 --Selection de tous les couples menu-recette avec recette ajouté après date voulue, group by pour compter combien de recette associée il y a
 --Selection de tous les menus pour lesquels le nombre de recette total = au nombre de recette post-date
 --VALIDEE
-SELECT id_menu
+SELECT id_menu, re2.menu_name
 FROM (  SELECT menu.id_menu as id1, COUNT(is_part_of.id_recipe) as nb_total_recipe FROM menu
         INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu
         GROUP BY menu.id_menu) AS re1
-INNER JOIN (  SELECT menu.id_menu, COUNT(recipe.id_recipe) as nb_recipe_valid FROM menu
+INNER JOIN (  SELECT menu.id_menu, menu.menu_name, COUNT(recipe.id_recipe) as nb_recipe_valid FROM menu
         INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu
         INNER JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe
         WHERE recipe.date_added >= '01/01/1000'
