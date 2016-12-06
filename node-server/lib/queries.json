@@ -15,5 +15,15 @@
   },
   "categories":{
     "all":"SELECT * FROM category"
+  },
+  "add":{
+    "ingredients":{
+      "query_ingredient": "INSERT INTO ingredient(ingredient_name) VALUES ($1::text) RETURNING id_ingredient",
+      "query_ing_charac": "INSERT INTO ingredient_characteristic(id_nc, id_ingredient, quantity) VALUES ($1::integer , $2::integer , $3::integer)",
+      "calory":1,
+      "protein":2,
+      "carbohydrate":3,
+      "lipid":4
+    }
   }
 }

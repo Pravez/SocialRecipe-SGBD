@@ -18,16 +18,28 @@
 <% include parts/toolbar.ejs %>
 
 <div class="container">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="input-group" data-toggle="tooltip" title="search for an ingredient name">
-                <span class="input-group-addon glyphicon glyphicon-search search" id="search-addon"></span>
-                <input <% if(locals.name){ %> value="<%= name %>" <% } %> name="name" id="search_name" type="text" class="form-control" placeholder="Search" aria-describedby="search-addon" oninput="search_value();">
-            </div>
+    <div class="col-md-6 col-md-offset-3">
+        <div class="input-group" data-toggle="tooltip" title="search for an ingredient name">
+            <span class="input-group-addon glyphicon glyphicon-search search" id="search-addon"></span>
+            <input
+                    <% if(locals.name){ %>
+                    value="<%= name %>"
+                    <% } %>
+                    name="name" id="search_name" type="text" class="form-control" placeholder="Search"
+                    aria-describedby="search-addon" oninput="search_value();">
         </div>
+    </div>
+    <div class="col-md-2 col-md-offset-1">
+        <div class="row">
+            <a href="/add_ingredient"><button type="button" class="btn btn-primary btn-add">Add an ingredient</button></a>
+        </div>
+    </div>
 
     <div class="row col-md-10 col-md-offset-1 spaced">
-        <div id="nothing-found" class="alert alert-info" role="alert" style="display:none;"><strong>Woops !</strong> Seems that your request gave nothing ...</div>
-        <% for(let i=0;i<rows.length;i++){ %>
+        <div id="nothing-found" class="alert alert-info" role="alert" style="display:none;"><strong>Woops !</strong>
+            Seems that your request gave nothing ...
+        </div>
+        <% for(let i = 0;i < rows.length;i++){ %>
         <div id-ingredient="<%= rows[i]['id_ingredient'] %>" class="col-sm-4 col-md-3 format-size">
             <div class="thumbnail">
                 <img src="images/ingredient_default.png" alt="Meal">
@@ -35,7 +47,8 @@
                     <h3><%= rows[i]['ingredient_name'] %></h3>
                     <p>SOME TEXT</p>
                     <div style="text-align:center;width:100%;">
-                        <p><a href="/ingredient?id=<%= rows[i]['id_ingredient'] %>" class="btn btn-primary" role="button">See more</a></p>
+                        <p><a href="/ingredient?id=<%= rows[i]['id_ingredient'] %>" class="btn btn-primary"
+                              role="button">See more</a></p>
                     </div>
                 </div>
             </div>

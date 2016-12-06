@@ -7,11 +7,16 @@ var bodyParser = require('body-parser');
 var app = express();
 var postgres = require('./lib/postgres');
 var ssh = require('./lib/sshConnection');
+var session = require('express-session');
 
 var index = require('./routes/index');
 var menu = require('./routes/menu');
 var recipe = require('./routes/recipe');
 var ingredient = require('./routes/ingredient');
+
+var add_ingredient = require('./routes/add_ingredient');
+
+app.use(session({secret:"canard rhododendron"}));
 
 
 var pgconfig = {
@@ -42,6 +47,7 @@ app.use('/', index);
 app.use('/menu', menu);
 app.use('/recipe', recipe);
 app.use('/ingredient', ingredient);
+app.use('/add_ingredient', add_ingredient);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

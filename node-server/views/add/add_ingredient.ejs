@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Recipe</title>
+    <% include ../parts/headers.ejs %>
+
+</head>
+<body>
+<% include ../parts/toolbar.ejs %>
+
+<div class="container col-md-8 col-md-offset-2">
+    <div class="jumbotron">
+        <h2>Addition of an Ingredient</h2>
+        <% if(locals.added){ %>
+        <label class="label label-success">Added ingredient !</label>
+        <% } %>
+    </div>
+    <form action="/add_ingredient" method="post">
+        <div class="form-group">
+            <label for="nom">Ingredient name</label>
+            <input name="ingredient_name" type="text" class="form-control" id="nom"
+                   placeholder="here a strange name ..." required>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="calory">Calories</label>
+                <input name="calories" type="number" class="form-control" id="calory" placeholder="Calories" required>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="protein">Proteins</label>
+                <input name="proteins" type="number" class="form-control" id="protein" placeholder="Proteins" required>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="carbohydrate">Glucids</label>
+                <input name="carbohydrates" type="number" class="form-control" id="carbohydrate"
+                       placeholder="Carbohydrate" required>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="lipid">Lipids</label>
+                <input name="lipids" type="number" class="form-control" id="lipid" placeholder="Lipids" required>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success" style="float:right;">Add it !</button>
+    </form>
+</div>
+
+
+</body>
+</html>
