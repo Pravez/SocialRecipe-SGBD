@@ -1,9 +1,9 @@
 'use strict';
 
-const tunnel = require('tunnel-ssh');
+var tunnel = require('tunnel-ssh');
 
 
-const config = {
+var config = {
     username: 'enseirb',
     password: 'vatefairefoutre42sgbd',
     host: 'pravez.ddns.net',
@@ -15,7 +15,7 @@ const config = {
     keepAlive: true
 };
 
-const ssh = tunnel(config, function(error, tnl){
+var ssh = tunnel(config, function(error, tnl){
     if(error){
         console.log(error);
         process.exit();

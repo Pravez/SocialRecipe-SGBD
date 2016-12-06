@@ -1,4 +1,4 @@
-const pg = require('pg');
+var pg = require('pg');
 
 var PostGres = function(config){
     this.client = new pg.Client(config);
@@ -6,8 +6,8 @@ var PostGres = function(config){
 };
 
 PostGres.prototype.doQuery = function(query, args, callback){
-    let array = [];
-    let result = this.client.query(query, args);
+    var array = [];
+    var result = this.client.query(query, args);
     result.on('row', (row) => {
         array.push(row);
     });
