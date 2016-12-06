@@ -61,15 +61,20 @@ WHERE recipe.id_recipe = 7 and nutritional_characteristic.id_nc=1; --1 parce que
 
 --==> Plus qu'à vérifier la valeur de chaque ingrédient de chaque recette du menu et estimer s'il est peu calorique ou non.
 
+SELECT ingredient.id_ingredient
+FROM (sous-requête du haut)
+WHERE ingredient_characteristic.quantity < @seuil;
+
+
 --liste des recettes sucré-salé pour une catégorie (à la fois miel et sel)
 --VALIDEE
 SELECT id_recipe
 FROM (SELECT id_recipe FROM constitute
        JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
-        WHERE ingredient_name = 'honey') AS re1
+        WHERE ingredient_name = 'Honey') AS re1
 NATURAL JOIN (SELECT id_recipe FROM constitute
        JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
-        WHERE ingredient_name = 'salt') AS re2
+        WHERE ingredient_name = 'Salt') AS re2
 WHERE re1.id_recipe = re2.recipe;
 
 --liste des top recettes : notés au moins 5 fois à 3
@@ -122,6 +127,7 @@ JOIN comment ON recipe.id_recipe = comment.id_recipe
 GROUP BY recipe.id_recipe
 HAVING COUNT(id_user) >=3;
 
+--Consultation détaillée pour menu, recette ingrédient
 
 -----------------------------------------------------------------------------
 --Statistiques
@@ -175,19 +181,107 @@ JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional
 WHERE nc_name = 'Calories' AND ingredient.id_ingredient = @ingredient;
 
 -- Moyenne Totale est obtenue avec :
-SELECT nc_name, AVG(quantity) FROM  ingredient_characteristic
+SELECT AVG(quantity) FROM  ingredient_characteristic
 JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
 GROUP BY nc_name
 HAVING nc_name='Calories';
 
 --Coefficient de commentaire
---Nombre de commentaire par recette pour l'ingredient @ingredient
-SELECT recipe.id_recipe, COUNT(id_comment) FROM recipe
-JOIN comment ON recipe.id_recipe = comment.id_recipe
-WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
-                          JOIN constitute ON recipe.id_recipe = constitute.id_recipe
-                          WHERE id_ingredient = @ingredient)
-GROUP BY recipe.id_recipe;
+--calcul du coefficient de commentaire
+SELECT SUM(coeff)
+FROM (SELECT nbComment,
+       CASE WHEN nbComment<=3 THEN 1
+            WHEN nbComment<=10 THEN 2
+            ELSE 3
+       END as coeff
+        FROM (SELECT recipe.id_recipe, COUNT(id_comment) as nbComment FROM recipe
+              JOIN comment ON recipe.id_recipe = comment.id_recipe
+              WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
+                                      JOIN constitute ON recipe.id_recipe = constitute.id_recipe
+                                      WHERE id_ingredient = 7)
+              GROUP BY recipe.id_recipe) as countComment
+GROUP BY nbComment) as Coefficient;
+
+----------------CALCUL TOTAL pour l'ingrédient 7:
+SELECT id_ingredient,
+  (((SELECT quantity FROM ingredient
+      JOIN ingredient_characteristic ON ingredient.id_ingredient = ingredient_characteristic.id_ingredient
+      JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
+      WHERE nc_name = 'Calories' AND ingredient.id_ingredient = 7) / (SELECT AVG(quantity) FROM  ingredient_characteristic
+                                                                      JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
+                                                                      GROUP BY nc_name
+                                                                      HAVING nc_name='Calories')) *
+  (SELECT AVG(note) FROM recipe
+  JOIN note ON recipe.id_recipe = note.id_recipe
+  WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
+                            JOIN constitute ON recipe.id_recipe = constitute.id_recipe
+                            WHERE id_ingredient = 7)
+  GROUP BY recipe.id_recipe)
+  *
+  (SELECT SUM(coeff)
+   FROM (SELECT nbComment,
+        CASE WHEN nbComment<=3 THEN 1
+             WHEN nbComment<=10 THEN 2
+             ELSE 3
+        END as coeff
+        FROM (SELECT recipe.id_recipe, COUNT(id_comment) as nbComment FROM recipe
+              JOIN comment ON recipe.id_recipe = comment.id_recipe
+              WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
+                                      JOIN constitute ON recipe.id_recipe = constitute.id_recipe
+                                      WHERE id_ingredient = 7)
+              GROUP BY recipe.id_recipe) as countComment
+GROUP BY nbComment) as Coefficient)) as CoeffOfTheDoom
+FROM ingredient;
+
+--Transaction pour avoir le coefficient de tous les ingrédients
+
+CREATE OR REPLACE FUNCTION getAllCoeff() RETURNS SETOF BIGINT AS
+$BODY$
+DECLARE
+    r BIGINT;
+  Coef BIGINT;
+BEGIN
+    FOR r IN SELECT id_ingredient FROM ingredient
+    LOOP
+      SELECT (((SELECT quantity FROM ingredient
+                                             JOIN ingredient_characteristic ON ingredient.id_ingredient = ingredient_characteristic.id_ingredient
+                                            JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
+      WHERE nc_name = 'Calories' AND ingredient.id_ingredient = r / (SELECT AVG(quantity) FROM  ingredient_characteristic
+                                                                      JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
+                                                                      GROUP BY nc_name
+                                                                      HAVING nc_name='Calories')) *
+  (SELECT AVG(note) FROM recipe
+  JOIN note ON recipe.id_recipe = note.id_recipe
+  WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
+                            JOIN constitute ON recipe.id_recipe = constitute.id_recipe
+                            WHERE id_ingredient = r)
+  GROUP BY recipe.id_recipe)
+  *
+  (SELECT SUM(coeff)
+   FROM (SELECT nbComment,
+        CASE WHEN nbComment<=3 THEN 1
+             WHEN nbComment<=10 THEN 2
+             ELSE 3
+        END as coeff
+        FROM (SELECT recipe.id_recipe, COUNT(id_comment) as nbComment FROM recipe
+              JOIN comment ON recipe.id_recipe = comment.id_recipe
+              WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
+                                      JOIN constitute ON recipe.id_recipe = constitute.id_recipe
+                                      WHERE id_ingredient = r)
+              GROUP BY recipe.id_recipe) as countComment
+GROUP BY nbComment) as Coefficient))) into Coef
+    FROM ingredient
+    WHERE ingredient.id_ingredient = r;
+
+    RETURN NEXT Coef;
+    END LOOP;
+    RETURN;
+END
+$BODY$
+LANGUAGE plpgsql;
+
+SELECT * FROM getallCoeff()
+ORDER BY "getallcoeff" ASC;
 
 -----------------------------------------------------------------------------
 --Mises à jour
