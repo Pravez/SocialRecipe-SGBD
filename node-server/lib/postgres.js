@@ -8,11 +8,11 @@ var PostGres = function(config){
 PostGres.prototype.doQuery = function(query, args, callback){
     var array = [];
     var result = this.client.query(query, args);
-    result.on('row', (row) => {
+    result.on('row', function(row){
         array.push(row);
     });
 
-    result.on('end', () => callback(array));
+    result.on('end', function(){callback(array)});
 };
 
 module.exports = PostGres;
