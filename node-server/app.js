@@ -11,6 +11,7 @@ var ssh = require('./lib/sshConnection');
 var index = require('./routes/index');
 var menu = require('./routes/menu');
 var recipe = require('./routes/recipe');
+var ingredient = require('./routes/ingredient');
 
 
 var pgconfig = {
@@ -40,6 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/menu', menu);
 app.use('/recipe', recipe);
+app.use('/ingredient', ingredient);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
