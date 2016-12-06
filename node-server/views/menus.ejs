@@ -48,7 +48,7 @@
         </form>
 
         <div class="row col-md-8 col-md-offset-2 spaced">
-            <div id="nothing-found" class="alert alert-info" role="alert"><strong>Woops !</strong> Seems that your request gave nothing ...</div>
+            <div id="nothing-found" class="alert alert-info" style="display:none;" role="alert"><strong>Woops !</strong> Seems that your request gave nothing ...</div>
             <% for(let i=0;i<rows.length;i++){ %>
             <div id-menu="<%= rows[i]['id_menu'] %>" class="col-sm-5 col-md-3 format-size">
                 <div class="thumbnail">

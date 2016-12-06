@@ -9,6 +9,10 @@
     "query_id": "SELECT * FROM recipe WHERE id_recipe=$1::integer",
     "everything":"SELECT recipe.id_recipe, recipe.recipe_name, recipe.servings, category_name FROM recipe INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe INNER JOIN category ON is_category.id_category=category.id_category"
   },
+  "ingredients":{
+    "all":"SELECT * FROM ingredient",
+    "query_id":"SELECT * FROM ingredient WHERE id_ingredient=$1::integer"
+  },
   "categories":{
     "all":"SELECT * FROM category"
   }

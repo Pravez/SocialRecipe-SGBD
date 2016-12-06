@@ -1,21 +1,18 @@
-const pg = require('pg');
+var pg = require('pg');
 
-class PostGres{
+var PostGres = function(config){
+    this.client = new pg.Client(config);
+    this.client.connect(function(err){ if(err) throw err; });
+};
 
-    constructor(config){
-        this.client = new pg.Client(config);
-        this.client.connect(function(err){ if(err) throw err; });
-    }
+PostGres.prototype.doQuery = function(query, args, callback){
+    var array = [];
+    var result = this.client.query(query, args);
+    result.on('row', function(row){
+        array.push(row);
+    });
 
-    doQuery(query, args, callback) {
-        let array = [];
-        let result = this.client.query(query, args);
-        result.on('row', (row) => {
-            array.push(row);
-        });
-
-        result.on('end', () => callback(array));
-    }
-}
+    result.on('end', function(){callback(array)});
+};
 
 module.exports = PostGres;
