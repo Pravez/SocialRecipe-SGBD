@@ -1,10 +1,3 @@
-$(".date").datepicker({
-    todayBtn: "linked",
-    clearBtn: true,
-    language: "en",
-    autoclose: true
-});
-
 function search_value(){
     let search_name = $("#search_name").val();
 
@@ -23,3 +16,4 @@ function search_value(){
     else
         document.querySelector("#nothing-found").style.display = "";
 }
+
