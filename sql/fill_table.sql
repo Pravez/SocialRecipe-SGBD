@@ -1,5 +1,4 @@
 /* INSERT INTO CATEGORIES */
-
 DELETE FROM category;
 ALTER SEQUENCE category_id_category_seq RESTART WITH 1;
 
@@ -495,7 +494,7 @@ INSERT INTO note(id_recipe, id_user, note) VALUES(12, 15, 2);
 INSERT INTO note(id_recipe, id_user, note) VALUES(12, 3, 2);
 INSERT INTO note(id_recipe, id_user, note) VALUES(12, 1, 2);
 INSERT INTO note(id_recipe, id_user, note) VALUES(12, 4, 1);
-INSERT INTO note(id_recipe, id_user, note) VALUES(12, 13, 1);
+INSERT INTO note(id_recipe, id_user, note) VALUES(12, 11, 1);
 INSERT INTO note(id_recipe, id_user, note) VALUES(12, 12, 1);
 INSERT INTO note(id_recipe, id_user, note) VALUES(12, 16, 1);
 INSERT INTO note(id_recipe, id_user, note) VALUES(12, 10, 1);
