@@ -27,6 +27,9 @@
     }
   },
   "users":{
-    "auth":"SELECT * FROM \"user\" WHERE pseudo=$1::text"
+    "auth":"SELECT * FROM \"user\" WHERE pseudo=$1::text",
+    "auth_id":"SELECT * FROM \"user\" WHERE id_user=$1::integer",
+    "remove":"DELETE FROM \"user\" WHERE id_user=$1::integer",
+    "add":"INSERT INTO \"user\"(pseudo) VALUES ($1::text) RETURNING id_user"
   }
 }
