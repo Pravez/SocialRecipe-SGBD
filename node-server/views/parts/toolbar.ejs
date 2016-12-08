@@ -10,6 +10,44 @@
                 <li class="<% if(this.recipes) { %> active <% } %>"><a href="/recipe">Recipes</a></li>
                 <li class="<% if(this.ingredients) { %> active <% } %>"><a href="/ingredient">Ingredients</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <% if(session.username) { %>
+                <li><p class="navbar-text">Logged as <%= session.username %></p></li>
+                <li><a href="/auth?so=true">Sign out</a></li>
+                <% }else{ %>
+                <li><a href="#" data-toggle="modal" data-target="#authentication">Sign in</a></li>
+                <% } %>
+            </ul>
         </div>
     </div>
 </nav>
+
+<div class="modal fade" id="authentication" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modal-label">Sign in to SocialRecipe</h4>
+            </div>
+            <form action="/auth" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="pseudo">Pseudo</label>
+                        <input name="name" type="text" class="form-control" id="pseudo" aria-describedby="pseudoHelp"
+                               placeholder="Enter your pseudo ...">
+                        <small id="pseudoHelp" class="form-text text-muted">Give only the pseudo of a registered user
+                            ...
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="reset" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Sign in</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

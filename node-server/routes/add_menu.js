@@ -5,7 +5,7 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
     postgreaccess.doQuery(queries.recipes.all, [], function(results){
-        res.render("add/add_menu", { rows: results });
+        res.render("add/add_menu", { rows: results, session: req.session });
     });
 });
 

@@ -25,5 +25,8 @@
       "carbohydrate":3,
       "lipid":4
     }
+  },
+  "users":{
+    "auth":"SELECT * FROM \"user\" WHERE pseudo=$1::text"
   }
 }

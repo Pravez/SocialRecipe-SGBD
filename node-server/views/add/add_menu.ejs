@@ -4,6 +4,10 @@
     <title>Social Recipe</title>
     <% include ../parts/headers.ejs %>
 
+    <script>
+        var rows = <%- JSON.stringify(rows) %>;
+    </script>
+
 </head>
 <body>
 <% include ../parts/toolbar.ejs %>
@@ -26,12 +30,13 @@
                 <div style="text-align:center">
                     <h4>Add recipes to compose the menu</h4>
                 </div>
-                <div class="input-group menu-input">
+                <div class="input-group menu-input" id="main">
                     <span class="input-group-btn">
                         <button class="btn btn-secondary" type="button" data-toggle="modal"
-                                data-target="#recipes-modal">Search a recipe</button>
+                                data-target="#recipes-modal" onclick="select_input(this.parentElement.parentElement);">Search a recipe</button>
                     </span>
-                    <input type="text" class="form-control" placeholder="Give a recipe name ..." name="recipe_0">
+                    <input type="text" class="form-control recipe-name" placeholder="Give a recipe name ..." name="recipe_0">
+                    <input type="number" class="recipe-id" style="display:none;" name="id_recipe_0">
                 </div>
             </div>
         </div>
@@ -55,9 +60,10 @@
                 <div class="row">
                     <% for(var j = 0;j < 4 && (i * 4 + j) < rows.length;j++){ %>
                     <div class="col-md-3" style="text-align:center;">
-                        <a href="#" class="thumbnail" style="min-height:90px;" onclick="this.classList.add('active');">
+                        <a data-dismiss="modal"  href="#" class="thumbnail" style="min-height:90px;"
+                           onclick="this.classList.add('active');select_recipe(this);">
                             <div class="caption" style="top:50%;">
-                                <p><%= rows[i * 4 + j]['recipe_name'] %></p>
+                                <p id-recipe="<%= rows[i * 4 + j]['id_recipe'] %>"><%= rows[i * 4 + j]['recipe_name'] %></p>
                             </div>
                         </a>
                     </div>

@@ -4,7 +4,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render("add/add_ingredient", {});
+    res.render("add/add_ingredient", {session: req.session});
 });
 
 router.post('/', function(req, res){
@@ -25,7 +25,7 @@ router.post('/', function(req, res){
                         console.log(car);
                         postgreaccess.doQuery(queries.add.ingredients.query_ing_charac, [queries.add.ingredients.lipid, id, lipids], function (li) {
                             console.log(li);
-                            res.render("add/add_ingredient", {added: true});
+                            res.render("add/add_ingredient", {added: true, session: req.session});
                         });
                     });
                 });

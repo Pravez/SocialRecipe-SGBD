@@ -3,11 +3,10 @@ var router = express.Router();
 
 
 /* GET home page. */
+var session;
 router.get('/', function(req, res, next) {
-    postgreaccess.doQuery("SELECT * FROM menu", [], function(results){
-        console.log(results);
-        res.render('index', { rows: results , home: true});
-    });
+    session = req.session;
+    res.render('index', { home: true, session: session});
 });
 
 
