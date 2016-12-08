@@ -1,4 +1,3 @@
-
 -----------------------------------------------------------------------------
 --Consultations
 -----------------------------------------------------------------------------
@@ -26,19 +25,21 @@ WHERE category_name = " + @category + " AND nb_people = " @nb_people";
 SELECT id_menu, re2.menu_name
 FROM (  SELECT menu.id_menu as id1, COUNT(is_part_of.id_recipe) as nb_total_recipe FROM menu
         INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu
-        GROUP BY menu.id_menu) AS re1
+        GROUP BY menu.id_menu) AS NbRecipePerMenu
 INNER JOIN (  SELECT menu.id_menu, menu.menu_name, COUNT(recipe.id_recipe) as nb_recipe_valid FROM menu
         INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu
         INNER JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe
         WHERE recipe.date_added >= '01/01/1000'
         GROUP BY menu.id_menu
-        )AS re2
-ON id1 = re2.id_menu
+        )AS NbRecipeValid
+ON NbRecipePerMenu.id1 = NbRecipeValid.id_menu
 WHERE  nb_total_recipe=nb_recipe_valid;
 
 --Historique des préparations d'une recette --> historique des descriptions ?
-/*SELECT
-FROM;*/
+SELECT id_description, description_text, description.date_added, id_user
+FROM description JOIN recipe ON description.id_recipe = recipe.id_recipe
+WHERE recipe.id_recipe = 1
+ORDER BY description.date_added ASC;
 
 --Ensemble des menus contenant des recettes avec des ingrédient peu caloriques
 
@@ -61,9 +62,17 @@ WHERE recipe.id_recipe = 7 and nutritional_characteristic.id_nc=1; --1 parce que
 
 --==> Plus qu'à vérifier la valeur de chaque ingrédient de chaque recette du menu et estimer s'il est peu calorique ou non.
 
-SELECT ingredient.id_ingredient
-FROM (sous-requête du haut)
-WHERE ingredient_characteristic.quantity < @seuil;
+SELECT id_ingredient
+FROM (SELECT ingredient.id_ingredient, nutritional_characteristic.id_nc, ingredient_characteristic.quantity from recipe
+      JOIN constitute ON recipe.id_recipe = constitute.id_recipe
+      JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
+      JOIN ingredient_characteristic ON ingredient.id_ingredient = ingredient_characteristic.id_ingredient
+      JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
+      WHERE nutritional_characteristic.nc_name = 'Calory' and recipe.id_recipe IN (SELECT recipe.id_recipe FROM menu
+																					  JOIN is_part_of ON menu.id_menu = is_part_of.id_menu
+																					  JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe
+																					  WHERE menu.id_menu = 10)) as CaloryPerIngredient
+WHERE quantity < 100;
 
 
 --liste des recettes sucré-salé pour une catégorie (à la fois miel et sel)
@@ -71,11 +80,11 @@ WHERE ingredient_characteristic.quantity < @seuil;
 SELECT id_recipe
 FROM (SELECT id_recipe FROM constitute
        JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
-        WHERE ingredient_name = 'Honey') AS re1
+        WHERE ingredient_name = 'Honey') AS sweetIngredient
 NATURAL JOIN (SELECT id_recipe FROM constitute
        JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient
-        WHERE ingredient_name = 'Salt') AS re2
-WHERE re1.id_recipe = re2.recipe;
+        WHERE ingredient_name = 'Salt') AS saltyIngredient
+WHERE sweetIngredient.id_recipe = saltyIngredient.id_recipe;
 
 --liste des top recettes : notés au moins 5 fois à 3
 --VALIDEE
@@ -128,6 +137,8 @@ GROUP BY recipe.id_recipe
 HAVING COUNT(id_user) >=3;
 
 --Consultation détaillée pour menu, recette ingrédient
+--Consultation détaillé menu
+
 
 -----------------------------------------------------------------------------
 --Statistiques
@@ -287,11 +298,32 @@ ORDER BY "getallcoeff" ASC;
 --Mises à jour
 -----------------------------------------------------------------------------
 
---Ajout
+--Ajout recette
 
---Suppression
+INSERT INTO recipe [ ( column [, ...] ) ]
+    { DEFAULT VALUES | VALUES ( { expression | DEFAULT } [, ...] ) | query }
 
---Modification d'une recette
+--Suppression du menu @menu.
+
+DELETE FROM menu
+    WHERE id_menu = @menu;
+    
+--Suppression de la recette @recipe.
+
+DELETE FROM recipe
+    WHERE id_recipe = @recipe;
+    
+--Suppression de l'utilisateur @user.
+
+DELETE FROM 'user'
+    WHERE id_user = @user;
+
+--Modification d'une recette @recipe
+
+UPDATE recipe
+    SET ColumnToChange= newValue
+    [ WHERE id_recipe = @recipe
+
 
 --Modification d'un ingrédient
 
