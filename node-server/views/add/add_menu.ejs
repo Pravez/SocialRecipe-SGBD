@@ -61,7 +61,7 @@
                     <% for(var j = 0;j < 4 && (i * 4 + j) < rows.length;j++){ %>
                     <div class="col-md-3" style="text-align:center;">
                         <a data-dismiss="modal"  href="#" class="thumbnail" style="min-height:90px;"
-                           onclick="this.classList.add('active');select_recipe(this);">
+                           onclick="if(!this.classList.contains('active')) { this.classList.add('active');select_recipe(this);$(this).css('pointer-events', 'none'); }">
                             <div class="caption" style="top:50%;">
                                 <p id-recipe="<%= rows[i * 4 + j]['id_recipe'] %>"><%= rows[i * 4 + j]['recipe_name'] %></p>
                             </div>
