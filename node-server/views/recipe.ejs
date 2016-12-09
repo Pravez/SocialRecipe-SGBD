@@ -7,49 +7,91 @@
 </head>
 <body>
 
-    <% include parts/toolbar.ejs %>
+<% include parts/toolbar.ejs %>
 
-    <div class="container">
-        <div class="jumbotron">
-            <h1><%= rows[0].recipe_name %></h1><br/>
+<div class="container">
+    <div class="jumbotron">
+        <h1><%= rows[0].recipe_name %></h1>
+        <p>Recipe description</p>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-6">
+            <p>You'll need : </p>
+            <ul>
+                <% for(var i = 0;i < ingredients_rows.length;i++) { %>
+                <li><%= ingredients_rows[i]["quantity"] %> <%= ingredients_rows[i]["unit_name"] %><%= if(ingredients_rows[i]["quantity"] > 1){ "s" }%>
+                    of
+                    <a href="/ingredient?id=<%= ingredients_rows[i]["id_ingredient"] %>"><%= ingredients_rows[i]["ingredient_name"] %></a>
+                </li>
+                <% } %>
+            </ul>
+        </div>
+        <div class="col-md-4 col-md-offset-2 data">
             <% if(rows[0].preparation_time.minutes || rows[0].preparation_time.hours) { %>
-            <button class="btn btn-primary" type="button" disabled>
-                <span class="glyphicon glyphicon-time"></span> Temps de préparation  <span class="badge">
+            <div class="row">
+                <div class="col-md-1">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+                <div class="col-md-3">
+                <span class="badge">
                     <% if(rows[0].preparation_time.minutes) { %>
-                        <%= rows[0].preparation_time.minutes %> minutes
+                    <%= rows[0].preparation_time.minutes %> minutes
                     <% }else if(rows[0].preparation_time.hours) { %>
-                        <%= rows[0].preparation_time.hours %> heures
+                    <%= rows[0].preparation_time.hours %> heures
                     <% } %>
                 </span>
-            </button>
+                </div>
+                <div class="col-md-5">
+                    Preparation time
+                </div>
+            </div>
             <% } %>
             <% if(rows[0].cooking_time.minutes || rows[0].cooking_time.hours) { %>
-            <button class="btn btn-primary" type="button" disabled>
-                <span class="glyphicon glyphicon-time"></span> Temps de cuisine  <span class="badge">
-                    <% if(rows[0].cooking_time.minutes) { %>
-                    <%= rows[0].cooking_time.minutes %> minutes
-                    <% }else if(rows[0].cooking_time.hours) { %>
-                    <%= rows[0].cooking_time.hours %> heures
-                    <% } %>
-                </span>
-            </button>
+            <div class="row">
+                <div class="col-md-1">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+                <div class="col-md-3"><span class="badge">
+                        <% if(rows[0].cooking_time.minutes) { %>
+                        <%= rows[0].cooking_time.minutes %> minutes
+                        <% }else if(rows[0].cooking_time.hours) { %>
+                        <%= rows[0].cooking_time.hours %> heures
+                        <% } %>
+                    </span></div>
+                <div class="col-md-5"> Cooking time</div>
+            </div>
             <% } %>
             <% if(rows[0].waiting_time.minutes || rows[0].waiting_time.hours) { %>
-            <button class="btn btn-primary" type="button" disabled>
-                <span class="glyphicon glyphicon-time"></span> Temps d'attente  <span class="badge">
-                    <% if(rows[0].waiting_time.minutes) { %>
-                    <%= rows[0].waiting_time.minutes %> minutes
-                    <% }else if(rows[0].waiting_time.hours) { %>
-                    <%= rows[0].waiting_time.hours %> heures
-                    <% } %>
-                </span>
-            </button>
+            <div class="row">
+                <div class="col-md-1">
+                    <span class="glyphicon glyphicon-time"></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge">
+                        <% if(rows[0].waiting_time.minutes) { %>
+                        <%= rows[0].waiting_time.minutes %> minutes
+                        <% }else if(rows[0].waiting_time.hours) { %>
+                        <%= rows[0].waiting_time.hours %> heures
+                        <% } %>
+                    </span>
+                </div>
+                <div class="col-md-5"> Waiting time</div>
+            </div>
             <% } %>
-            <button class="btn btn-danger" type="button" disabled>
-                <span class="glyphicon glyphicon-cutlery"></span> Pour <span class="badge"><%= rows[0].servings %></span> personnes
-            </button>
+            <div class="row">
+                <div class="col-md-1">
+                    <span class="glyphicon glyphicon-cutlery"></span>
+                </div>
+                <div class="col-md-3">
+                    <span class="badge"><%= rows[0].servings %></span>
+                </div>
+                <div class="col-md-5">
+                    Servings
+                </div>
+            </div>
         </div>
     </div>
+</div>
 
 </body>
 </html>

@@ -9,7 +9,8 @@
   "recipes":{
     "all":"SELECT * FROM recipe",
     "query_id": "SELECT * FROM recipe WHERE id_recipe=$1::integer",
-    "everything":"SELECT recipe.id_recipe, recipe.recipe_name, recipe.servings, category_name FROM recipe INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe INNER JOIN category ON is_category.id_category=category.id_category"
+    "everything":"SELECT recipe.id_recipe, recipe.recipe_name, recipe.servings, category_name FROM recipe INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe INNER JOIN category ON is_category.id_category=category.id_category",
+    "query_id_ingredients": "SELECT unit_name, quantity, ingredient.id_ingredient, ingredient.ingredient_name FROM recipe INNER JOIN constitute ON recipe.id_recipe = constitute.id_recipe INNER JOIN unit ON constitute.id_unit = unit.id_unit INNER JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient WHERE recipe.id_recipe = $1::integer"
   },
   "ingredients":{
     "all":"SELECT * FROM ingredient",
