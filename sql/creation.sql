@@ -1,11 +1,11 @@
 CREATE TABLE Ingredient (
 	id_ingredient   SERIAL PRIMARY KEY,
-	ingredient_name VARCHAR(50) NOT NULL
+	ingredient_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE Nutritional_Characteristic (
 	id_nc   SERIAL PRIMARY KEY,
-	nc_name VARCHAR(50) NOT NULL
+	nc_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE Ingredient_Characteristic (
@@ -17,7 +17,7 @@ CREATE TABLE Ingredient_Characteristic (
 
 CREATE TABLE Unit (
 	id_unit   SERIAL PRIMARY KEY ,
-	unit_name VARCHAR(50) NOT NULL
+	unit_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE Recipe (
@@ -40,7 +40,7 @@ CREATE TABLE Constitute (
 
 CREATE TABLE Category(
   id_category SERIAL PRIMARY KEY ,
-  category_name VARCHAR(50) NOT NULL
+  category_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE Is_Category(
@@ -51,12 +51,12 @@ CREATE TABLE Is_Category(
 
 CREATE TABLE "user"(
   id_user SERIAL PRIMARY KEY ,
-  pseudo VARCHAR(50)
+  pseudo VARCHAR(50) UNIQUE
 );
 
 CREATE TABLE Menu(
   id_menu SERIAL PRIMARY KEY ,
-  menu_name VARCHAR(50),
+  menu_name VARCHAR(50) UNIQUE,
   id_user INT REFERENCES "user"(id_user)
 );
 
