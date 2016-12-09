@@ -23,3 +23,10 @@ function search_value(){
     else
         document.querySelector("#nothing-found").style.display = "";
 }
+
+$("#menu_add").click(function(event){
+    if(!$("#logged").length){
+        event.preventDefault();
+        alert("You must be logged in to add a menu !");
+    }
+});

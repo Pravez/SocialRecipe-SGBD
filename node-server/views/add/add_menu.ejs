@@ -32,15 +32,20 @@
                 </div>
                 <div class="input-group menu-input" id="main">
                     <span class="input-group-btn">
-                        <button class="btn btn-secondary" type="button" data-toggle="modal"
+                        <button class="btn btn-default" type="button" data-toggle="modal"
                                 data-target="#recipes-modal" onclick="select_input(this.parentElement.parentElement);">Search a recipe</button>
                     </span>
-                    <input type="text" class="form-control recipe-name" placeholder="Give a recipe name ..." name="recipe_0">
+                    <input type="text" class="form-control recipe-name" placeholder="Give a recipe name ..." readonly>
+                    <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" onclick="remove_input(this.parentElement.parentElement);"><span
+                                        class="glyphicon glyphicon-trash"></span></button>
+                    </span>
+
                     <input type="number" class="recipe-id" style="display:none;" name="id_recipe_0">
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-success" style="float:right;">Add it !</button>
+        <button id="create" type="submit" class="btn btn-success" style="float:right;">Add it !</button>
     </form>
 </div>
 
@@ -60,7 +65,7 @@
                 <div class="row">
                     <% for(var j = 0;j < 4 && (i * 4 + j) < rows.length;j++){ %>
                     <div class="col-md-3" style="text-align:center;">
-                        <a data-dismiss="modal"  href="#" class="thumbnail" style="min-height:90px;"
+                        <a data-dismiss="modal" href="#" class="thumbnail" style="min-height:90px;"
                            onclick="if(!this.classList.contains('active')) { this.classList.add('active');select_recipe(this);$(this).css('pointer-events', 'none'); }">
                             <div class="caption" style="top:50%;">
                                 <p id-recipe="<%= rows[i * 4 + j]['id_recipe'] %>"><%= rows[i * 4 + j]['recipe_name'] %></p>

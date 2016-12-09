@@ -24,6 +24,10 @@
       "protein":2,
       "carbohydrate":3,
       "lipid":4
+    },
+    "menus":{
+      "query_menu": "INSERT INTO menu(menu_name, id_user) VALUES ($1::text, $2::integer) RETURNING id_menu",
+      "query_part_of" : "INSERT INTO is_part_of(id_recipe, id_menu) VALUES ($1::integer, $2::integer)"
     }
   },
   "users":{

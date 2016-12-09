@@ -5,14 +5,14 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="<% if(this.home) { %> active <% } %>"><a href="/">Home</a></li>
-                <li class="<% if(this.menus) { %> active <% } %>"><a href="/menu">Menus</a></li>
-                <li class="<% if(this.recipes) { %> active <% } %>"><a href="/recipe">Recipes</a></li>
-                <li class="<% if(this.ingredients) { %> active <% } %>"><a href="/ingredient">Ingredients</a></li>
+                <li class="<% if(locals.home) { %> active <% } %>"><a href="/">Home</a></li>
+                <li class="<% if(locals.menus) { %> active <% } %>"><a href="/menu">Menus</a></li>
+                <li class="<% if(locals.recipes) { %> active <% } %>"><a href="/recipe">Recipes</a></li>
+                <li class="<% if(locals.ingredients) { %> active <% } %>"><a href="/ingredient">Ingredients</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <% if(session.username) { %>
-                <li><p class="navbar-text">Logged as <%= session.username %></p></li>
+                <li><p class="navbar-text" id="logged">Logged as <%= session.username %></p></li>
                 <li><a href="/auth?so=true">Sign out</a></li>
                 <li><a href="/auth?del=true">Remove account</a></li>
                 <% }else{ %>
