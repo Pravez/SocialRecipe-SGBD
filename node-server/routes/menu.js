@@ -4,9 +4,11 @@ var router = express.Router();
 /* GET menus page. */
 router.get('/', function (req, res) {
     if (req.query["id"]) {
-        postgreaccess.doQuery(queries.menus.query_id, [req.query["id"]], function (results) {
-            console.log(results);
-            res.render('menu', {rows: results, session: req.session});
+        postgreaccess.doQuery(queries.menus.query_id_user, [req.query["id"]], function (menu_user) {
+            console.log(menu_user);
+            postgreaccess.doQuery(queries.menus.query_id_recipes, [req.query["id"]], function(recipes){
+                res.render('menu', {rows: menu_user, recipes_rows: recipes, session: req.session, menus:true});
+            });
         });
     } else {
         postgreaccess.doQuery(queries.menus.all, [], function (results) {
@@ -24,11 +26,11 @@ router.post('/', function (req, res) {
         var final_date = date[2] + "-" + date[0] + "-" + date[1];
 
         postgreaccess.doQuery(queries.menus.query_date, [final_date], function (results) {
-            res.render('menus', {rows: results, date: req.body["date"], name: req.body["name"], session: req.session});
+            res.render('menus', {rows: results, date: req.body["date"], name: req.body["name"], session: req.session, menus:true});
         });
     } else {
         postgreaccess.doQuery(queries.menus.all, [], function (results) {
-            res.render('menus', {rows: results, date: req.body["date"], name: req.body["name"], session: req.session});
+            res.render('menus', {rows: results, date: req.body["date"], name: req.body["name"], session: req.session, menus:true});
         });
     }
 });

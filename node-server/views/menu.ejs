@@ -8,7 +8,24 @@
 <body>
     <% include parts/toolbar.ejs %>
 
-
+    <div class="container">
+        <div class="jumbotron">
+            <h2><%= rows[0]["menu_name"] %></h2>
+            <p>Created by <%= rows[0]["pseudo"] %></p>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-6">
+                <p>Recipes in this menu :</p>
+                <div class="list-group">
+                    <% for(var i=0;i<recipes_rows.length;i++) { %>
+                    <a href="/recipe?id=<%= recipes_rows[i]["id_recipe"] %>" class="list-group-item list-group-item-action">
+                        <h5 class="list-group-item-heading"><%= recipes_rows[i]["recipe_name"] %></h5>
+                    </a>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </body>
 </html>

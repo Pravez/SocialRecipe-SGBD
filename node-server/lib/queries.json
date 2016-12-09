@@ -2,7 +2,9 @@
   "menus":{
     "all":"SELECT id_menu, menu_name FROM menu",
     "query_id": "SELECT * FROM menu WHERE id_menu=$1::integer",
-    "query_date": "SELECT id_menu, re2.menu_name FROM (  SELECT menu.id_menu as id1, COUNT(is_part_of.id_recipe) as nb_total_recipe FROM menu INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu GROUP BY menu.id_menu) AS re1 INNER JOIN (  SELECT menu.id_menu, menu.menu_name, COUNT(recipe.id_recipe) as nb_recipe_valid FROM menu INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu INNER JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe WHERE recipe.date_added >= $1::date GROUP BY menu.id_menu )AS re2 ON id1 = re2.id_menu WHERE  nb_total_recipe=nb_recipe_valid"
+    "query_date": "SELECT id_menu, re2.menu_name FROM (  SELECT menu.id_menu as id1, COUNT(is_part_of.id_recipe) as nb_total_recipe FROM menu INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu GROUP BY menu.id_menu) AS re1 INNER JOIN (  SELECT menu.id_menu, menu.menu_name, COUNT(recipe.id_recipe) as nb_recipe_valid FROM menu INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu INNER JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe WHERE recipe.date_added >= $1::date GROUP BY menu.id_menu )AS re2 ON id1 = re2.id_menu WHERE  nb_total_recipe=nb_recipe_valid",
+    "query_id_user": "SELECT menu.id_menu, menu_name, \"user\".id_user, pseudo FROM menu INNER JOIN \"user\" ON menu.id_user=\"user\".id_user WHERE menu.id_menu=$1::integer",
+    "query_id_recipes": "SELECT recipe.id_recipe, recipe_name FROM menu INNER JOIN is_part_of ON menu.id_menu = is_part_of.id_menu INNER JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe WHERE menu.id_menu=$1::integer"
   },
   "recipes":{
     "all":"SELECT * FROM recipe",
