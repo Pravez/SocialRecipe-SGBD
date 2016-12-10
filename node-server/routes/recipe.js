@@ -9,11 +9,26 @@ router.get('/', function (req, res, next) {
             console.log(recipe_values);
             postgreaccess.doQuery(queries.recipes.query_id_ingredients, [req.query["id"]], function (ingredients_values) {
                 console.log(ingredients_values);
-                res.render('recipe', {
-                    rows: recipe_values,
-                    ingredients_rows: ingredients_values,
-                    recipes: true,
-                    session: req.session
+                postgreaccess.doQuery(queries.recipes.query_id_description, [req.query["id"]], function (description) {
+                    console.log(description);
+                    postgreaccess.doQuery(queries.recipes.query_id_comments, [req.query["id"]], function (comments) {
+                        console.log(comments);
+                        postgreaccess.doQuery(queries.recipes.query_id_notes, [req.query["id"]], function (notes){
+                            var new_notes = convert_notes(notes);
+                            var average = compute_average(notes);
+                            console.log(new_notes);
+                            res.render('recipe', {
+                                rows: recipe_values,
+                                ingredients_rows: ingredients_values,
+                                description_rows: description,
+                                comments_rows: comments,
+                                notes_rows: new_notes,
+                                average_note: average,
+                                recipes: true,
+                                session: req.session
+                            });
+                        });
+                    });
                 });
             });
         });
@@ -50,6 +65,29 @@ function compute_categories(results) {
     }
 
     return final;
+}
+
+function convert_notes(notes){
+    var new_notes = {};
+
+    for(var i=0;i<notes.length;i++){
+        new_notes[notes[i]["pseudo"]] = notes[i]["note"];
+    }
+
+    return new_notes;
+}
+
+function compute_average(notes){
+    if(notes.length != 0) {
+        var average = 0;
+
+        for (var i = 0; i < notes.length; i++)
+            average += notes[i]["note"];
+
+        return average / notes.length;
+    }else{
+        return -1;
+    }
 }
 
 

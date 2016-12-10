@@ -13,13 +13,14 @@
     <div class="jumbotron">
         <h1><%= rows[0].recipe_name %></h1>
         <p>Recipe description</p>
+        <% if(average_note !== -1) { %><p>Average note : <span class="label label-default"><%= average_note %></span></p><% } %>
     </div>
     <div class="col-md-12">
         <div class="col-md-6">
             <p>You'll need : </p>
             <ul>
                 <% for(var i = 0;i < ingredients_rows.length;i++) { %>
-                <li><%= ingredients_rows[i]["quantity"] %> <%= ingredients_rows[i]["unit_name"] %><%= if(ingredients_rows[i]["quantity"] > 1){ "s" }%>
+                <li><%= ingredients_rows[i]["quantity"] %> <%= ingredients_rows[i]["unit_name"] %><% if(ingredients_rows[i]["quantity"] > 1){  %><%= "s" %><%}%>
                     of
                     <a href="/ingredient?id=<%= ingredients_rows[i]["id_ingredient"] %>"><%= ingredients_rows[i]["ingredient_name"] %></a>
                 </li>
@@ -90,6 +91,18 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-12">
+            <h2>Preparation by <%= description_rows[0]["pseudo"] %></h2>
+            <p><%= description_rows[0]["description_text"] %></p>
+        </div>
+        <div class="col-md-12">
+            <h2>Comments on this recipe</h2>
+            <% for(var j=0;j<comments_rows.length;j++){ %>
+                <h4><%= comments_rows[j]["pseudo"] %> <% if(notes_rows[comments_rows[j]["pseudo"]] ) { %><span class="label label-default"><%= notes_rows[comments_rows[j]["pseudo"]] %></span><% } %></h4>
+                <p><%= comments_rows[j]["comment_text"] %></p>
+            <% } %>
+        </div>
+        <div class="col-md-12" style="height:50px;"></div>
     </div>
 </div>
 
