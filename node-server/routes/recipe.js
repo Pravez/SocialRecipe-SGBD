@@ -13,7 +13,7 @@ router.get('/', function (req, res, next) {
                     console.log(description);
                     postgreaccess.doQuery(queries.recipes.query_id_comments, [req.query["id"]], function (comments) {
                         console.log(comments);
-                        postgreaccess.doQuery(queries.recipes.query_id_notes, [req.query["id"]], function (notes){
+                        postgreaccess.doQuery(queries.recipes.query_id_notes, [req.query["id"]], function (notes) {
                             var new_notes = convert_notes(notes);
                             var average = compute_average(notes);
                             console.log(new_notes);
@@ -43,6 +43,35 @@ router.get('/', function (req, res, next) {
     }
 });
 
+router.post('/', function (req, res) {
+    if (req.body["id_recipe"]) {
+        if (req.body["rating"] && req.body["rating"] > 0) {
+            postgreaccess.doQuery(queries.recipes.add_rating, [req.body["id_recipe"], req.session.user_id, req.body["rating"]], function (results) {
+                console.log(results);
+            });
+        }
+        if (req.body["update_rating"]) {
+            if (req.body["update_rating"] == 0) {
+                postgreaccess.doQuery(queries.recipes.remove_note, [req.session.user_id, req.body["id_recipe"]], function (results) {
+                    console.log(results);
+                });
+            } else {
+                postgreaccess.doQuery(queries.recipes.update_rating, [req.body["update_rating"], req.session.user_id, req.body["id_recipe"]], function (results) {
+                    console.log(results);
+                });
+            }
+        }
+        if (req.body["comment"] && req.body["comment"] != "") {
+            postgreaccess.doQuery(queries.recipes.add_comment, [req.body["id_recipe"], req.session.user_id, req.body["comment"]], function (results) {
+                console.log(results);
+            })
+        }
+    }
+
+    res.redirect(req.header('Referer') || '/');
+
+});
+
 function compute_categories(results) {
     var newResults = {};
 
@@ -67,25 +96,25 @@ function compute_categories(results) {
     return final;
 }
 
-function convert_notes(notes){
+function convert_notes(notes) {
     var new_notes = {};
 
-    for(var i=0;i<notes.length;i++){
+    for (var i = 0; i < notes.length; i++) {
         new_notes[notes[i]["pseudo"]] = notes[i]["note"];
     }
 
     return new_notes;
 }
 
-function compute_average(notes){
-    if(notes.length != 0) {
+function compute_average(notes) {
+    if (notes.length != 0) {
         var average = 0;
 
         for (var i = 0; i < notes.length; i++)
             average += notes[i]["note"];
 
         return average / notes.length;
-    }else{
+    } else {
         return -1;
     }
 }
