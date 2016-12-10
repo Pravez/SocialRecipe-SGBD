@@ -17,7 +17,8 @@
   },
   "ingredients":{
     "all":"SELECT * FROM ingredient",
-    "query_id":"SELECT * FROM ingredient WHERE id_ingredient=$1::integer"
+    "query_id":"SELECT * FROM ingredient WHERE id_ingredient=$1::integer",
+    "query_id_nc": "SELECT ingredient_name, quantity, nc_name FROM ingredient INNER JOIN ingredient_characteristic ON ingredient.id_ingredient = ingredient_characteristic.id_ingredient INNER JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc WHERE ingredient.id_ingredient = $1::integer"
   },
   "categories":{
     "all":"SELECT * FROM category"

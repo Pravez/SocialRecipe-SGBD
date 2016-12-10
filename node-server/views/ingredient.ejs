@@ -8,6 +8,18 @@
 <body>
 <% include parts/toolbar.ejs %>
 
+<div class="container">
+    <div class="jumbotron">
+        <h2><%= rows[0]["ingredient_name"] %></h2>
+    </div>
+
+    <div class="col-md-12">
+        <h4>The nutritional characteristics of this ingredient for 100 grammes are : </h4>
+        <% for(var i=0;i<rows.length;i++){ %>
+            <p><%= rows[i]["quantity"] %> <a href="https://en.wikipedia.org/wiki/<%= rows[i]["nc_name"] %>"><%= rows[i]["nc_name"] %></a></p>
+        <% } %>
+    </div>
+</div>
 
 
 </body>
