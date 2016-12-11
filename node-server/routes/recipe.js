@@ -67,8 +67,13 @@ router.post('/', function (req, res) {
             })
         }
     }
-
-    res.redirect(req.header('Referer') || '/');
+    if (req.body["preparations"]) {
+        postgreaccess.doQuery(queries.recipes.query_id_descriptions, [req.body["preparations"]], function (results) {
+            res.send(results);
+        });
+    } else {
+        res.redirect(req.header('Referer') || '/');
+    }
 
 });
 

@@ -5,6 +5,10 @@
     <% include parts/headers.ejs %>
 
     <link href="components/bootstrap-star-rating/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+
+    <script>
+        var recipe_id = <%- rows[0]["id_recipe"] %>;
+    </script>
 </head>
 <body>
 
@@ -15,7 +19,7 @@
         <h1><%= rows[0].recipe_name %></h1>
         <p>Recipe description</p>
         <% if(average_note !== -1) { %>
-        <p>Average note : <span class="label label-default"><%= average_note %></span></p>
+        <p>Average note : <input type="text" id="avg_rating" class="rating" value="<%= average_note %>"></p>
         <% } %>
     </div>
     <div class="col-md-12">
@@ -97,9 +101,12 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12" id="descriptions">
             <h2>Preparation by <%= description_rows[0]["pseudo"] %></h2>
             <p><%= description_rows[0]["description_text"] %></p>
+        </div>
+        <div class="col-md-12" id="all_preparations_div">
+            <p><small>Want to see all preparations created ? <a href="#" id="all_preparations">click here</a></small></p>
         </div>
         <div class="col-md-12" style="margin-bottom:50px;">
             <h2>Comments on this recipe</h2>
