@@ -92,7 +92,7 @@ WHERE sweetIngredient.id_recipe = saltyIngredient.id_recipe;
 SELECT recipe.id_recipe, COUNT(recipe.id_recipe) as nb_vote FROM recipe
 JOIN note ON recipe.id_recipe = note.id_recipe
 WHERE  note.note >= 3
-GROUP BY recipe.id_recipe;
+GROUP BY recipe.id_recipe
 HAVING COUNT(id_user) >=5;
 
 --recettes présentes dans au moins trois menus, ayant au moins 10 notes et au moins 3 com

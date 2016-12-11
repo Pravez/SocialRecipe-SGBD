@@ -60,7 +60,7 @@ function search_value() {
 }
 
 function validate_category(element, regex) {
-    for (var i =0;i<element[category].length;i++){
+    for (var i = 0; i < element[category].length; i++) {
         if (element[category][i].match(regex)) {
             return true;
         }
@@ -69,8 +69,17 @@ function validate_category(element, regex) {
     return false;
 }
 
-$("#honeysalt").click(function(event){
-    $.post("/recipe", { honeysalt: true}, function(results){
+$("#honeysalt").click(function (event) {
+    $.post("/recipe", {honeysalt: true}, function (results) {
+        $(".recipe-item").css("display", "none");
+        results.forEach(function (e) {
+            $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
+        });
+    });
+});
+
+$("#top_recipes").click(function (event) {
+    $.post("/recipe", {top_recipes:true}, function(results){
         $(".recipe-item").css("display", "none");
         results.forEach(function(e){
             $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
