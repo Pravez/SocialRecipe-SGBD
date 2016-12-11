@@ -6,12 +6,15 @@ $("#all_preparations").click(function(event){
     event.preventDefault();
 
     $.post("/recipe", { preparations: recipe_id }, function(results){
-        $("#all_preparations_div").remove();
         if(results.length > 1){
+            $("#all_preparations_div").remove();
             for(var i=1;i<results.length;i++){
                 $("#descriptions").append("<h4>Preparation by " + results[i]["pseudo"] + "</h4>");
                 $("#descriptions").append("<p>" + results[i]["description_text"] + "</p>");
             }
+        }else{
+            $(this).remove();
+            $("#preparations_result").html("Finally, it was the only preparation we found !");
         }
     });
 });
