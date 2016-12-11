@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Recipe</title>
+
+    <% include parts/headers.ejs %>
+
+    <link href="components/bootstrap-star-rating/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+
+
+</head>
+<body>
+
+<% include parts/toolbar.ejs %>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2>Recipes rankings</h2>
+        <p>Here are recipes ranked by their notes</p>
+    </div>
+
+    <div class="col-md-6 col-md-offset-3">
+        <div class="list-group">
+            <% for(var i = 0;i < rows.length;i++){ %>
+            <a href="/recipe?id=<%= rows[i]["id_recipe"] %>" class="list-group-item"><%= rows[i]["recipe_name"] %><span><input
+                            type="text" class="rating ranking" value="<%= rows[i]["average"] %>"></span></a>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<script src="components/bootstrap-star-rating/js/star-rating.js" type="text/javascript"></script>
+<script>
+    $(".ranking").rating({stars: 3, min:0, max:3, step: 1, animate: false, showCaption: false, displayOnly: true, size:"xs"});
+    $(".rating-container").css("font-size", "1.3em").css("display", "flex").css("float", "right");
+</script>
+
+</body>
+</html>

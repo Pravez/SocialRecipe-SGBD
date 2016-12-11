@@ -17,6 +17,8 @@ var ingredient = require('./routes/ingredient');
 var add_ingredient = require('./routes/add_ingredient');
 var add_menu = require('./routes/add_menu');
 
+var statistics = require('./routes/stats');
+
 var authentification = require('./routes/auth');
 
 app.use(session({secret:"canard rhododendron"}));
@@ -54,6 +56,7 @@ app.use('/add_ingredient', add_ingredient);
 app.use('/add_menu', add_menu);
 
 app.use('/auth', authentification);
+app.use('/stats', statistics);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -51,5 +51,8 @@
     "auth_id":"SELECT * FROM \"user\" WHERE id_user=$1::integer",
     "remove":"DELETE FROM \"user\" WHERE id_user=$1::integer",
     "add":"INSERT INTO \"user\"(pseudo) VALUES ($1::text) RETURNING id_user"
+  },
+  "stats":{
+    "ranking":"SELECT recipe.id_recipe, recipe.recipe_name, AVG(note.note) as average FROM recipe JOIN note ON recipe.id_recipe = note.id_recipe GROUP BY recipe.id_recipe ORDER BY average DESC"
   }
 }
