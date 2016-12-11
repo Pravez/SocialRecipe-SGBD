@@ -86,3 +86,12 @@ $("#top_recipes").click(function (event) {
         });
     });
 });
+
+$("#common_recipes").click(function (event) {
+    $.post("/recipe", {common_recipes:true}, function(results){
+        $(".recipe-item").css("display", "none");
+        results.forEach(function(e){
+            $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
+        });
+    });
+});

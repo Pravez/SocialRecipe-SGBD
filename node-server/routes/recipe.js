@@ -86,6 +86,11 @@ router.post('/', function (req, res) {
         postgreaccess.doQuery(queries.recipes.top_recipes, [], function (results) {
             res.send(results);
         });
+    } else if (req.body["common_recipes"]) {
+        postgreaccess.doQuery(queries.recipes.common_recipes, [], function (results) {
+            console.log(results);
+            res.send(results);
+        });
     } else {
         res.redirect(req.header('Referer') || '/');
     }

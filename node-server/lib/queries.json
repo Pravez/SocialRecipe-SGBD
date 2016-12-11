@@ -21,7 +21,8 @@
     "remove_note":"DELETE FROM note WHERE id_user=$1::integer AND id_recipe=$2::integer",
     "add_description":"INSERT INTO description(description_text, date_added, id_recipe, id_user) VALUES($1::text, $2::date, $3::integer, $4::integer)",
     "honey_salty":"SELECT id_recipe FROM (SELECT id_recipe FROM constitute JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient WHERE ingredient_name = 'Honey') AS sweetIngredient NATURAL JOIN (SELECT id_recipe FROM constitute JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient WHERE ingredient_name = 'Salt') AS saltyIngredient WHERE sweetIngredient.id_recipe = saltyIngredient.id_recipe",
-    "top_recipes":"SELECT recipe.id_recipe, COUNT(recipe.id_recipe) as nb_vote FROM recipe JOIN note ON recipe.id_recipe = note.id_recipe WHERE note.note >= 3 GROUP BY recipe.id_recipe HAVING COUNT(id_user) >=5"
+    "top_recipes":"SELECT recipe.id_recipe, COUNT(recipe.id_recipe) as nb_vote FROM recipe JOIN note ON recipe.id_recipe = note.id_recipe WHERE note.note >= 3 GROUP BY recipe.id_recipe HAVING COUNT(id_user) >=5",
+    "common_recipes":"(SELECT recipe.id_recipe FROM recipe  JOIN is_part_of ON recipe.id_recipe = is_part_of.id_recipe GROUP BY recipe.id_recipe HAVING COUNT(id_menu) >=3 INTERSECT SELECT recipe.id_recipe FROM recipe JOIN note ON recipe.id_recipe = note.id_recipe GROUP BY recipe.id_recipe HAVING COUNT(id_user) >=10) INTERSECT SELECT recipe.id_recipe FROM recipe JOIN comment ON recipe.id_recipe = comment.id_recipe GROUP BY recipe.id_recipe HAVING COUNT(id_user) >=3"
   },
   "ingredients":{
     "all":"SELECT * FROM ingredient",
