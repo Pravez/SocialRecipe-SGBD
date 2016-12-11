@@ -44,6 +44,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res) {
+    //POST routes for single recipes
     if (req.body["id_recipe"]) {
         if (req.body["rating"] && req.body["rating"] > 0) {
             postgreaccess.doQuery(queries.recipes.add_rating, [req.body["id_recipe"], req.session.user_id, req.body["rating"]], function (results) {
@@ -66,14 +67,19 @@ router.post('/', function (req, res) {
                 console.log(results);
             })
         }
-        if(req.body["new_description_text"]){
-            postgreaccess.doQuery(queries.recipes.add_description, [req.body["new_description_text"], new Date().toLocaleString(), req.body["id_recipe"], req.session.user_id], function(results){
+        if (req.body["new_description_text"]) {
+            postgreaccess.doQuery(queries.recipes.add_description, [req.body["new_description_text"], new Date().toLocaleString(), req.body["id_recipe"], req.session.user_id], function (results) {
                 console.log(results);
             });
         }
     }
+    //POST routes for search for recipes
     if (req.body["preparations"]) {
         postgreaccess.doQuery(queries.recipes.query_id_descriptions, [req.body["preparations"]], function (results) {
+            res.send(results);
+        });
+    } else if (req.body["honeysalt"]) {
+        postgreaccess.doQuery(queries.recipes.honey_salty, [], function (results) {
             res.send(results);
         });
     } else {

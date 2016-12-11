@@ -68,3 +68,12 @@ function validate_category(element, regex) {
 
     return false;
 }
+
+$("#honeysalt").click(function(event){
+    $.post("/recipe", { honeysalt: true}, function(results){
+        $(".recipe-item").css("display", "none");
+        results.forEach(function(e){
+            $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
+        });
+    });
+});
