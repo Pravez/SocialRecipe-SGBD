@@ -106,8 +106,33 @@
             <p><%= description_rows[0]["description_text"] %></p>
         </div>
         <div class="col-md-12" id="all_preparations_div">
-            <p><small id="preparations_result">Want to see all preparations created ? <a href="#" id="all_preparations">click here</a></small></p>
+            <p>
+                <small id="preparations_result">Want to see all preparations created ? <a href="#"
+                                                                                          id="all_preparations">Click
+                        here</a></small>
+            </p>
         </div>
+        <% if(session.username){ %>
+        <div class="col-md-12">
+            <span id="add_description"><small>Want to create one ? <a href="#"
+                                                                      onclick="event.preventDefault();toggleDescription();">Click here</a></small></span>
+            <div class="col-md-12" id="new_description" style="display:none;margin-top:20px;">
+                <form action="/recipe" method="post">
+                    <div class="form-group">
+                        <label for="description_text">Give your new preparation !</label>
+                        <textarea id="description_text" name="new_description_text" rows="3" class="form-control"
+                                  required></textarea>
+                        <input name="id_recipe" type="number" style="display:none;" value="<%= rows[0]["id_recipe"] %>">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>
+        <% } else { %>
+        <div class="col-md-12">
+            <span><small>To create a description you must be <a href="#" data-toggle="modal" data-target="#authentication">logged in</a> ...</small></span>
+        </div>
+        <% } %>
         <div class="col-md-12" style="margin-bottom:50px;">
             <h2>Comments on this recipe</h2>
             <% for(var j = 0;j < comments_rows.length;j++){ %>
@@ -125,8 +150,12 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="rating">Rating : </label>
-                        <input <% if(notes_rows[session.username]) { %>value="<%= notes_rows[session.username] %>" name="update_rating"
-                               <% }else{ %> name="rating" <% } %> type="text" class="rating" id="rating" data-size="xs">
+                        <input <% if(notes_rows[session.username]) { %>value="<%= notes_rows[session.username] %>"
+                               name="update_rating"
+                                <% }else{ %>
+                               name="rating"
+                                <% } %>
+                               type="text" class="rating" id="rating" data-size="xs">
                         <input name="id_recipe" type="number" style="display:none;" value="<%= rows[0]["id_recipe"] %>">
                     </div>
                 </div>

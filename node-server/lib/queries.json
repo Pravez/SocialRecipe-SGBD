@@ -18,7 +18,8 @@
     "add_rating":"INSERT INTO note(id_recipe, id_user, note) VALUES($1::integer, $2::integer, $3::integer)",
     "add_comment":"INSERT INTO comment(id_recipe, id_user, comment_text) VALUES($1::integer, $2::integer, $3::text)",
     "update_rating":"UPDATE note SET note=$1::integer WHERE id_user=$2::integer AND id_recipe=$3::integer",
-    "remove_note":"DELETE FROM note WHERE id_user=$1::integer AND id_recipe=$2::integer"
+    "remove_note":"DELETE FROM note WHERE id_user=$1::integer AND id_recipe=$2::integer",
+    "add_description":"INSERT INTO description(description_text, date_added, id_recipe, id_user) VALUES($1::text, $2::date, $3::integer, $4::integer)"
   },
   "ingredients":{
     "all":"SELECT * FROM ingredient",

@@ -66,6 +66,11 @@ router.post('/', function (req, res) {
                 console.log(results);
             })
         }
+        if(req.body["new_description_text"]){
+            postgreaccess.doQuery(queries.recipes.add_description, [req.body["new_description_text"], new Date().toLocaleString(), req.body["id_recipe"], req.session.user_id], function(results){
+                console.log(results);
+            });
+        }
     }
     if (req.body["preparations"]) {
         postgreaccess.doQuery(queries.recipes.query_id_descriptions, [req.body["preparations"]], function (results) {

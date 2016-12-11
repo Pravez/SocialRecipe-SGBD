@@ -18,3 +18,13 @@ $("#all_preparations").click(function(event){
         }
     });
 });
+
+function toggleDescription(){
+    if($("#new_description").css("display") == "none"){
+        $("#new_description").css("display", "block");
+        $("#add_description").html("<small><a href=\"#\" onclick=\"event.preventDefault();toggleDescription();\">Hide preparation creation</a></small>");
+    }else{
+        $("#new_description").css("display", "none");
+        $("#add_description").html("<small>Want to create one ? <a href=\"#\" onclick=\"event.preventDefault();toggleDescription();\">Click here</a></small>");
+    }
+}
