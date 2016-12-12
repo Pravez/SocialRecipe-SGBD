@@ -4,7 +4,6 @@
 
 --nombre de recettes d'une catégorie @category crée depuis le début de l'année @year
 -- on crée la date 01/01/year dans @date
---VALIDEE
 
 SELECT recipe.id_recipe FROM recipe
 JOIN is_category ON recipe.id_recipe=is_category.id_recipe
@@ -12,7 +11,6 @@ JOIN category ON is_category.id_category=category.id_category
 WHERE category_name = @category AND recipe.date_added >= '01/01/@year';
 
 --Classement des recettes selon les notes données :
---VALIDEE
 
 SELECT recipe.id_recipe, AVG(note.note) as average FROM recipe
 JOIN note ON recipe.id_recipe = note.id_recipe
@@ -20,16 +18,16 @@ GROUP BY recipe.id_recipe
 ORDER BY average DESC;
 
 --Pour les menus d'un internaute @user, la moyenne des notes données pour les recettes qu'il comprend
---VALIDEE
 
-SELECT menu.id_menu, AVG(average) as total_average
+SELECT menu.id_user, AVG(average) as total_average
 FROM (  SELECT recipe.id_recipe, AVG(note.note) as average FROM recipe
-        JOIN note ON recipe.id_recipe = note.id_recipe
-        GROUP BY recipe.id_recipe) as table1
-JOIN is_part_of ON table1.id_recipe = is_part_of.id_recipe
-JOIN menu ON is_part_of.id_menu = menu.id_menu
-WHERE menu.id_user = @user
-GROUP BY menu.id_menu;
+    	JOIN note ON recipe.id_recipe = note.id_recipe
+		GROUP BY recipe.id_recipe) as table1
+		JOIN is_part_of ON table1.id_recipe = is_part_of.id_recipe
+		JOIN menu ON is_part_of.id_menu = menu.id_menu
+		WHERE menu.id_user = @user
+		GROUP BY menu.id_user;
+
 
 --classement fin des ingrédient : 
 --Différentes info à récupérer
