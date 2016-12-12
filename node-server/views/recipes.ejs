@@ -91,11 +91,11 @@
         </div>
     </div>
 
-    <div class="row col-md-8 col-md-offset-2 spaced">
+    <div class="row col-md-10 col-md-offset-1 spaced">
         <div id="nothing-found" class="alert alert-info" role="alert" style="display:none;"><strong>Woops !</strong>
             Seems that your request gave nothing ...
         </div>
-        <% for(let i = 0;i < rows.length;i++){ %>
+        <% for(var i = 0;i < rows.length;i++){ %>
         <div id-recipe="<%= rows[i]['id_recipe'] %>" class="col-sm-5 col-md-3 format-size recipe-item">
             <div class="thumbnail">
                 <img src="images/recipe_default.jpg" alt="...">
