@@ -9,7 +9,7 @@
   "recipes":{
     "all":"SELECT * FROM recipe",
     "query_id": "SELECT * FROM recipe WHERE id_recipe=$1::integer",
-    "everything":"SELECT recipe.id_recipe, recipe.recipe_name, recipe.servings, category_name FROM recipe INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe INNER JOIN category ON is_category.id_category=category.id_category",
+    "everything":"SELECT recipe.id_recipe, recipe.recipe_name, recipe.servings, category_name, AVG(note.note) as average FROM recipe INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe INNER JOIN category ON is_category.id_category=category.id_category INNER JOIN note ON recipe.id_recipe = note.id_recipe GROUP BY recipe.id_recipe, category.category_name",
     "query_id_ingredients": "SELECT unit_name, quantity, ingredient.id_ingredient, ingredient.ingredient_name FROM recipe INNER JOIN constitute ON recipe.id_recipe = constitute.id_recipe INNER JOIN unit ON constitute.id_unit = unit.id_unit INNER JOIN ingredient ON constitute.id_ingredient = ingredient.id_ingredient WHERE recipe.id_recipe = $1::integer",
     "query_id_description": "SELECT pseudo, description_text, description.date_added FROM recipe INNER JOIN description ON recipe.id_recipe = description.id_recipe INNER JOIN \"user\" ON description.id_user = \"user\".id_user WHERE recipe.id_recipe = $1::integer ORDER BY description.date_added DESC LIMIT 1",
     "query_id_descriptions":"SELECT pseudo, description_text, description.date_added FROM recipe INNER JOIN description ON recipe.id_recipe = description.id_recipe INNER JOIN \"user\" ON description.id_user = \"user\".id_user WHERE recipe.id_recipe = $1::integer ORDER BY description.date_added DESC",

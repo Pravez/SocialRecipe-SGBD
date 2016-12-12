@@ -1,6 +1,10 @@
 let selected_servings = 2;
 let selected_category = 0;
 
+$(".recipe-rate").rating({stars: 3, min:0, max:3, step: 1, animate: false, showCaption: false, displayOnly: true, size:"xs"});
+$(".rating-container").css("font-size", "1.3em").css("display", "inline");
+
+
 $("#servings-list").find("li a").on("click", function (e) {
     $("#servings-list").find("li").removeClass("active");
     $(this).parent().addClass("active");
