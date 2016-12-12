@@ -10,16 +10,24 @@ function add_ingredient(){
 }
 
 var selectedInput;
+var same = false;
 function select_input(input){
+    if (selectedInput == input) same = true;
+    else same = false;
     selectedInput = input;
-    console.log(input);
 }
 
 function select_ingredient(ingredient){
+    if(same === false){
+        add_ingredient();
+    }else{
+        var elem = $(".caption p[id-ingredient=" + $(selectedInput).find(".ingredient-id").val() + "]").parent().parent();
+        $(elem).removeClass("active");
+        $(elem).css("pointer-events", "auto");
+    }
     var ingredient_value = $(ingredient).find(".caption p");
     $(selectedInput).find(".ingredient-name").val(ingredient_value.html());
     $(selectedInput).find(".ingredient-id").val(ingredient_value.attr("id-ingredient"));
-    add_ingredient();
 }
 
 function remove_input(input){
