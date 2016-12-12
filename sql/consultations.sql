@@ -3,19 +3,20 @@
 -----------------------------------------------------------------------------
 
 -- Informations sur recettes :
-SELECT * FROM recipe;
+SELECT id_recipe, recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings
+FROM recipe;
 
 -- Informations sur ingrédients :
-SELECT * FROM ingredient;
+SELECT id_ingredient, ingredient_name FROM ingredient;
 
 -- Informations sur menus :
-SELECT * FROM menu;
+SELECT id_menu, menu_name, 'user' FROM menu;
 
 --Recette d'une catégorie @category pour un nombre de personne @nb_people donné
 SELECT * FROM recipe
 INNER JOIN is_category ON recipe.id_recipe=is_category.id_recipe
 INNER JOIN category ON is_category.id_category=category.id_category;
-WHERE category_name = " + @category + " AND nb_people = " @nb_people";
+WHERE category_name = " @category " AND nb_people = " @nb_people";
 
 --Menu avec seulement des recettes ajoutées après une date @date donnée
 --Selection de tous les couple menu-recette, group by pour compter combien de recette par menu
@@ -136,5 +137,33 @@ JOIN comment ON recipe.id_recipe = comment.id_recipe
 GROUP BY recipe.id_recipe
 HAVING COUNT(id_user) >=3;
 
---Consultation détaillée pour menu, recette ingrédient
---Consultation détaillé menu
+
+--Consultation détaillée du menu @menu
+SELECT id_menu, name_menu, 'user'
+FROM menu;
+SELECT id_recipe, name_recipe
+FROM recipe
+JOIN is_part_of ON recipe.id_recipe = is_part_of.id_recipe
+WHERE id_menu = @menu;
+
+--Consultation détaillée de la recette @recipe
+SELECT id_recipe, name_recipe, date_added, preparation_time, cooking_time, waiting_time, servings
+FROM recipe;
+SELECT id_category, category_name
+FROM category
+JOIN is_category ON category.id_category = is_category.id_category
+WHERE is_category.id_recipe = @recipe;
+SELECT unit_name, ingredient_name, quantity
+FROM ingredient
+JOIN constitute ON ingredient.id_ingredient = constitute.id_ingredient
+JOIN unit ON consitute.id_unit = unit.id_unit
+WHERE constitute.id_recipe = @recipe;
+
+--Consultation détaillée de l'ingrédient @ingredient
+
+SELECT id_ingredient, ingredient_name
+FROM ingredient;
+SELECT nc_name, quantity
+FROM Ingredient_Characteristic
+JOIN Nutritional_Characteristic ON Ingredient_Characteristic.id_nc = Nutritional_Characteristic.id_nc
+WHERE Ingredient_Characteristic.id_ingredient = @ingredient;

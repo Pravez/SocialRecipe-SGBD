@@ -2,36 +2,44 @@
 --Mises à jour
 -----------------------------------------------------------------------------
 
---Ajout recette
 
-INSERT INTO recipe ( column [, ...] ) ]
-    { DEFAULT VALUES | VALUES ( { expression | DEFAULT } [, ...] ) | query }
+--------------- AJOUT D'UNE RECETTE -------------------
+--Création de la recette
+INSERT INTO recipe (recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings)
+    VALUES (@name, @date, @p_time, @c_time, @w_time, @servings);
 
---Suppression du menu @menu.
+--Création du lien avec category
+INSERT INTO is_category column (id_category, id_recipe)
+    VALUES (@id_ctageory, id_recipe);
 
-DELETE FROM menu
-    WHERE id_menu = @menu;
+--Création du lien avec ingredient
+INSERT INTO constitute (id_recipe, id_ingredient, id_unit, quantity)
+    VALUES (@id_recipe, @id_ingredient, @id_unit, @quantity);
+
+
+--Suppression de la note de la recette @recipe mise par l'utilisateur @user.
+
+DELETE FROM note
+    WHERE id_recipe = @recipe and id_user = @user;
     
---Suppression de la recette @recipe.
+--Suppression du commentaire @comment.
 
-DELETE FROM recipe
-    WHERE id_recipe = @recipe;
+DELETE FROM comment
+    WHERE id_comment = @comment;
     
 --Suppression de l'utilisateur @user.
 
 DELETE FROM 'user'
     WHERE id_user = @user;
 
---trigger pour la suppression de l'utilisateur
---trigger arguments postgresql
+--trigger pour la suppression de l'utilisateur : remplace dans les commentaires et les descriptions par l'utilisateur supprimé et supprime les notes correspondantes.
 CREATE OR REPLACE FUNCTION replace() RETURNS trigger AS $replace_user$
 DECLARE
   r BIGINT;
 BEGIN
     FOR r IN SELECT id_user FROM note
     LOOP
-        UPDATE note
-          SET id_user = 0
+        DELETE FROM note
           WHERE id_user = OLD.id_user;
     END LOOP;
     FOR r IN SELECT id_user FROM comment
@@ -51,16 +59,23 @@ END;
 $replace_user$ LANGUAGE plpgsql;
 
 CREATE TRIGGER replace_user
-AFTER DELETE ON "user"
+BEFORE DELETE ON "user"
     EXECUTE PROCEDURE replace();
     
---Modification d'une recette @recipe
+--Modification du champs @champs d'une recette @recipe 
 
 UPDATE recipe
-    SET ColumnToChange= newValue
-    [ WHERE id_recipe = @recipe
+    SET @champs = newValue
+    WHERE id_recipe = @recipe
 
+--Modification du champs @champs d'un ingrédient @ingredient
 
---Modification d'un ingrédient
+UPDATE ingredient
+    SET @champs = newValue
+    WHERE id_ingredient = @ingredient
 
---Modification d'un menu
+--Modification du champs @champs d'un menu @menu
+
+UPDATE recipe
+    SET @champs = newValue
+    WHERE id_menu = @menu
