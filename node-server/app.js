@@ -16,6 +16,7 @@ var ingredient = require('./routes/ingredient');
 
 var add_ingredient = require('./routes/add_ingredient');
 var add_menu = require('./routes/add_menu');
+var add_recipe = require('./routes/add_recipe');
 
 var statistics = require('./routes/stats');
 
@@ -54,9 +55,11 @@ app.use('/recipe', recipe);
 app.use('/ingredient', ingredient);
 app.use('/add_ingredient', add_ingredient);
 app.use('/add_menu', add_menu);
+app.use('/add_recipe', add_recipe);
 
 app.use('/auth', authentification);
 app.use('/stats', statistics);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -21,15 +21,20 @@
 
 <div class="container">
     <div class="row col-md-10 col-md-offset-1">
-        <div class="col-md-12 row" style="margin-bottom:20px;text-align:center;">
-            <div class="col-md-4">
-                <button class="btn btn-secondary" id="honeysalt">Recipes with honey and salt</button>
+        <div class="col-md-10 row" style="margin-bottom:20px;text-align:center;">
+            <div class="col-md-10">
+                <div class="btn-group" role="group" aria-label="buttons-search">
+                    <button class="btn btn-default" id="honeysalt">Recipes with honey and salt</button>
+                    <button class="btn btn-default" id="top_recipes">Top recipes</button>
+                    <button class="btn btn-default" id="common_recipes">Most common recipes</button>
+                </div>
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-secondary" id="top_recipes">Top recipes</button>
+            <div class="col-md-1">
+                <button class="btn btn-secondary" id="refresh_recipes"><span class="glyphicon glyphicon-refresh"></span>
+                </button>
             </div>
-            <div class="col-md-4">
-                <button class="btn btn-secondary" id="common_recipes">Most common recipes</button>
+            <div class="col-md-1">
+                <a href="/add_recipe"><button class="btn btn-primary">Add a recipe</button></a>
             </div>
         </div>
         <div class="col-md-12 row">

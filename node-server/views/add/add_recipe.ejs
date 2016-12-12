@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Recipe</title>
+    <% include ../parts/headers.ejs %>
+
+    <link rel="stylesheet" href="components/bootstrap-select/dist/css/bootstrap-select.min.css">
+
+</head>
+<body>
+<% include ../parts/toolbar.ejs %>
+
+<div class="container col-md-8 col-md-offset-2">
+    <div class="jumbotron">
+        <h2>Addition of a recipe</h2>
+        <% if(locals.added){ %>
+        <label class="label label-success">Added menu !</label>
+        <% } %>
+    </div>
+    <form action="/add_menu" method="post">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="recipe-name">Recipe name : </label>
+                    <input type="text" id="recipe-name" name="recipe_name" class="form-control"
+                           placeholder="Enter here your recipe name ..." required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="servings">Servings : </label>
+                    <input type="number" id="servings" class="form-control" name="servings" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="preparation-time">Preparation time : </label>
+                    <input type="time" id="preparation-time" class="form-control" name="preparation_time">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="cooking-time">Cooking time : </label>
+                    <input type="time" id="cooking-time" class="form-control" name="cooking_time">
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="waiting-time">Waiting time : </label>
+                    <input type="time" id="waiting-time" class="form-control" name="waiting_time">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="categories">What are the categories of your recipes ?</label>
+                    <select id="categories" class="selectpicker form-control" multiple data-selected-text-format="count > 10"
+                            name="categories" required>
+                        <% for(var k = 0;k < categories_rows.length;k++){ %>
+                        <option><%= categories_rows[k]["category_name"] %></option>
+                        <% } %>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 form-group">
+                <label for="description_text">Enter your preparation method : </label>
+                <textarea id="description_text" name="description_text" rows="3" class="form-control" required></textarea>
+            </div>
+        </div>
+        <div class="row col-md-12 form-group" id="ingredients" style="text-align:center;">
+            <h4 style="margin-bottom:20px;">Select the ingredients you want in your recipe</h4>
+            <div class="col-md-5">Ingredient name</div>
+            <div class="col-md-3">Quantity</div>
+            <div class="col-md-3">Unit</div>
+            <div class="ingredients-input" id="main" style="margin-top:20px;">
+                <div class="col-md-5">
+                    <input type="text" placeholder="Click to search an ingredient"
+                           class="form-control ingredient-name" data-toggle="modal"
+                           data-target="#ingredients-modal" onclick="select_input(this.parentElement.parentElement);">
+                </div>
+                <div class="col-md-3">
+                    <input type="number" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" id="unit-selector">
+                        <% for(var l = 0;l < unit_rows.length;l++){ %>
+                        <option><%= unit_rows[l]["unit_name"] %></option>
+                        <% } %>
+                    </select>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-default" type="button"
+                            onclick="remove_input(this.parentElement.parentElement);">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </div>
+
+                <input type="number" class="ingredient-id" style="display:none;" name="ingredient_id_0">
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="ingredients-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="modal-label">Select ingredient</h4>
+            </div>
+            <div class="modal-body">
+                <% for(var i = 0;i < ingredients_rows.length / 4;i++){ %>
+                <div class="row">
+                    <% for(var j = 0;j < 4 && (i * 4 + j) < ingredients_rows.length;j++){ %>
+                    <div class="col-md-3" style="text-align:center;">
+                        <a data-dismiss="modal" href="#" class="thumbnail" style="min-height:10px;"
+                           onclick="if(!this.classList.contains('active')) { this.classList.add('active');select_ingredient(this);$(this).css('pointer-events', 'none'); }">
+                            <div class="caption" style="top:50%;">
+                                <p id-ingredient="<%= ingredients_rows[i * 4 + j]['id_ingredient'] %>"><%= ingredients_rows[i * 4 + j]['ingredient_name'] %></p>
+                            </div>
+                        </a>
+                    </div>
+                    <% } %>
+                </div>
+                <% } %>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="components/bootstrap-select/dist/js/bootstrap-select.js"></script>
+<script src="javascripts/add_recipe.js"></script>
+</body>
+</html>

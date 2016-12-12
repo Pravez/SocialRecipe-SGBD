@@ -17,7 +17,6 @@
 <div class="container">
     <div class="jumbotron">
         <h1><%= rows[0].recipe_name %></h1>
-        <p>Recipe description</p>
         <% if(average_note !== -1) { %>
         <p><input type="text" id="avg_rating" class="rating" value="<%= average_note %>"></p>
         <% } %>
@@ -130,22 +129,24 @@
         </div>
         <% } else { %>
         <div class="col-md-12">
-            <span><small>To create a description you must be <a href="#" data-toggle="modal" data-target="#authentication">logged in</a> ...</small></span>
+            <span><small>To create a description you must be <a href="#" data-toggle="modal"
+                                                                data-target="#authentication">logged in</a> ...</small></span>
         </div>
         <% } %>
-        <div class="col-md-12" style="margin-bottom:50px;">
+        <div class="col-md-12">
             <h2>Comments on this recipe</h2>
             <% for(var j = 0;j < comments_rows.length;j++){ %>
             <h4><%= comments_rows[j]["pseudo"] %>
                 <% if(notes_rows[comments_rows[j]["pseudo"]] ) { %>
-                <span class="label label-default"><%= notes_rows[comments_rows[j]["pseudo"]] %></span>
+                <input type="text" class="rating user-rate" value="<%= notes_rows[comments_rows[j]["pseudo"]] %>">
                 <% } %>
             </h4>
             <p><%= comments_rows[j]["comment_text"] %></p>
             <% } %>
         </div>
         <% if(session.username) { %>
-        <div class="col-md-12">
+        <div class="col-md-12" style="margin-top:10px;">
+            <h3>Let a comment on this recipe !</h3>
             <form action="/recipe" method="post">
                 <div class="col-md-12">
                     <div class="form-group">
@@ -169,6 +170,10 @@
                     <button type="submit" class="btn btn-default">Submit</button>
                 </div>
             </form>
+        </div>
+        <% } else { %>
+        <div class="col-md-12">
+            <span><small>You must be <a href="#" data-toggle="modal" data-target="#authentication">logged in</a> to write a comment ...</small></span>
         </div>
         <% } %>
         <div class="col-md-12" style="height:50px;"></div>

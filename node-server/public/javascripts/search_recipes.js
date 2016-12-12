@@ -46,17 +46,17 @@ function search_value() {
 
     rows.forEach(function (e) {
         if (e[name].match(new RegExp(search_name, 'i')) && test_servings(selected_servings, parseInt(search_servings), e[quantity]) && validate_category(e, new RegExp(search_category, "i"))) {
-            document.querySelector('[' + id_field + '="' + e[id] + '"]').style.display = "";
+            $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "");
             found++;
         } else {
-            document.querySelector('[' + id_field + '="' + e[id] + '"]').style.display = "none";
+            $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "none");
         }
     });
 
     if (found > 0)
-        document.querySelector("#nothing-found").style.display = "none";
+        $("#nothing-found").css("display", "none");
     else
-        document.querySelector("#nothing-found").style.display = "";
+        $("#nothing-found").css("display", "");
 }
 
 function validate_category(element, regex) {
@@ -72,26 +72,50 @@ function validate_category(element, regex) {
 $("#honeysalt").click(function (event) {
     $.post("/recipe", {honeysalt: true}, function (results) {
         $(".recipe-item").css("display", "none");
-        results.forEach(function (e) {
-            $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
-        });
+        if (results.length > 0) {
+            $("#nothing-found").css("display", "none");
+            results.forEach(function (e) {
+                $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
+            });
+        } else {
+            $("#nothing-found").css("display", "");
+        }
     });
 });
 
 $("#top_recipes").click(function (event) {
-    $.post("/recipe", {top_recipes:true}, function(results){
+    $.post("/recipe", {top_recipes: true}, function (results) {
         $(".recipe-item").css("display", "none");
-        results.forEach(function(e){
-            $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
-        });
+        if (results.length > 0) {
+            $("#nothing-found").css("display", "none");
+            results.forEach(function (e) {
+                $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
+            });
+        } else {
+            $("#nothing-found").css("display", "");
+        }
     });
 });
 
 $("#common_recipes").click(function (event) {
-    $.post("/recipe", {common_recipes:true}, function(results){
+    $.post("/recipe", {common_recipes: true}, function (results) {
         $(".recipe-item").css("display", "none");
-        results.forEach(function(e){
-            $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
-        });
+        if (results.length > 0) {
+            $("#nothing-found").css("display", "none");
+            results.forEach(function (e) {
+                $("[" + id_field + "=\"" + e[id] + "\"]").css("display", "block");
+            });
+        } else {
+            $("#nothing-found").css("display", "");
+        }
     });
+});
+
+$("#refresh_recipes").click(function(event){
+    $("#search_name").val("");
+    $("#search_servings").val("");
+    $("#search_categories").val("");
+    $("#categories-list").find("li").removeClass("active");
+    $("[id-category=\"0\"]").addClass("active");
+    search_value();
 });

@@ -32,6 +32,9 @@
   "categories":{
     "all":"SELECT * FROM category"
   },
+  "unit":{
+    "all":"SELECT * FROM unit"
+  },
   "add":{
     "ingredients":{
       "query_ingredient": "INSERT INTO ingredient(ingredient_name) VALUES ($1::text) RETURNING id_ingredient",

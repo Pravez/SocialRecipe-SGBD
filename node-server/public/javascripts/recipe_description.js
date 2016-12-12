@@ -1,6 +1,8 @@
 
-$("#avg_rating").rating({stars: 3, min:0, max:3, step: 1, animate: false, showCaption: false, displayOnly: true, size:"xs"});
+$("#avg_rating").rating({stars: 3, min:0, max:3, step: 1, animate: false, showCaption: false, displayOnly: true, size:"lg"});
 $("#rating").rating({stars: 3, min:0, max:3, step: 1, animate: false, showCaption: false, clearButton: "<i class=\"glyphicon glyphicon-minus\"></i>"});
+$(".user-rate").rating({stars: 3, min:0, max:3, step: 1, animate: false, showCaption: false, displayOnly: true, size:"xs"});
+$(".rating-container").css("font-size", "1.3em").css("display", "inline");
 
 $("#all_preparations").click(function(event){
     event.preventDefault();
