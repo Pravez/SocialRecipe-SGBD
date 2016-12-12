@@ -17,6 +17,13 @@ JOIN note ON recipe.id_recipe = note.id_recipe
 GROUP BY recipe.id_recipe
 ORDER BY average DESC;
 
+--Pour les menus d'un internaute @user, la moyenne des notes données pour chacune des recettes de chacun de ses menus
+SELECT menu.id_user, pseudo, menu_name, recipe_name, AVG(note.note) FROM menu INNER JOIN is_part_of
+ON menu.id_menu = is_part_of.id_menu INNER JOIN recipe ON is_part_of.id_recipe = recipe.id_recipe
+INNER JOIN "user" ON menu.id_user = "user".id_user INNER JOIN note ON recipe.id_recipe = note.id_recipe
+WHERE menu.id_user = 7
+GROUP BY menu.id_user, menu_name, "user".pseudo, recipe.recipe_name;
+
 --Pour les menus d'un internaute @user, la moyenne des notes données pour les recettes qu'il comprend
 
 SELECT menu.id_user, AVG(average) as total_average
@@ -25,18 +32,16 @@ FROM (  SELECT recipe.id_recipe, AVG(note.note) as average FROM recipe
 		GROUP BY recipe.id_recipe) as table1
 		JOIN is_part_of ON table1.id_recipe = is_part_of.id_recipe
 		JOIN menu ON is_part_of.id_menu = menu.id_menu
-		WHERE menu.id_user = @user
+		WHERE menu.id_user = 1
 		GROUP BY menu.id_user;
-
 
 --classement fin des ingrédient : 
 --Différentes info à récupérer
---Moyenne des notes des recettes enregistrées utilsant l'ingédient.
-SELECT recipe.id_recipe, AVG(note) FROM recipe
+    --Moyenne des notes des recettes enregistrées utilsant l'ingrédient.
+SELECT AVG(note) FROM recipe
 JOIN note ON recipe.id_recipe = note.id_recipe
-WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
-JOIN constitute ON recipe.id_recipe = constitute.id_recipe
-WHERE id_ingredient = 8)
+WHERE recipe.id_recipe IN (SELECT id_recipe FROM constitute
+        WHERE id_ingredient = 8)
 GROUP BY recipe.id_recipe;
 
 --Rcal : nbCalorie / MoyenneCalorieTotal

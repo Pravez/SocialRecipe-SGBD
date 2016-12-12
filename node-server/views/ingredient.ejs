@@ -14,10 +14,15 @@
     </div>
 
     <div class="col-md-12">
-        <h4>The nutritional characteristics of this ingredient for 100 grammes are : </h4>
-        <% for(var i=0;i<rows.length;i++){ %>
+        <div class="col-md-8">
+            <h4>The nutritional characteristics of this ingredient for 100 grammes are : </h4>
+            <% for(var i=0;i<rows.length;i++){ %>
             <p><%= rows[i]["quantity"] %> <a href="https://en.wikipedia.org/wiki/<%= rows[i]["nc_name"] %>"><%= rows[i]["nc_name"] %></a></p>
-        <% } %>
+            <% } %>
+        </div>
+        <div class="col-md-4">
+            <p>This ingredient coefficient is : <%= coef %></p>
+        </div>
     </div>
 </div>
 
