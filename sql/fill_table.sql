@@ -282,9 +282,11 @@ DELETE from is_part_of;
 INSERT INTO is_part_of VALUES (13,1);
 INSERT INTO is_part_of VALUES (2,1);
 INSERT INTO is_part_of VALUES (3,1);
+INSERT INTO is_part_of VALUES (6,1);
 
 INSERT INTO is_part_of VALUES (4,2);
 INSERT INTO is_part_of VALUES (1,2);
+INSERT INTO is_part_of VALUES (6,2);
 
 INSERT INTO is_part_of VALUES (5,3);
 INSERT INTO is_part_of VALUES (3,3);
