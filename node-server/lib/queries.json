@@ -47,6 +47,12 @@
     "menus":{
       "query_menu": "INSERT INTO menu(menu_name, id_user) VALUES ($1::text, $2::integer) RETURNING id_menu",
       "query_part_of" : "INSERT INTO is_part_of(id_recipe, id_menu) VALUES ($1::integer, $2::integer)"
+    },
+    "recipes":{
+      "recipe":"INSERT INTO recipe(recipe_name, date_added, preparation_time, cooking_time, waiting_time, servings) VALUES($1::text, $2::date, $3::interval, $4::interval, $5::interval, $6::integer) RETURNING id_recipe",
+      "link_category":"INSERT INTO is_category(id_category, id_recipe) VALUES($1::integer, $2::integer)",
+      "link_ingredient":"INSERT INTO constitute(id_ingredient, id_recipe, id_unit, quantity) VALUES($1::integer, $2::integer, $3::integer, $4::integer)",
+      "link_description":"INSERT INTO description(description_text, date_added, id_recipe, id_user) VALUES($1::text, $2::date, $3::integer, $4::integer)"
     }
   },
   "users":{

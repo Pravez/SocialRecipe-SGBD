@@ -7,6 +7,7 @@
     "install-everything": "npm install && npm install bower && ./node_modules/.bin/bower install"
   },
   "dependencies": {
+    "async": "^2.1.4",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -16,6 +17,7 @@
     "less-middleware": "~2.2.0",
     "morgan": "~1.7.0",
     "pg": "^6.1.0",
+    "postgres-interval": "^1.0.2",
     "serve-favicon": "~2.3.0",
     "tunnel-ssh": "^4.1.1"
   }

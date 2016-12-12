@@ -4,8 +4,14 @@ function add_ingredient(){
     var next_ingredient = $("#main").clone();
     next_ingredient.id = "";
     $(next_ingredient).find(".ingredient-name").val("");
-    $(next_ingredient).find(".ingredient-id").attr("name", "id_ingredient_" + ingredient_index++);
+    $(next_ingredient).find(".ingredient-id").attr("name", "ingredient_id_" + ingredient_index);
     $(next_ingredient).find(".ingredient-id").val("");
+    $(next_ingredient).find(".ingredient-quantity").attr("name", "ingredient_quantity_" + ingredient_index);
+    $(next_ingredient).find(".ingredient-quantity").val("");
+    $(next_ingredient).find(".ingredient-quantity").prop("required", false);
+    $(next_ingredient).find(".ingredient-unit").attr("name", "ingredient_unit_" + ingredient_index++);
+    $(next_ingredient).find(".ingredient-unit").val("");
+    $(next_ingredient).find(".ingredient-unit").prop("required", false);
     $("#ingredients").append(next_ingredient);
 }
 
@@ -28,6 +34,8 @@ function select_ingredient(ingredient){
     var ingredient_value = $(ingredient).find(".caption p");
     $(selectedInput).find(".ingredient-name").val(ingredient_value.html());
     $(selectedInput).find(".ingredient-id").val(ingredient_value.attr("id-ingredient"));
+    $(selectedInput).find(".ingredient-quantity").prop("required", true);
+    $(selectedInput).find(".ingredient-unit").prop("required", true);
 }
 
 function remove_input(input){
@@ -39,5 +47,8 @@ function remove_input(input){
     }else{
         $(input).find(".ingredient-name").val("");
         $(input).find(".ingredient-id").val("");
+        $(input).find(".ingredient-quantity").val("");
+        $(input).find(".ingredient-unit").val("");
+
     }
 }
