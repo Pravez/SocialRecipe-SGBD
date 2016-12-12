@@ -1,14 +1,14 @@
------------------------------------------------------------------------------
+﻿-----------------------------------------------------------------------------
 --Statistiques
 -----------------------------------------------------------------------------
 
 --nombre de recettes d'une catégorie @category crée depuis le début de l'année @year
 -- on crée la date 01/01/year dans @date
 
-SELECT recipe.id_recipe FROM recipe
+SELECT id_category, COUNT(recipe.id_recipe)
 JOIN is_category ON recipe.id_recipe=is_category.id_recipe
-JOIN category ON is_category.id_category=category.id_category
-WHERE category_name = @category AND recipe.date_added >= '01/01/@year';
+WHERE category_name=@category AND recipe.date_added >= '01/01/@year' 
+GROUP_BY id_category;
 
 --Classement des recettes selon les notes données :
 
