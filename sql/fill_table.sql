@@ -26,6 +26,7 @@ INSERT INTO category(category_name) VALUES('breakfast');
 DELETE FROM "user";
 
 ALTER SEQUENCE user_id_user_seq RESTART WITH 1;
+INSERT INTO "user"(id_user, pseudo) VALUES (0,'Anonymous');
 INSERT INTO "user"(pseudo) VALUES ('Etchebest');
 INSERT INTO "user"(pseudo) VALUES ('Ramsey');
 INSERT INTO "user"(pseudo) VALUES ('Ratatouille');

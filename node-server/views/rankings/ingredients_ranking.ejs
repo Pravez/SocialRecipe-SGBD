@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Social Recipe</title>
+
+    <% include ../parts/headers.ejs %>
+
+</head>
+<body>
+
+<% include ../parts/toolbar.ejs %>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2>Ingredients ranking</h2>
+        <p>Here are the ingredients ranked by a certain coefficient, based on complex maths operations</p>
+    </div>
+
+    <div class="col-md-6 col-md-offset-3">
+        <div class="list-group">
+            <% for(var i = 0;i < rows.length;i++){ %>
+            <a href="/ingredient?id=<%= rows[i]["id_ingredient"] %>" class="list-group-item"><%= rows[i]["ingredient_name"] %>
+            <span class="badge"><%= rows[i]["coef"] %></span></a>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

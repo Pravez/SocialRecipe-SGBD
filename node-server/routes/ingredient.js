@@ -6,7 +6,9 @@ router.get('/', function (req, res) {
     if (req.query["id"]) {
         postgreaccess.doQuery(queries.ingredients.query_id_nc, [req.query["id"]], function (results) {
             console.log(results);
-            res.render('ingredient', {rows: results, session: req.session, ingredients:true});
+            postgreaccess.doQuery(queries.stats.ingredient_ranking_id, [req.query["id"]], function(coef){
+                res.render('ingredient', {rows: results, session: req.session, ingredients:true, coef:coef});
+            });
         });
     } else {
         postgreaccess.doQuery(queries.ingredients.all, [], function (results) {

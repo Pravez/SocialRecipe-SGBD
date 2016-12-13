@@ -11,7 +11,7 @@
     <div class="container">
         <div class="jumbotron">
             <h2><%= rows[0]["menu_name"] %></h2>
-            <p>Created by <%= rows[0]["pseudo"] %></p>
+            <% if(rows[0]["pseudo"] != undefined) { %><p>Created by <%= rows[0]["pseudo"] %></p><% } %>
         </div>
         <div class="col-md-12">
             <div class="col-md-6">

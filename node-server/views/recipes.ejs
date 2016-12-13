@@ -4,6 +4,8 @@
     <title>Social Recipe</title>
     <% include parts/headers.ejs %>
 
+    <link href="components/bootstrap-star-rating/css/star-rating.css" media="all" rel="stylesheet" type="text/css"/>
+
     <script>
         const name = "recipe_name";
         const id = "id_recipe";
@@ -34,7 +36,9 @@
                 </button>
             </div>
             <div class="col-md-1">
-                <a href="/add_recipe"><button class="btn btn-primary">Add a recipe</button></a>
+                <a href="/add_recipe">
+                    <button class="btn btn-primary">Add a recipe</button>
+                </a>
             </div>
         </div>
         <div class="col-md-12 row">
@@ -87,17 +91,17 @@
         </div>
     </div>
 
-    <div class="row col-md-8 col-md-offset-2 spaced">
+    <div class="row col-md-10 col-md-offset-1 spaced">
         <div id="nothing-found" class="alert alert-info" role="alert" style="display:none;"><strong>Woops !</strong>
             Seems that your request gave nothing ...
         </div>
-        <% for(let i = 0;i < rows.length;i++){ %>
+        <% for(var i = 0;i < rows.length;i++){ %>
         <div id-recipe="<%= rows[i]['id_recipe'] %>" class="col-sm-5 col-md-3 format-size recipe-item">
             <div class="thumbnail">
                 <img src="images/recipe_default.jpg" alt="...">
                 <div class="caption">
                     <h3><%= rows[i]['recipe_name'] %></h3>
-                    <p>SOME TEXT</p>
+                    <p><input type="text" class="rating recipe-rate" value="<%= rows[i]["average"] %>"></p>
                     <div style="text-align:center;width:100%;">
                         <p><a href="/recipe?id=<%= rows[i]['id_recipe'] %>" class="btn btn-primary" role="button">See
                                 more</a></p>
@@ -110,7 +114,7 @@
 </div>
 
 </body>
+
+<script src="components/bootstrap-star-rating/js/star-rating.js" type="text/javascript"></script>
 <script src="javascripts/search_recipes.js"></script>
-
-
 </html>

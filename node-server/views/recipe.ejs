@@ -44,10 +44,11 @@
                 </div>
                 <div class="col-md-3">
                 <span class="badge">
+                    <% if(rows[0].preparation_time.hours) { %>
+                    <%= rows[0].preparation_time.hours %> hours
+                    <% } %>
                     <% if(rows[0].preparation_time.minutes) { %>
                     <%= rows[0].preparation_time.minutes %> minutes
-                    <% }else if(rows[0].preparation_time.hours) { %>
-                    <%= rows[0].preparation_time.hours %> heures
                     <% } %>
                 </span>
                 </div>
@@ -62,10 +63,11 @@
                     <span class="glyphicon glyphicon-time"></span>
                 </div>
                 <div class="col-md-3"><span class="badge">
+                        <% if(rows[0].cooking_time.hours) { %>
+                        <%= rows[0].cooking_time.hours %> hours
+                        <% } %>
                         <% if(rows[0].cooking_time.minutes) { %>
                         <%= rows[0].cooking_time.minutes %> minutes
-                        <% }else if(rows[0].cooking_time.hours) { %>
-                        <%= rows[0].cooking_time.hours %> heures
                         <% } %>
                     </span></div>
                 <div class="col-md-5"> Cooking time</div>
@@ -78,10 +80,11 @@
                 </div>
                 <div class="col-md-3">
                     <span class="badge">
+                        <% if(rows[0].waiting_time.hours) { %>
+                        <%= rows[0].waiting_time.hours %> hours
+                        <% } %>
                         <% if(rows[0].waiting_time.minutes) { %>
                         <%= rows[0].waiting_time.minutes %> minutes
-                        <% }else if(rows[0].waiting_time.hours) { %>
-                        <%= rows[0].waiting_time.hours %> heures
                         <% } %>
                     </span>
                 </div>

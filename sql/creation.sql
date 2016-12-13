@@ -62,7 +62,7 @@ CREATE TABLE Menu(
 
 CREATE TABLE Is_Part_Of(
   id_recipe INT REFERENCES Recipe(id_recipe),
-  id_menu INT REFERENCES Menu(id_menu),
+  id_menu INT REFERENCES Menu(id_menu), -- ON DELETE CASCADE,
   PRIMARY KEY (id_recipe,id_menu)
 );
 
@@ -76,7 +76,7 @@ CREATE TABLE Note(
 CREATE TABLE Comment(
   id_comment SERIAL PRIMARY KEY ,
   id_recipe INT REFERENCES Recipe(id_recipe),
-  id_user INT REFERENCES "user"(id_user),
+  id_user INT REFERENCES "user"(id_user) ,
   comment_text TEXT
 );
 
@@ -87,3 +87,29 @@ CREATE TABLE Description(
   id_recipe INT REFERENCES Recipe(id_recipe),
   id_user INT REFERENCES "user"(id_user)
 );
+-- Permet la suppression d'un menu
+ALTER TABLE Is_Part_Of
+    DROP CONSTRAINT is_part_of_id_menu_fkey;
+ALTER TABLE Is_Part_Of
+    ADD CONSTRAINT is_part_of_id_menu_fkey FOREIGN KEY (id_menu) REFERENCES Menu(id_menu) ON DELETE CASCADE;
+
+-- Permet la suppression d'un user
+ALTER TABLE Note
+    DROP CONSTRAINT note_id_user_fkey;
+ALTER TABLE Note
+    ADD CONSTRAINT note_id_user_fkey FOREIGN KEY (id_user) REFERENCES "user"(id_user) ON DELETE CASCADE ;
+
+ALTER TABLE Comment
+    DROP CONSTRAINT comment_id_user_fkey;
+ALTER TABLE Comment
+    ADD CONSTRAINT comment_id_user_fkey FOREIGN KEY (id_user) REFERENCES "user"(id_user) ON DELETE CASCADE ;
+
+ALTER TABLE Description
+    DROP CONSTRAINT description_id_user_fkey;
+ALTER TABLE Description
+    ADD CONSTRAINT description_id_user_fkey FOREIGN KEY (id_user) REFERENCES "user"(id_user) ON DELETE SET NULL;
+
+ALTER TABLE Menu
+    DROP CONSTRAINT menu_id_user_fkey;
+ALTER TABLE Menu
+    ADD CONSTRAINT menu_id_user_fkey FOREIGN KEY (id_user) REFERENCES "user"(id_user) ON DELETE SET NULL;

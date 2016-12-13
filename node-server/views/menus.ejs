@@ -54,13 +54,12 @@
 
         <div class="row col-md-8 col-md-offset-2 spaced">
             <div id="nothing-found" class="alert alert-info" style="display:none;" role="alert"><strong>Woops !</strong> Seems that your request gave nothing ...</div>
-            <% for(let i=0;i<rows.length;i++){ %>
+            <% for(var i=0;i<rows.length;i++){ %>
             <div id-menu="<%= rows[i]['id_menu'] %>" class="col-sm-5 col-md-3 format-size">
                 <div class="thumbnail">
                     <img src="images/meal.jpeg" alt="Meal">
                     <div class="caption">
                         <h3><%= rows[i]['menu_name'] %></h3>
-                        <p>SOME TEXT</p>
                         <div style="text-align:center;width:100%;">
                             <p><a href="/menu?id=<%= rows[i]['id_menu'] %>" class="btn btn-primary" role="button">See more</a></p>
                         </div>
