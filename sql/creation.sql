@@ -62,7 +62,7 @@ CREATE TABLE Menu(
 
 CREATE TABLE Is_Part_Of(
   id_recipe INT REFERENCES Recipe(id_recipe),
-  id_menu INT REFERENCES Menu(id_menu), -- ON DELETE CASCADE,
+  id_menu INT REFERENCES Menu(id_menu),
   PRIMARY KEY (id_recipe,id_menu)
 );
 
