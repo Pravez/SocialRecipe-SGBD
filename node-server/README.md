@@ -13,6 +13,11 @@ Vous devez donc au préalable avoir installé NodeJS.
 Pour installer l'intégralité des paquets nécessaires à NodeJS pour fonctionner, lancer :
 `npm install`
 
+(L'étape avec `bower` peut être sautée puisque l'archive est supposée déjà contenir les dépendances. Cependant si l'interface
+plante ou s'affiche (très) mal, il pourrait s'avérer que les dépendances ne soient pas résolues. Dans ce cas, faire les actions
+suivantes ...).
+
+
 Une fois ceci fait il faut utiliser `bower` pour résoudre les dépendances côté rendu client (jquery, bootstrap ...).
 Soit vous êtes un fan inconditionnel de bower et vous l'avez installé de manière globale avec `npm install -g bower`
 (en admin) : vous pourrez l'appeller avec simplement depuis l'invite de commande `bower`. Sinon vous l'aurez d'installé
