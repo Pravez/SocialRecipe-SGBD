@@ -160,7 +160,27 @@ INSERT INTO "user"(pseudo)
 
 
 
+--------------------------------------- MODIF ----------------------------------------------
+--Modification du champs @champs d'une recette @recipe
 
+UPDATE recipe
+    SET @champs = newValue
+    WHERE id_recipe = @recipe
+
+--Modification du champs @champs d'un ingrédient @ingredient
+
+UPDATE ingredient
+    SET @champs = newValue
+    WHERE id_ingredient = @ingredient
+
+--Modification du champs @champs d'un menu @menu
+
+UPDATE recipe
+    SET @champs = newValue
+    WHERE id_menu = @menu
+
+
+----------------------------------------SUPPRESSION -------------------------------------------
 --Suppression de la note de la recette @recipe mise par l'utilisateur @user.
 DELETE FROM note
     WHERE id_recipe = @recipe and id_user = @user;
