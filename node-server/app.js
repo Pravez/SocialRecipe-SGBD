@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var app = express();
 var postgres = require('./lib/postgres');
-var ssh = require('./lib/sshConnection');
 var session = require('express-session');
 
 var index = require('./routes/index');
@@ -25,13 +24,23 @@ var authentification = require('./routes/auth');
 app.use(session({secret:"canard rhododendron"}));
 
 
+
+/********************PARTIE CONFIGURATION************************************/
+/***************************************************************************/
+//A commenter si vous ne souhaitez pas utiliser de tunnel ssh
+//vers la raspberry contenant la base de donnees
+var ssh = require('./lib/sshConnection');
+
 var pgconfig = {
-    user: 'enseirb', //env var: PGUSER
-    database: 'enseirb', //env var: PGDATABASE
-    password: 'vatefairefoutre', //env var: PGPASSWORD
-    host: 'localhost', // Server hosting the postgres database
-    port: 30003 //env var: PGPORT
+    user: 'enseirb', //precisez ici l'utilisateur utilisant la base de donnees
+    database: 'enseirb', //ici le nom de la base de donnees
+    password: 'vatefairefoutre', //ici le mot de passe de l'utilisateur pour se connecter
+    host: 'localhost', // ici le host de la base de donnees
+    port: 30003 //et enfin ici le port sur lequel se connecter
 };
+/******************************************************************************/
+
+
 
 postgreaccess = new postgres(pgconfig);
 queries = require('./lib/queries.json');

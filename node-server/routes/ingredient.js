@@ -7,7 +7,11 @@ router.get('/', function (req, res) {
         postgreaccess.doQuery(queries.ingredients.query_id_nc, [req.query["id"]], function (results) {
             console.log(results);
             postgreaccess.doQuery(queries.stats.ingredient_ranking_id, [req.query["id"]], function(coef){
-                res.render('ingredient', {rows: results, session: req.session, ingredients:true, coef:coef});
+                var final = coef[0]["?column?"];
+                if(final == null)
+                    final = 0;
+                final = Number(final).toFixed(3);
+                res.render('ingredient', {rows: results, session: req.session, ingredients:true, coef:final});
             });
         });
     } else {
