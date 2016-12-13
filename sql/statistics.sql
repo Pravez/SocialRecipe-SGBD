@@ -32,12 +32,15 @@ FROM (  SELECT recipe.id_recipe, AVG(note.note) as average FROM recipe
 --classement fin des ingrédient : 
 --Différentes info à récupérer
 --Moyenne des notes des recettes enregistrées utilisant l'ingédient.
-SELECT AVG(note) FROM recipe
-JOIN note ON recipe.id_recipe = note.id_recipe
-WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
-JOIN constitute ON recipe.id_recipe = constitute.id_recipe
-WHERE id_ingredient = 8)
-GROUP BY recipe.id_recipe;
+SELECT AVG(average)
+FROM (SELECT recipe.id_recipe, AVG(note) as average FROM recipe
+  JOIN note ON recipe.id_recipe = note.id_recipe
+  WHERE recipe.id_recipe IN (SELECT id_recipe FROM constitute
+              WHERE id_ingredient = 8)
+  GROUP BY recipe.id_recipe) as averageNotes
+JOIN consitute ON averageNotes.id_recipe = constitute.id_recipe
+WHERE constitute.id_ingredient = 8
+GROUP BY id_ingredient;
 
 --Rcal : nbCalorie / MoyenneCalorieTotal
 
@@ -78,12 +81,15 @@ SELECT id_ingredient,
                                                                       JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
                                                                       GROUP BY nc_name
                                                                       HAVING nc_name='Calories')) *
-  (SELECT AVG(note) FROM recipe
+(SELECT AVG(average)
+FROM (SELECT recipe.id_recipe, AVG(note) as average FROM recipe
   JOIN note ON recipe.id_recipe = note.id_recipe
-  WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
-                            JOIN constitute ON recipe.id_recipe = constitute.id_recipe
-                            WHERE id_ingredient = 7)
-  GROUP BY recipe.id_recipe)
+  WHERE recipe.id_recipe IN (SELECT id_recipe FROM constitute
+              WHERE id_ingredient = 8)
+  GROUP BY recipe.id_recipe) as averageNotes
+JOIN consitute ON averageNotes.id_recipe = constitute.id_recipe
+WHERE constitute.id_ingredient = 8
+GROUP BY id_ingredient)
   *
   (SELECT SUM(coeff)
    FROM (SELECT nbComment,
@@ -117,12 +123,15 @@ BEGIN
                                                                       JOIN nutritional_characteristic ON ingredient_characteristic.id_nc = nutritional_characteristic.id_nc
                                                                       GROUP BY nc_name
                                                                       HAVING nc_name='Calories')) *
-  (SELECT AVG(note) FROM recipe
+  (SELECT AVG(average)
+FROM (SELECT recipe.id_recipe, AVG(note) as average FROM recipe
   JOIN note ON recipe.id_recipe = note.id_recipe
-  WHERE recipe.id_recipe = (SELECT recipe.id_recipe from recipe
-                            JOIN constitute ON recipe.id_recipe = constitute.id_recipe
-                            WHERE id_ingredient = r)
-  GROUP BY recipe.id_recipe)
+  WHERE recipe.id_recipe IN (SELECT id_recipe FROM constitute
+              WHERE id_ingredient = 8)
+  GROUP BY recipe.id_recipe) as averageNotes
+JOIN consitute ON averageNotes.id_recipe = constitute.id_recipe
+WHERE constitute.id_ingredient = 8
+GROUP BY id_ingredient)
   *
   (SELECT SUM(coeff)
    FROM (SELECT nbComment,
