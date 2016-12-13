@@ -13,3 +13,18 @@ DELETE FROM constitute;
 DELETE FROM unit;
 DELETE FROM recipe;
 DELETE FROM ingredient;
+
+DROP TABLE is_part_of;
+DROP TABLE menu;
+DROP TABLE note;
+DROP TABLE comment;
+DROP TABLE description;
+DROP TABLE "user";
+DROP TABLE is_category;
+DROP TABLE category;
+DROP TABLE ingredient_characteristic;
+DROP TABLE nutritional_characteristic;
+DROP TABLE constitute;
+DROP TABLE unit;
+DROP TABLE recipe;
+DROP TABLE ingredient;

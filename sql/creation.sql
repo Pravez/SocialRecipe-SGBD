@@ -1,3 +1,7 @@
+---------------------------------
+-- Nécessite d'avoir crée une base de données et d'y être connecté
+---------------------------------
+
 CREATE TABLE Ingredient (
 	id_ingredient   SERIAL PRIMARY KEY,
 	ingredient_name VARCHAR(50) UNIQUE NOT NULL
