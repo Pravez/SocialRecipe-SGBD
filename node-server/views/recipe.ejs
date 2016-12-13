@@ -20,6 +20,9 @@
         <% if(average_note !== -1) { %>
         <p><input type="text" id="avg_rating" class="rating" value="<%= average_note %>"></p>
         <% } %>
+        <% if(rows[0]["date_added"]) { %>
+        <p><small>Created the <%= new Date(rows[0]["date_added"]).toLocaleDateString() %></small></p>
+        <% } %>
     </div>
     <div class="col-md-12">
         <div class="col-md-6">
@@ -106,12 +109,13 @@
         <div class="col-md-12" id="descriptions">
             <h2>Preparation by <%= description_rows[0]["pseudo"] %></h2>
             <p><%= description_rows[0]["description_text"] %></p>
+            <p><small style="font-style:italic">Added the <%= new Date(description_rows[0]["date_added"]).toLocaleString() %></small></p>
         </div>
         <div class="col-md-12" id="all_preparations_div">
             <p>
-                <small id="preparations_result">Want to see all preparations created ? <a href="#"
-                                                                                          id="all_preparations">Click
-                        here</a></small>
+                <small id="preparations_result">Want to see all preparations created ?
+                    <a href="#" id="all_preparations">Click here</a>
+                </small>
             </p>
         </div>
         <% if(session.username){ %>
