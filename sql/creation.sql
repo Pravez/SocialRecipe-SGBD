@@ -93,7 +93,7 @@ ALTER TABLE Is_Part_Of
 ALTER TABLE Is_Part_Of
     ADD CONSTRAINT is_part_of_id_menu_fkey FOREIGN KEY (id_menu) REFERENCES Menu(id_menu) ON DELETE CASCADE;
 
--- Permet la suppression d'un user 
+-- Permet la suppression d'un user
 ALTER TABLE Note
     DROP CONSTRAINT note_id_user_fkey;
 ALTER TABLE Note
