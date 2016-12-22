@@ -34,7 +34,7 @@ var ssh = require('./lib/sshConnection');
 var pgconfig = {
     user: 'enseirb', //precisez ici l'utilisateur utilisant la base de donnees
     database: 'enseirb', //ici le nom de la base de donnees
-    password: 'vatefairefoutre', //ici le mot de passe de l'utilisateur pour se connecter
+    password: '', //ici le mot de passe de l'utilisateur pour se connecter (ME DEMANDER LE PASS)
                                  //Nous excuserons ici la nature du contenu du mot de passe, et le laisserons passer
                                  //comme mot de passe lambda, simple enchaînement de lettres sans réelle significations
                                  //n'ayant pour but que de rendre compliqué l'accès à des données protégées ...
