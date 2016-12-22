@@ -5,7 +5,7 @@ var tunnel = require('tunnel-ssh');
 
 var config = {
     username: 'enseirb',
-    password: 'vatefairefoutre42sgbd',
+    password: '', // ME DEMANDER LE PASS
     host: 'pravez.ddns.net',
     port: 22,
     dstHost: 'localhost',
